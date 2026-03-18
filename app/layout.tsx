@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bitter, Raleway } from "next/font/google";
+import { Bitter, Lexend } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/theme-provider";
 
@@ -8,8 +8,8 @@ const bitter = Bitter({
   subsets: ["latin"],
 });
 
-const raleway = Raleway({
-  variable: "--font-raleway",
+const lexend = Lexend({
+  variable: "--font-lexend",
   subsets: ["latin"],
 });
 
@@ -25,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${bitter.variable} ${raleway.variable} antialiased`}>
+      <body className={`${bitter.variable} ${lexend.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           {children}
         </ThemeProvider>

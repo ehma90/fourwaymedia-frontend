@@ -23,8 +23,21 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 px-4">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-6 rounded-br-2xl rounded-bl-2xl border border-black/10 bg-white/65 px-5 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/45">
-        <Link href="/" className="shrink-0 text-lg font-semibold tracking-wide">
-          FOURWAY
+        <Link
+          href="/"
+          className="shrink-0"
+          aria-label="Fourwaymedia home"
+        >
+          <img
+            src="https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png"
+            alt="Fourwaymedia logo"
+            className="block h-16 w-16 dark:hidden object-cover"
+          />
+          <img
+            src="https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png"
+            alt="Fourwaymedia logo"
+            className="hidden h-16 w-16 dark:block object-cover"
+          />
         </Link>
 
         <nav className="hidden flex-1 items-center justify-center gap-7 md:flex">
@@ -32,10 +45,10 @@ export function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className={`text-sm transition-colors ${
+              className={`border-b-2 border-transparent pb-1 text-sm transition-colors ${
                 isActiveLink(item.href)
-                  ? "text-[#DC4437] border-b-2 border-[#DC4437]"
-                  : "text-foreground/80 hover:text-foreground"
+                  ? "text-[#DC4437] [border-image:linear-gradient(120deg,#DC4437,#FEC107)_1]"
+                  : "text-white/80 hover:text-white"
               }`}
             >
               {item.label}
