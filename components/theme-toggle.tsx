@@ -11,17 +11,19 @@ export function ThemeToggle() {
   const toggleLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
 
   return (
-    <Button
-      type="button"
-      variant="outline"
-      size="sm"
-      aria-label={toggleLabel}
-      title={toggleLabel}
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="min-w-[88px] gap-1.5"
-    >
-      {isDark ? <Moon size={14} /> : <Sun size={14} />}
-  
-    </Button>
+    <div className=" ">
+      <Button
+        type="button"
+        // variant="outline" 
+        size="sm"
+        aria-label={toggleLabel}
+        title={toggleLabel}
+        onClick={() => setTheme(isDark ? "light" : "dark")}
+        className=" gap-1 bg-gray-800"
+      >
+        {isDark ? <Moon size={16} className="text-white" /> : <Sun size={16} className="text-white" />}
+
+      </Button>
+    </div>
   );
 }

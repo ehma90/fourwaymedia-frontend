@@ -1,21 +1,29 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { label: "Service", href: "#" },
-  { label: "Shop", href: "#", active: true },
-  { label: "Product", href: "#" },
-  { label: "Contact", href: "#" },
-  { label: "About", href: "#" },
+  { label: "Service", href: "/service" },
+  { label: "Shop", href: "/shop" },
+  { label: "Product", href: "/product" },
+  { label: "Contact", href: "/contact" },
+  { label: "About", href: "/about" },
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+
+  const isActiveLink = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     <header className="sticky top-0 z-50 px-4">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-6 rounded-br-2xl rounded-bl-2xl border border-black/10 bg-white/65 px-5 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/45">
-        <Link href="#" className="shrink-0 text-lg font-semibold tracking-wide">
+        <Link href="/" className="shrink-0 text-lg font-semibold tracking-wide">
           FOURWAY
         </Link>
 
@@ -25,8 +33,8 @@ export function Navbar() {
               key={item.label}
               href={item.href}
               className={`text-sm transition-colors ${
-                item.active
-                  ? "bg-gradient-to-r from-[#DC4437] to-[#FEC107] bg-clip-text text-transparent border-b-2 border-[#DC4437]"
+                isActiveLink(item.href)
+                  ? "text-[#DC4437] border-b-2 border-[#DC4437]"
                   : "text-foreground/80 hover:text-foreground"
               }`}
             >
