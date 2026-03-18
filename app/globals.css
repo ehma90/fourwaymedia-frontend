@@ -3,19 +3,25 @@
 :root {
   --background: #f7f7f7;
   --foreground: #111827;
-  --surface: rgba(255, 255, 255, 0.72);
+  --surface: rgba(23, 21, 21, 0.6);
+  --copy-primary: #000000;
+  --copy-body: #9ca3af;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-copy-primary: var(--copy-primary);
+  --color-copy-body: var(--copy-body);
   --font-sans: var(--font-lexend);
 }
 
 .dark {
-  --background: #19120f;
+  --background: #1A1A1A;
   --foreground: #f3f4f6;
   --surface: rgba(18, 18, 18, 0.6);
+  --copy-primary: #ffffff;
+  --copy-body: #9ca3af;
 }
 
 body {
