@@ -1,7 +1,9 @@
+"use client";
+import { useTheme } from "next-themes";
 import Link from "next/link";
 
 const LIGHT_LOGO =
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png";
+  "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
 const DARK_LOGO =
   "https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png";
 
@@ -106,6 +108,9 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
 }
 
 export function Footer() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
+  const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
   return (
     <footer className="text-copy-primary">
       <div className="mx-auto max-w-6xl px-6 pb-8 pt-16">
@@ -113,12 +118,12 @@ export function Footer() {
           <div className="flex flex-col gap-5">
             <Link href="/" aria-label="Fourwaymedia home">
               <img
-                src={LIGHT_LOGO}
+                src={logo}
                 alt="Fourwaymedia logo"
                 className="block h-16 w-16 object-cover dark:hidden"
               />
               <img
-                src={DARK_LOGO}
+                src={logo}
                 alt="Fourwaymedia logo"
                 className="hidden h-16 w-16 object-cover dark:block"
               />
