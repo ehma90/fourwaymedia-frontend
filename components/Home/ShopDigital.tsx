@@ -8,29 +8,18 @@ import { useCallback, useEffect, useState } from "react";
 /** Placeholder marketplace visuals — swap URLs when final assets are ready */
 const MARKETPLACE_SLIDES = [
   {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/b72df1311aae253c6a82830d1df7b54ccf567fe0.jpg",
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/ff3db51ebb7041f19386395e394515c9299a8b3a.png",
     alt: "Template with warm tones and typography",
   },
   {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/0598bb08693b596f79436327c0a4cdc9d8d5061a.jpg",
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/72e6f08be6a6c56b05def63096110a3dd1c66bf8.jpg",
     alt: "Creative layout mockup",
   },
   {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/27ae5e736f11788f4269a4d49b4b35037b35441a.png",
-    alt: "3D and geometric visual",
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/0a1850f1617c2e0d083a0a6ae9643a1a8f7c563a.jpg",
+    alt: "Social Media Post",
   },
-  {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/88507498df3c2047a804f53ff310c763d35a7228%20(1).jpg",
-    alt: "Branding and visual style template",
-  },
-  {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/c70ed8c45b92416b95dd8ce61eaf9b87e60378f2.jpg",
-    alt: "Photography-forward asset",
-  },
-  {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/f3c144330654faa0c8034e190c5ac3bb28c29cbe.jpg",
-    alt: "Editorial template preview",
-  },
+ 
 ] as const;
 
 export function ShopDigital() {
@@ -76,10 +65,10 @@ export function ShopDigital() {
 
   return (
     <section
-      className="relative overflow-x-hidden border-t border-white/10 bg-[#281E1B] py-16 text-white sm:py-24"
+      className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
       aria-labelledby="shop-digital-heading"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-14">
           {/* Copy + CTA */}
           <div className="max-w-xl">
@@ -129,17 +118,17 @@ export function ShopDigital() {
                 </button>
 
                 <div ref={emblaRef} className="overflow-hidden pl-9 pr-9 sm:pl-11 sm:pr-11">
-                  <div className="flex touch-pan-y gap-4">
+                  <div className="flex touch-pan-y gap-6">
                     {MARKETPLACE_SLIDES.map((slide) => (
                       <div
                         key={slide.src}
-                        className="min-w-0 shrink-0 grow-0 basis-[78%] sm:basis-[45%] lg:basis-[calc((100%-2rem)/3)]"
+                        className="min-w-0 shrink-0 grow-0 basis-[78%] max-w-80 w-full"
                       >
                         <div className="overflow-hidden rounded-2xl bg-zinc-900/50 ring-1 ring-white/10">
                           <img
                             src={slide.src}
                             alt={slide.alt}
-                            className="aspect-3/4 w-full object-cover sm:aspect-4/5"
+                            className="aspect-3/4 w-full object-cover sm:aspect-4/5 h-96 "
                           />
                         </div>
                       </div>

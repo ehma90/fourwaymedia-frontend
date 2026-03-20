@@ -112,7 +112,7 @@ export function Footer() {
   const isDark = resolvedTheme === "dark";
   const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
   return (
-    <footer className="text-copy-primary">
+    <footer className="text-copy-primary border-t border-copy-body/15">
       <div className="mx-auto max-w-6xl px-6 pb-8 pt-16">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-[220px_1fr]">
           <div className="flex flex-col gap-5">

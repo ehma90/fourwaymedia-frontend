@@ -69,7 +69,7 @@ export function FeaturedSection() {
       className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
       aria-labelledby="featured-work-heading"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-7xl px-6">
         <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
           <h2
             id="featured-work-heading"
