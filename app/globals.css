@@ -17,7 +17,7 @@
 }
 
 .dark {
-  --background: #1A1A1A;
+  --background: #1a1a1a;
   --foreground: #f3f4f6;
   --surface: rgba(18, 18, 18, 0.6);
   --copy-primary: #ffffff;
@@ -56,7 +56,9 @@ h6 {
   background:
     linear-gradient(rgba(19, 22, 26, 0.82), rgba(19, 22, 26, 0.82)) padding-box,
     linear-gradient(120deg, #dc4437, #fec107) border-box;
-  box-shadow: 0 0 0 1px rgba(254, 193, 7, 0.22), 0 8px 20px rgba(220, 68, 55, 0.18);
+  box-shadow:
+    0 0 0 1px rgba(254, 193, 7, 0.22),
+    0 8px 20px rgba(220, 68, 55, 0.18);
   transform: translateY(-1px);
 }
 
@@ -77,7 +79,8 @@ h6 {
   will-change: transform;
 }
 
-.service-marquee-viewport:has(.service-category-card:hover) .service-marquee-track {
+.service-marquee-viewport:has(.service-category-card:hover)
+  .service-marquee-track {
   animation-play-state: paused;
 }
 
@@ -88,6 +91,60 @@ h6 {
   }
 
   .service-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}
+
+/* Featured work: dual marquees (opposite horizontal), pause on card hover */
+@keyframes featured-marquee-ltr {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes featured-marquee-rtl {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.featured-marquee-track-ltr {
+  display: flex;
+  width: max-content;
+  animation: featured-marquee-ltr 48s linear infinite;
+  will-change: transform;
+}
+
+.featured-marquee-track-rtl {
+  display: flex;
+  width: max-content;
+  animation: featured-marquee-rtl 52s linear infinite;
+  will-change: transform;
+}
+
+.featured-marquee-viewport:has(.featured-work-card:hover)
+  .featured-marquee-track-ltr,
+.featured-marquee-viewport:has(.featured-work-card:hover)
+  .featured-marquee-track-rtl {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-marquee-viewport {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .featured-marquee-track-ltr,
+  .featured-marquee-track-rtl {
     animation: none;
     transform: none;
   }

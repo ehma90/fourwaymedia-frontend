@@ -1,0 +1,183 @@
+"use client";
+
+import useEmblaCarousel from "embla-carousel-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
+
+/** Placeholder marketplace visuals — swap URLs when final assets are ready */
+const MARKETPLACE_SLIDES = [
+  {
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/b72df1311aae253c6a82830d1df7b54ccf567fe0.jpg",
+    alt: "Template with warm tones and typography",
+  },
+  {
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/0598bb08693b596f79436327c0a4cdc9d8d5061a.jpg",
+    alt: "Creative layout mockup",
+  },
+  {
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/27ae5e736f11788f4269a4d49b4b35037b35441a.png",
+    alt: "3D and geometric visual",
+  },
+  {
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/88507498df3c2047a804f53ff310c763d35a7228%20(1).jpg",
+    alt: "Branding and visual style template",
+  },
+  {
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/c70ed8c45b92416b95dd8ce61eaf9b87e60378f2.jpg",
+    alt: "Photography-forward asset",
+  },
+  {
+    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/f3c144330654faa0c8034e190c5ac3bb28c29cbe.jpg",
+    alt: "Editorial template preview",
+  },
+] as const;
+
+export function ShopDigital() {
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: "start",
+      loop: true,
+      dragFree: false,
+      skipSnaps: false,
+    },
+    [],
+  );
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [snapCount, setSnapCount] = useState(0);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const sync = () => {
+      setSelectedIndex(emblaApi.selectedScrollSnap());
+      setSnapCount(emblaApi.scrollSnapList().length);
+    };
+
+    emblaApi.on("reInit", sync);
+    emblaApi.on("select", sync);
+
+    const frame = requestAnimationFrame(sync);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      emblaApi.off("reInit", sync);
+      emblaApi.off("select", sync);
+    };
+  }, [emblaApi]);
+
+  const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
+  const scrollTo = useCallback(
+    (index: number) => emblaApi?.scrollTo(index),
+    [emblaApi],
+  );
+
+  return (
+    <section
+      className="relative overflow-x-hidden border-t border-white/10 bg-[#281E1B] py-16 text-white sm:py-24"
+      aria-labelledby="shop-digital-heading"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-14">
+          {/* Copy + CTA */}
+          <div className="max-w-xl">
+            <h2
+              id="shop-digital-heading"
+              className="text-3xl font-semibold tracking-tight text-white sm:text-4xl"
+            >
+              Shop Digital Assets
+            </h2>
+            <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
+              Production-ready templates and creative assets, built for
+              real-world use.
+            </p>
+            <Link
+              href="/marketplace"
+              className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#E65141] px-8 text-base font-medium text-white shadow-[0_10px_24px_rgba(230,81,65,0.35)] transition-[filter,transform] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 active:translate-y-px"
+            >
+              Explore Marketplace
+            </Link>
+          </div>
+
+          {/* Carousel — gradient frame, glow from top-left */}
+          <div className="relative min-w-0">
+            <div
+              className="rounded-2xl p-px shadow-[0_0_0_1px_rgba(220,68,55,0.12)]"
+              style={{
+                background:
+                  "linear-gradient(135deg, rgba(220,68,55,0.85) 0%, rgba(254,193,7,0.35) 18%, rgba(40,30,27,0) 55%, rgba(40,30,27,0) 100%)",
+              }}
+            >
+              <div className="relative overflow-hidden rounded-[0.9375rem] bg-[#1f1815] px-3 pb-10 pt-4 sm:px-5 sm:pb-11 sm:pt-5">
+                <button
+                  type="button"
+                  onClick={scrollPrev}
+                  className="absolute left-1 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 sm:left-2"
+                  aria-label="Previous slide"
+                >
+                  <ChevronLeft className="h-5 w-5" strokeWidth={2} />
+                </button>
+                <button
+                  type="button"
+                  onClick={scrollNext}
+                  className="absolute right-1 top-1/2 z-10 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-white/90 transition-colors hover:bg-white/10 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 sm:right-2"
+                  aria-label="Next slide"
+                >
+                  <ChevronRight className="h-5 w-5" strokeWidth={2} />
+                </button>
+
+                <div ref={emblaRef} className="overflow-hidden pl-9 pr-9 sm:pl-11 sm:pr-11">
+                  <div className="flex touch-pan-y gap-4">
+                    {MARKETPLACE_SLIDES.map((slide) => (
+                      <div
+                        key={slide.src}
+                        className="min-w-0 shrink-0 grow-0 basis-[78%] sm:basis-[45%] lg:basis-[calc((100%-2rem)/3)]"
+                      >
+                        <div className="overflow-hidden rounded-2xl bg-zinc-900/50 ring-1 ring-white/10">
+                          <img
+                            src={slide.src}
+                            alt={slide.alt}
+                            className="aspect-3/4 w-full object-cover sm:aspect-4/5"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div
+                  className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 sm:bottom-4"
+                  role="tablist"
+                  aria-label="Carousel slides"
+                >
+                  {Array.from({ length: Math.max(snapCount, 1) }).map(
+                    (_, index) => {
+                      const isActive = index === selectedIndex;
+                      return (
+                        <button
+                          key={index}
+                          type="button"
+                          role="tab"
+                          aria-selected={isActive}
+                          aria-label={`Go to slide ${index + 1}`}
+                          onClick={() => scrollTo(index)}
+                          className={
+                            isActive
+                              ? "h-2.5 w-2.5 rounded-full bg-[#E65141] transition-transform"
+                              : "h-2.5 w-2.5 rounded-full border border-white/80 bg-transparent transition-colors hover:border-white"
+                          }
+                        />
+                      );
+                    },
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

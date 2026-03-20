@@ -1,7 +1,9 @@
 import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/Home/HeroSection";
-import { ServiceCategories } from "@/components/Home/ServiceCategories";  
+import { ServiceCategories } from "@/components/Home/ServiceCategories";
+import { FeaturedSection } from "@/components/Home/FeaturedSection";
 import { Footer } from "@/components/footer";
+import { ShopDigital } from "@/components/Home/ShopDigital";
 
 export default function Home() {
   return (
@@ -9,6 +11,8 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <ServiceCategories />
+      <FeaturedSection />
+      <ShopDigital />
       <Footer />
     </div>
   );
