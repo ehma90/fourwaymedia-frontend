@@ -30,7 +30,7 @@ export function HeroSection() {
           <Button
             variant="primary"
             size="lg"
-            className="h-14 min-w-[180px] px-8 text-base font-medium shadow-[0_10px_22px_rgba(220,68,55,0.3h-10 min-w-[120px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 text-[16px] font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] py-3"
+            className="h-14 min-w-[180px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 py-3 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
           >
             Shop Template
           </Button>
