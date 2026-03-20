@@ -59,3 +59,36 @@ h6 {
   box-shadow: 0 0 0 1px rgba(254, 193, 7, 0.22), 0 8px 20px rgba(220, 68, 55, 0.18);
   transform: translateY(-1px);
 }
+
+/* Service categories: infinite horizontal marquee, pause on card hover */
+@keyframes service-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.service-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: service-marquee 55s linear infinite;
+  will-change: transform;
+}
+
+.service-marquee-viewport:has(.service-category-card:hover) .service-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-marquee-viewport {
+    overflow-x: auto;
+    mask-image: none;
+  }
+
+  .service-marquee-track {
+    animation: none;
+    transform: none;
+  }
+}

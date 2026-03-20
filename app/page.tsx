@@ -1,6 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { HeroSection } from "@/components/Home/HeroSection";
-import { BrandSection } from "@/components/Home/BrandSection";
+import { ServiceCategories } from "@/components/Home/ServiceCategories";  
 import { Footer } from "@/components/footer";
 
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <HeroSection />
-      <BrandSection />
+      <ServiceCategories />
       <Footer />
     </div>
   );
