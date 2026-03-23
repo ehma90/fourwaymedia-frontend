@@ -4,6 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { Button } from "../ui/button";
 
 /** Placeholder marketplace visuals — swap URLs when final assets are ready */
 const MARKETPLACE_SLIDES = [
@@ -65,7 +66,7 @@ export function ShopDigital() {
 
   return (
     <section
-      className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
+      className="relative overflow-x-hidden py-16 sm:py-24"
       aria-labelledby="shop-digital-heading"
     >
       <div className="mx-auto max-w-7xl px-6">
@@ -74,20 +75,21 @@ export function ShopDigital() {
           <div className="max-w-xl">
             <h2
               id="shop-digital-heading"
-              className="text-3xl font-semibold tracking-tight text-white sm:text-4xl"
+              className="text-3xl font-semibold tracking-tight text-copy-primary sm:text-4xl"
             >
               Shop Digital Assets
             </h2>
-            <p className="mt-4 text-base leading-relaxed text-white/70 sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-copy-body sm:text-lg">
               Production-ready templates and creative assets, built for
               real-world use.
             </p>
-            <Link
-              href="/marketplace"
-              className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#E65141] px-8 text-base font-medium text-white shadow-[0_10px_24px_rgba(230,81,65,0.35)] transition-[filter,transform] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 active:translate-y-px"
+            <Button
+              variant="primary"
+              size="lg"
+              className="mt-8 inline-flex h-14 min-w-[180px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 py-3 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
             >
-              Explore Marketplace
-            </Link>
+              Shop Now
+            </Button>
           </div>
 
           {/* Carousel — gradient frame, glow from top-left */}
@@ -99,7 +101,7 @@ export function ShopDigital() {
                   "linear-gradient(135deg, rgba(220,68,55,0.85) 0%, rgba(254,193,7,0.35) 18%, rgba(40,30,27,0) 55%, rgba(40,30,27,0) 100%)",
               }}
             >
-              <div className="relative overflow-hidden rounded-[0.9375rem] bg-[#1f1815] px-3 pb-10 pt-4 sm:px-5 sm:pb-11 sm:pt-5">
+              <div className="relative overflow-hidden rounded-[0.9375rem] bg-[#1a1a1a] px-3 pb-10 pt-4 sm:px-5 sm:pb-11 sm:pt-5">
                 <button
                   type="button"
                   onClick={scrollPrev}
@@ -118,11 +120,12 @@ export function ShopDigital() {
                 </button>
 
                 <div ref={emblaRef} className="overflow-hidden pl-9 pr-9 sm:pl-11 sm:pr-11">
-                  <div className="flex touch-pan-y gap-6">
+                  
+                  <div className="flex touch-pan-y">
                     {MARKETPLACE_SLIDES.map((slide) => (
                       <div
                         key={slide.src}
-                        className="min-w-0 shrink-0 grow-0 basis-[78%] max-w-80 w-full"
+                        className="min-w-0 shrink-0 grow-0 basis-[78%] max-w-80 w-full px-4"
                       >
                         <div className="overflow-hidden rounded-2xl bg-zinc-900/50 ring-1 ring-white/10">
                           <img

@@ -49,7 +49,7 @@ function CategoryCard({
       tabIndex={decorative ? -1 : undefined}
       aria-hidden={decorative ? true : undefined}
       onClick={() => onSelect?.(item)}
-      className="service-category-card group relative flex h-full w-[min(85vw,300px)] shrink-0 flex-col overflow-hidden rounded-2xl border border-copy-body/15 bg-background/60 text-left shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] outline-none transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:bg-white/3 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)] sm:w-[420px] cursor-pointer"
+      className="service-category-card group relative flex h-full w-[min(85vw,300px)] shrink-0 flex-col overflow-hidden rounded-2xl text-left shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] outline-none transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-[420px] cursor-pointer"
       aria-label={
         decorative ? undefined : `${item.title}. Open details.`
       }
@@ -69,10 +69,7 @@ function CategoryCard({
         <span className="text-lg font-semibold leading-snug text-copy-primary sm:text-xl">
           {item.title}
         </span>
-        <span
-          className="mt-auto h-px w-12 bg-linear-to-r from-[#DC4437] to-[#FEC107] opacity-90"
-          aria-hidden
-        />
+        
       </div>
     </button>
   );
