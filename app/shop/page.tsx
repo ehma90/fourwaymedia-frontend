@@ -9,6 +9,7 @@ export default function Shop() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <ShopHero />
+      {/* Shop next section will be here*/}
       <Footer />
     </div>
   );
