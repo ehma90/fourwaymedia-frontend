@@ -1,34 +1,9 @@
 "use client";
 
-const categories = [
-  {
-    title: "Branding & Visual Identity",
-    image:
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/88507498df3c2047a804f53ff310c763d35a7228%20(1).jpg",
-  },
-  {
-    title: "Content Creation",
-    image:
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/b72df1311aae253c6a82830d1df7b54ccf567fe0.jpg",
-  },
-  {
-    title: "Web & Mobile Development",
-    image:
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/0598bb08693b596f79436327c0a4cdc9d8d5061a.jpg",
-  },
-  {
-    title: "Social Media Management",
-    image:
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/ffbe39adb7cb65e2198621ca9fc8fab7974e0543%20(1).jpg",
-  },
-  {
-    title: "Performance Marketing (Paid Ads)",
-    image:
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/b95cb84d4fa291af30f0b5bea6a32196543a63b5.jpg",
-  },
-] as const;
+import { useCallback, useState } from "react";
 
-type CategoryItem = (typeof categories)[number];
+import { categories, type CategoryItem } from "@/mock-data/service-categories-data";
+import { ServiceCategoryModal } from "@/components/Home/ServiceCategoryModal";
 
 function CategoryCard({
   item,
@@ -69,18 +44,30 @@ function CategoryCard({
         <span className="text-lg font-semibold leading-snug text-copy-primary sm:text-xl">
           {item.title}
         </span>
-        
+
       </div>
     </button>
   );
 }
 
 type ServiceCategoriesProps = {
-  /** Wire this up when routes or modals are ready */
+  /** Optional hook e.g. analytics; modal still opens on card click */
   onCategoryClick?: (item: CategoryItem) => void;
 };
 
 export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
+  const [modalItem, setModalItem] = useState<CategoryItem | null>(null);
+
+  const handleCategoryClick = useCallback(
+    (item: CategoryItem) => {
+      onCategoryClick?.(item);
+      setModalItem(item);
+    },
+    [onCategoryClick],
+  );
+
+  const closeModal = useCallback(() => setModalItem(null), []);
+
   return (
     <section
       className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
@@ -113,7 +100,7 @@ export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
               key={`${item.title}-a`}
               item={item}
               instanceId={`service-category-${index}`}
-              onSelect={onCategoryClick}
+              onSelect={handleCategoryClick}
             />
           ))}
           {categories.map((item, index) => (
@@ -121,12 +108,14 @@ export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
               key={`${item.title}-b`}
               item={item}
               instanceId={`service-category-clone-${index}`}
-              onSelect={onCategoryClick}
+              onSelect={handleCategoryClick}
               decorative
             />
           ))}
         </div>
       </div>
+
+      <ServiceCategoryModal item={modalItem} onClose={closeModal} />
     </section>
   );
 }

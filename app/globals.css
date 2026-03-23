@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Align dark: with next-themes (.dark on <html>), not prefers-color-scheme */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #f7f7f7;
   --foreground: #111827;
@@ -56,9 +59,7 @@ h6 {
   background:
     linear-gradient(rgba(19, 22, 26, 0.82), rgba(19, 22, 26, 0.82)) padding-box,
     linear-gradient(120deg, #dc4437, #fec107) border-box;
-  box-shadow:
-    0 0 0 1px rgba(254, 193, 7, 0.22),
-    0 8px 20px rgba(220, 68, 55, 0.18);
+  box-shadow: 0 0 0 1px rgba(254, 193, 7, 0.22), 0 8px 20px rgba(220, 68, 55, 0.18);
   transform: translateY(-1px);
 }
 

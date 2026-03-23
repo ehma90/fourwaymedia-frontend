@@ -22,21 +22,21 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 px-4">
-      <div className="mx-auto flex w-full max-w-7xl items-center gap-6 rounded-br-2xl rounded-bl-2xl border border-black/10 bg-white/65 px-5 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/45">
+      <div className="mx-auto flex w-full max-w-7xl items-center gap-6 rounded-br-2xl rounded-bl-2xl border border-black/10 bg-black/45  px-5 py-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/45">
         <Link
           href="/"
           className="shrink-0"
           aria-label="Fourwaymedia home"
         >
-          <img
+          {/* <img
             src="https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png"
             alt="Fourwaymedia logo"
-            className="block h-16 w-16 dark:hidden object-cover"
-          />
+            className="block h-16 w-16 object-cover"
+          /> */}
           <img
             src="https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png"
             alt="Fourwaymedia logo"
-            className="hidden h-16 w-16 dark:block object-cover"
+            className=" h-16 w-16 object-cover dark:block mix-blend-difference"
           />
         </Link>
 
