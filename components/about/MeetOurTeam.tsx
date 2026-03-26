@@ -101,7 +101,7 @@ export function MeetOurTeam() {
             <span className="relative inline-block text-[#DC4437] dark:text-[#f97316]">
               Team
               <motion.span
-                className="absolute -bottom-1 left-1/2 block h-0.5 w-full max-w-12 -translate-x-1/2 rounded-full bg-[#DC4437] dark:bg-[#f97316] sm:-bottom-1.5 sm:h-1"
+                className="absolute -bottom-1 left-1/2 block h-0.5 w-full max-w-12 -translate-x-1/2 rounded-full bg-[#DC4437] dark:bg-[#f97316] sm:-bottom-1.5 sm:h-0.5"
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
                 viewport={{ once: true }}
@@ -182,20 +182,7 @@ export function MeetOurTeam() {
           ))}
         </motion.ul>
 
-        <motion.div
-          className="mt-14 flex justify-center sm:mt-16"
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.45, delay: 0.2 }}
-        >
-          <Link
-            href="/about#meet-team-heading"
-            className="rounded-md border border-violet-900/40 bg-transparent px-8 py-2.5 text-sm font-medium text-neutral-900 transition-colors hover:border-violet-700 hover:bg-neutral-200/50 dark:border-violet-400/35 dark:text-white dark:hover:border-violet-300/50 dark:hover:bg-white/5"
-          >
-            View the team
-          </Link>
-        </motion.div>
+       
       </div>
     </section>
   );

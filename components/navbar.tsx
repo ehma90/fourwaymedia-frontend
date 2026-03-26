@@ -4,8 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 const navLinks = [
   { label: "Service", href: "/service" },
@@ -59,24 +58,18 @@ export function Navbar() {
 
         <div className="ml-auto flex items-center gap-3">
           <ThemeToggle />
-          <Link
-            href="/sign-in"
-            className={cn(
-              buttonVariants({ variant: "outline" }),
-              "navbar-outline-button inline-flex h-10 min-w-[120px] border-2 px-8 text-[16px] font-medium text-white",
-            )}
+          <Button
+            variant="outline"
+            className="navbar-outline-button h-10 min-w-[120px] border-2 px-8 text-[16px] font-medium text-white "
           >
             Sign in
-          </Link>
-          <Link
-            href="/sign-up"
-            className={cn(
-              buttonVariants({ variant: "primary" }),
-              "inline-flex h-10 min-w-[120px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 text-[16px] font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]",
-            )}
+          </Button>
+          <Button
+            variant="primary"
+            className="h-10 min-w-[120px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 text-[16px] font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
           >
             Sign up
-          </Link>
+          </Button>
         </div>
       </div>
     </header>
