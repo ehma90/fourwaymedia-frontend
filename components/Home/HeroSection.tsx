@@ -1,7 +1,5 @@
 import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
-
 // const HERO_BG =
 //   "https://ik.imagekit.io/vp72mg6kz/Homepage/Reel2024Fastforgif-ezgif-ezgif.com-video-to-gif-converter.gif";
 const HERO_BG_2 =
@@ -35,13 +33,12 @@ export function HeroSection() {
           >
             Shop Template
           </Link>
-          <Button
-            variant="outline"
-            size="lg"
-            className="navbar-outline-button min-w-[120px] border-2 px-8 text-[16px] h-14 font-medium text-white py-3"
+          <Link
+            href="/contact"
+            className="navbar-outline-button inline-flex min-w-[120px] items-center justify-center rounded-xl border-2 px-8 py-3 text-[16px] font-medium text-white transition-all h-14 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40"
           >
             Work With Us
-          </Button>
+          </Link>
         </div>
       </div>
     </section>
