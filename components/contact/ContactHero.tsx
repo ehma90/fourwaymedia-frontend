@@ -58,7 +58,9 @@ export function ContactHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.32, ease: easeOut }}
         >
-          Get in touch and let us know how we can help.
+          Tell us about your project , social content, web, or shop
+          templates and we'll help you plan the right next step. Share a bit
+          below and our team will respond, typically within one business day.
         </motion.p>
       </div>
     </section>
