@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 
 const SERVICE_HERO_IMAGE =
-  "https://ik.imagekit.io/vp72mg6kz/service-page/1c4bcde859a71ee6f9963682a2d4e14fa7f37cb0.jpg";
+  "https://ik.imagekit.io/vp72mg6kz/service-page/lukas-muller-ONZG-HRGKNQ-unsplash.jpg";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -23,7 +23,7 @@ export function ServiceHero() {
           transition={{ duration: 1.1, ease: easeOut }}
         />
         <div
-          className="absolute inset-0 bg-black/50 dark:bg-black/45"
+          className="absolute inset-0 bg-black/75 dark:bg-black/75"
           aria-hidden
         />
       </div>
@@ -36,7 +36,7 @@ export function ServiceHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: easeOut }}
         >
-          Everything You Need to Launch and Grow
+          Everything You Need to <br /> Launch and Grow
         </motion.h1>
         <motion.p
           className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white sm:mt-8 sm:text-lg md:text-xl"

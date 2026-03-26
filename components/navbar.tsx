@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 const navLinks = [
   { label: "Service", href: "/service" },
   { label: "Shop", href: "/shop" },
-  { label: "Product", href: "/product" },
   { label: "Contact", href: "/contact" },
   { label: "About", href: "/about" },
 ];
@@ -29,11 +28,6 @@ export function Navbar() {
           className="shrink-0"
           aria-label="Fourwaymedia home"
         >
-          {/* <img
-            src="https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png"
-            alt="Fourwaymedia logo"
-            className="block h-16 w-16 object-cover"
-          /> */}
           <img
             src="https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png"
             alt="Fourwaymedia logo"
@@ -46,11 +40,10 @@ export function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className={`border-b-2 border-transparent pb-1 text-sm transition-colors ${
-                isActiveLink(item.href)
-                  ? "text-[#DC4437] [border-image:linear-gradient(120deg,#DC4437,#FEC107)_1]"
-                  : "text-white/80 hover:text-white"
-              }`}
+              className={`border-b-2 border-transparent pb-1 text-sm transition-colors ${isActiveLink(item.href)
+                ? "text-[#DC4437] [border-image:linear-gradient(120deg,#DC4437,#FEC107)_1]"
+                : "text-white/80 hover:text-white"
+                }`}
             >
               {item.label}
             </Link>
