@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button } from "@/components/ui/button";
 
 // const HERO_BG =
@@ -27,13 +29,12 @@ export function HeroSection() {
         </p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
-          <Button
-            variant="primary"
-            size="lg"
-            className="h-14 min-w-[180px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 py-3 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
+          <Link
+            href="/shop"
+            className="inline-flex h-14 min-w-[180px] items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 py-3 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40"
           >
             Shop Template
-          </Button>
+          </Link>
           <Button
             variant="outline"
             size="lg"
