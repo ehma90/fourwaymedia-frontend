@@ -77,12 +77,7 @@ export function FeaturedSection() {
           >
             Featured work
           </h2>
-          <Link
-            href="/work"
-            className="inline-flex h-11 w-fit shrink-0 items-center justify-center rounded-full border border-white/35 px-7 text-sm font-medium text-white/90 transition-colors hover:border-white/55 hover:bg-white/5 hover:text-white"
-          >
-            View more
-          </Link>
+        
         </div>
 
         <div className="rounded-2xl border border-[#DC4437]/35 bg-black/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-5 md:p-6 dark:border-[#DC4437]/40 dark:bg-black/35">
