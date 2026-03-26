@@ -16,14 +16,7 @@ export function SignInForm() {
   return (
     <div className="w-full max-w-[440px] rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.06)] sm:p-10 dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
       <div className="text-center">
-        <p
-          className={cn(
-            logoFontClass,
-            "bg-linear-to-r from-[#DC4437] to-[#FEC107] bg-clip-text text-transparent",
-          )}
-        >
-          FourWayMedia
-        </p>
+
         <h1 className="mt-6 text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
           Welcome back
         </h1>
@@ -81,20 +74,16 @@ export function SignInForm() {
           </div>
         </div>
 
-        <Button
-          type="submit"
-          variant="primary"
-          className="h-12 w-full rounded-xl text-base font-semibold shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
-        >
-          Sign in
-        </Button>
+        <div className="mt-10 flex flex-col gap-5">
+          <Button
+            type="submit"
+            variant="primary"
+            className="h-12 w-full rounded-xl text-base font-semibold shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
+          >
+            Sign in
+          </Button>
 
-        <button
-          type="button"
-          className="h-12 w-full rounded-xl border-2 border-[#DC4437]/80 bg-white text-base font-semibold text-[#DC4437] transition-colors hover:bg-[#DC4437]/5 dark:border-[#FEC107]/60 dark:bg-transparent dark:text-[#FEC107] dark:hover:bg-[#FEC107]/10"
-        >
-          Send magic link
-        </button>
+        </div>
       </form>
 
       <div className="relative my-8">
@@ -108,15 +97,9 @@ export function SignInForm() {
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3">
         <SocialButton label="Google" ariaLabel="Continue with Google">
           <GoogleIcon />
-        </SocialButton>
-        <SocialButton label="GitHub" ariaLabel="Continue with GitHub">
-          <GitHubIcon />
-        </SocialButton>
-        <SocialButton label="Microsoft" ariaLabel="Continue with Microsoft">
-          <MicrosoftIcon />
         </SocialButton>
       </div>
 

@@ -5,8 +5,13 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  className?: string;
+};
+
+export function ThemeToggle({ className }: ThemeToggleProps = {}) {
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
   const toggleLabel = isDark ? "Switch to light mode" : "Switch to dark mode";
@@ -19,7 +24,7 @@ export function ThemeToggle() {
         aria-label={toggleLabel}
         title={toggleLabel}
         onClick={() => setTheme(isDark ? "light" : "dark")}
-        className="gap-1 bg-gray-600"
+        className={cn("gap-1 bg-gray-600 text-white", className)}
       >
         <AnimatePresence mode="wait" initial={false}>
           {isDark ? (
@@ -31,7 +36,7 @@ export function ThemeToggle() {
               transition={{ duration: 0.2, ease: "easeInOut" }}
               className="inline-flex"
             >
-              <Moon size={16} className="text-white" />
+              <Moon size={16} className="text-current" />
             </motion.span>
           ) : (
             <motion.span
@@ -42,7 +47,7 @@ export function ThemeToggle() {
               transition={{ duration: 0.2, ease: "easeInOut" }}
               className="inline-flex"
             >
-              <Sun size={16} className="text-white" />
+              <Sun size={16} className="text-current" />
             </motion.span>
           )}
         </AnimatePresence>

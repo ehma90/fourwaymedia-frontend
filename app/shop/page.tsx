@@ -9,7 +9,7 @@ export default function Shop() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <ShopHero />
+      {/* <ShopHero /> */}
       <ShopBrowse />
       <Footer />
     </div>
