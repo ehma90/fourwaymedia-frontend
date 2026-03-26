@@ -1,4 +1,5 @@
 import { AboutHero } from "@/components/about/AboutHero";
+import { MeetOurTeam } from "@/components/about/MeetOurTeam";
 import { WhyWorkWithUs } from "@/components/about/WhyWorkWithUs";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
@@ -9,6 +10,7 @@ export default function About() {
       <Navbar />
       <AboutHero />
       <WhyWorkWithUs />
+      <MeetOurTeam />
       <Footer />
     </div>
   );
