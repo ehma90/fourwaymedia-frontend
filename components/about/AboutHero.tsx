@@ -4,7 +4,7 @@ const ABOUT_HERO_IMAGE =
 export function AboutHero() {
   return (
     <section
-      className="relative -mt-24 overflow-hidden border-b border-white/10"
+      className="relative -mt-24 overflow-hidden "
       aria-labelledby="about-hero-heading"
     >
       <div className="pointer-events-none absolute inset-0">
@@ -14,7 +14,7 @@ export function AboutHero() {
           className="h-full w-full object-cover object-center"
         />
         <div
-          className="absolute inset-0 bg-black/50 dark:bg-black/55"
+          className="absolute inset-0 bg-black/60 dark:bg-black/55"
           aria-hidden
         />
       </div>
