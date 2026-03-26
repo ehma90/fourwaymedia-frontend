@@ -2,23 +2,20 @@
 
 import { motion } from "framer-motion";
 
-/** Dark abstract 3D-style render — Unsplash */
-const CONTACT_HERO_IMAGE =
-  "https://ik.imagekit.io/vp72mg6kz/Shop-page/6c052bfd8b5aad1bfe27102ae1f53b890c20b88c.jpg";
+const SERVICE_HERO_IMAGE =
+  "https://ik.imagekit.io/vp72mg6kz/service-page/1c4bcde859a71ee6f9963682a2d4e14fa7f37cb0.jpg";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-const ACCENT = "#FEC107";
-
-export function ContactHero() {
+export function ServiceHero() {
   return (
     <section
       className="relative -mt-24 overflow-hidden border-b border-white/10"
-      aria-labelledby="contact-hero-heading"
+      aria-labelledby="service-hero-heading"
     >
       <div className="pointer-events-none absolute inset-0">
         <motion.img
-          src={CONTACT_HERO_IMAGE}
+          src={SERVICE_HERO_IMAGE}
           alt=""
           className="h-full w-full object-cover object-center"
           initial={{ scale: 1.06, opacity: 0 }}
@@ -26,31 +23,28 @@ export function ContactHero() {
           transition={{ duration: 1.1, ease: easeOut }}
         />
         <div
-          className="absolute inset-0 bg-black/65 dark:bg-black/60"
+          className="absolute inset-0 bg-black/50 dark:bg-black/45"
           aria-hidden
         />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[min(75vh,700px)] max-w-6xl flex-col items-center justify-center px-6 pb-20 pt-32 text-center sm:pb-28 sm:pt-36 md:pt-40">
         <motion.h1
-          id="contact-hero-heading"
-          className="font-[family-name:var(--font-lexend),system-ui,sans-serif] text-4xl font-bold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl"
+          id="service-hero-heading"
+          className="max-w-4xl font-[family-name:var(--font-lexend),system-ui,sans-serif] text-3xl font-bold leading-[1.12] tracking-tight text-white sm:text-4xl md:text-5xl lg:text-[3.25rem] lg:leading-[1.08]"
           initial={{ opacity: 0, y: 28 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: easeOut }}
         >
-          Contact us
-          
+          Everything You Need to Launch and Grow
         </motion.h1>
         <motion.p
-          className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg md:text-xl"
+          className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white sm:mt-8 sm:text-lg md:text-xl"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.32, ease: easeOut }}
         >
-          Tell us about your project, social content, web, or shop
-          templates and we'll help you plan the right next step. Share a bit
-          below and our team will respond, typically within one business day.
+          Strategy, design, development, and ads built into one connected system.
         </motion.p>
       </div>
     </section>

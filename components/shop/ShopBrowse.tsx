@@ -59,7 +59,7 @@ export function ShopBrowse() {
 
   return (
     <section
-      className="border-t border-neutral-200/80 py-14 sm:py-16 dark:border-white/10"
+      className=" py-14 sm:py-16 dark:border-white/10"
       aria-labelledby="shop-browse-heading"
     >
       <div className="mx-auto max-w-7xl px-6">

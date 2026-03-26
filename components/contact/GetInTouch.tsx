@@ -5,15 +5,13 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-const ACCENT = "#FFCC00";
 
-/** Modern office facade — Unsplash */
 const OFFICE_IMAGE =
   "https://ik.imagekit.io/vp72mg6kz/Shop-page/cd520ee99ee6b633e452c923cb2305efe463882b.jpg";
 
-/** Nyhavn, Copenhagen — OSM embed bbox */
+/** Ikeja, Lagos State, Nigeria — OSM embed (bbox min_lon,min_lat,max_lon,max_lat; marker=lat,lon) */
 const MAP_EMBED_SRC =
-  "https://www.openstreetmap.org/export/embed.html?bbox=12.5830%2C55.6745%2C12.5980%2C55.6815&layer=mapnik&marker=55.6780%2C12.5905";
+  "https://www.openstreetmap.org/export/embed.html?bbox=3.330%2C6.575%2C3.370%2C6.620&layer=mapnik&marker=6.6018%2C3.3515";
 
 const blockVariants = {
   hidden: { opacity: 0, x: -20 },
@@ -42,19 +40,8 @@ export function GetInTouch() {
             id="get-in-touch-heading"
             className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.5rem]"
           >
-            <span className="text-neutral-900 dark:text-white">Get in </span>
-            <span className="relative inline-block" style={{ color: ACCENT }}>
-              Touch
-              <motion.span
-                className="absolute -bottom-1 left-1/2 block h-0.5 w-12 max-w-full -translate-x-1/2 rounded-full sm:-bottom-1.5 sm:h-1"
-                style={{ backgroundColor: ACCENT, transformOrigin: "center" }}
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.15, ease: easeOut }}
-                aria-hidden
-              />
-            </span>
+            <span className="text-neutral-900 dark:text-white">Get in Touch </span>
+            
           </h2>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-400">
             We&apos;d love to hear from you. Reach out with any questions or
@@ -78,7 +65,7 @@ export function GetInTouch() {
                   Head Office
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-                  Office location No. 9 Nyhavn Street, Copenhagen — Denmark
+                  Office location No. 9, Ikeja, Lagos State, Nigeria
                 </p>
               </div>
             </motion.li>
@@ -103,14 +90,14 @@ export function GetInTouch() {
                     href="mailto:support@yourdomain.xxc"
                     className="underline-offset-2 hover:text-neutral-900 hover:underline dark:hover:text-white"
                   >
-                    Support@yourdomain.xxc
+                    Contact@fourwaymedia.com
                   </a>
                   <br />
                   <a
                     href="mailto:hello@yourdomain.fgl"
                     className="underline-offset-2 hover:text-neutral-900 hover:underline dark:hover:text-white"
                   >
-                    hello@yourdomain.fgl
+                    info@fourwaymedia.com
                   </a>
                 </p>
               </div>
@@ -158,7 +145,7 @@ export function GetInTouch() {
             </div>
             <div className="relative h-[min(280px,50vh)] w-full min-h-[220px] bg-neutral-200 dark:bg-neutral-800">
               <iframe
-                title="Office location near Nyhavn, Copenhagen"
+                title="Office location in Ikeja, Lagos State, Nigeria"
                 src={MAP_EMBED_SRC}
                 className="h-full w-full border-0 grayscale-[0.15] dark:grayscale-[0.25]"
                 loading="lazy"

@@ -67,7 +67,7 @@ export function WereHiring() {
             <span className="relative inline-block" style={{ color: ACCENT }}>
               Hiring!
               <motion.span
-                className="absolute -bottom-1 left-1/2 block h-0.5 w-full max-w-12 -translate-x-1/2 rounded-full sm:-bottom-1.5 sm:h-1"
+                className="absolute -bottom-1 left-1/2 block h-0.5 w-full max-w-12 -translate-x-1/2 rounded-full sm:-bottom-1.5 sm:h-0.5"
                 style={{ backgroundColor: ACCENT, transformOrigin: "center" }}
                 initial={{ scaleX: 0 }}
                 whileInView={{ scaleX: 1 }}
