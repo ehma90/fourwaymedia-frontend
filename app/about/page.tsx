@@ -1,12 +1,13 @@
+import { AboutHero } from "@/components/about/AboutHero";
+import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
 export default function About() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
-      <main className="mx-auto flex min-h-[200vh] w-full max-w-6xl items-start px-6 pt-20">
-            <h1 className="text-3xl font-semibold">About</h1>
-        </main>
+      <AboutHero />
+      <Footer />
     </div>
-  )
-};
+  );
+}
