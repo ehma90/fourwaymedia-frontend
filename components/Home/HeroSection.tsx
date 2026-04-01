@@ -7,7 +7,7 @@ const HERO_BG_2 =
 
 export function HeroSection() {
   return (
-    <section className="relative -mt-[90px] flex min-h-screen items-center justify-center overflow-hidden pt-[72px]">
+    <section className="relative -mt-[76px] flex min-h-screen items-center justify-center overflow-hidden pt-[64px] md:-mt-[90px] md:pt-[72px]">
       <img
         src={HERO_BG_2}
         alt=""

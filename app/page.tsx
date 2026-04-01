@@ -8,7 +8,7 @@ import { TestimonialsSection } from "@/components/Home/TestimonialsSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen max-w-[100vw] overflow-x-hidden bg-background text-foreground">
       <Navbar />
       <HeroSection />
       <ServiceCategories />
