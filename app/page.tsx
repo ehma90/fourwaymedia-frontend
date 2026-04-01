@@ -8,14 +8,16 @@ import { TestimonialsSection } from "@/components/Home/TestimonialsSection";
 
 export default function Home() {
   return (
-    <div className="min-h-screen max-w-[100vw] overflow-x-hidden bg-background text-foreground">
+    <>
       <Navbar />
-      <HeroSection />
-      <ServiceCategories />
-      <FeaturedSection />
-      <TestimonialsSection />
-      <ShopDigital />
-      <Footer />
-    </div>
+      <div className="min-h-screen max-w-[100vw] overflow-x-hidden bg-background text-foreground">
+        <HeroSection />
+        <ServiceCategories />
+        <FeaturedSection />
+        <TestimonialsSection />
+        <ShopDigital />
+        <Footer />
+      </div>
+    </>
   );
 }
