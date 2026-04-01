@@ -85,8 +85,7 @@ export function ShopDigital() {
             </p>
             <Button
               variant="primary"
-              size="lg"
-              className="mt-8 inline-flex h-14 min-w-[180px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 py-3 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
+              className="mt-8 inline-flex h-11 min-w-[140px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-5 py-2 text-sm font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base"
             >
               Shop Now
             </Button>
@@ -131,7 +130,7 @@ export function ShopDigital() {
                           <img
                             src={slide.src}
                             alt={slide.alt}
-                            className="aspect-3/4 w-full object-cover sm:aspect-4/5 h-96 "
+                            className="aspect-3/4 w-full object-cover sm:aspect-4/5 min-h-72 lg:min-h-96 "
                           />
                         </div>
                       </div>
