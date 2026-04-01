@@ -44,6 +44,7 @@ export function Navbar() {
     document.addEventListener("keydown", onKeyDown);
     return () => {
       document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = "";
     };
   }, [mobileOpen]);
 
@@ -117,17 +118,13 @@ export function Navbar() {
         </div>
       </div>
 
-      <AnimatePresence
-        onExitComplete={() => {
-          document.body.style.overflow = "";
-        }}
-      >
+      <AnimatePresence>
         {mobileOpen ? (
           <>
             <motion.button
               key="mobile-nav-backdrop"
               type="button"
-              className="fixed inset-0 z-60 bg-black/60 backdrop-blur-sm md:hidden"
+              className="fixed inset-0 z-60 bg-black/35 backdrop-blur-sm dark:bg-black/60 md:hidden"
               aria-hidden
               tabIndex={-1}
               initial={{ opacity: 0 }}
@@ -142,13 +139,13 @@ export function Navbar() {
               role="dialog"
               aria-modal="true"
               aria-labelledby={titleId}
-              className="fixed inset-y-0 right-0 z-70 flex w-[min(100vw-2.5rem,20rem)] flex-col border-l border-white/10 bg-black/95 shadow-2xl backdrop-blur-xl md:hidden"
+              className="fixed inset-y-0 right-0 z-70 flex w-[min(100vw-2.5rem,20rem)] flex-col border-l border-black/10 bg-background/95 text-foreground shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/95 md:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 32, stiffness: 380, mass: 0.85 }}
             >
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+              <div className="flex items-center justify-between border-b border-black/10 px-4 py-3 dark:border-white/10">
                 <Link
                   id={titleId}
                   href="/"
@@ -164,7 +161,7 @@ export function Navbar() {
                 </Link>
                 <button
                   type="button"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-xl text-foreground transition-colors hover:bg-black/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40 dark:hover:bg-white/10"
                   aria-label="Close menu"
                   onClick={() => setMobileOpen(false)}
                 >
@@ -179,8 +176,8 @@ export function Navbar() {
                     className={cn(
                       "rounded-lg px-3 py-3 text-base transition-colors",
                       isActiveLink(item.href)
-                        ? "bg-white/10 text-[#FEC107]"
-                        : "text-white/90 hover:bg-white/5",
+                        ? "bg-black/10 text-[#DC4437] dark:bg-white/10 dark:text-[#FEC107]"
+                        : "text-foreground/90 hover:bg-black/5 dark:hover:bg-white/10",
                     )}
                     onClick={() => setMobileOpen(false)}
                   >
@@ -188,7 +185,7 @@ export function Navbar() {
                   </Link>
                 ))}
               </nav>
-              <div className="border-t border-white/10 p-4">
+              <div className="border-t border-black/10 p-4 dark:border-white/10">
                 <div className="flex flex-col gap-2">
                   <Link
                     href="/sign-in"
