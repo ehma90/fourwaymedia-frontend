@@ -17,12 +17,13 @@ import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { cn } from "@/lib/utils";
-import { useTheme } from "next-themes";
 
-const LIGHT_LOGO =
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
-const DARK_LOGO =
+/** Light chrome (no `html.dark`) — dark mark on light sidebar */
+const LOGO_FOR_LIGHT_UI =
   "https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png";
+/** Dark chrome — light mark on dark sidebar (do not pick via useTheme; `resolvedTheme` is undefined on first paint) */
+const LOGO_FOR_DARK_UI =
+  "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
 
 /** Phase A mock — replace with API subscription state */
 const MOCK_IS_SUBSCRIBED = false;
@@ -125,7 +126,6 @@ function SidebarMenuFooter({
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { resolvedTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const navItems = buildNavItems(MOCK_IS_SUBSCRIBED);
 
@@ -166,8 +166,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
   const pageTitle = getDashboardPageTitle(pathname);
   const userInitials = getInitials(MOCK_USER_DISPLAY_NAME);
-  const isDark = resolvedTheme === "dark";
-  const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
 
   return (
     <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
@@ -177,14 +175,14 @@ export function DashboardShell({ children }: DashboardShellProps) {
             <div className="flex items-center justify-between gap-3">
             <Link href="/" aria-label="Fourwaymedia home">
               <img
-                src={logo}
+                src={LOGO_FOR_LIGHT_UI}
                 alt="Fourwaymedia logo"
-                className="block h-16 w-16 object-cover dark:hidden"
+                className="h-16 w-16 object-cover md:h-11 md:w-11 dark:hidden"
               />
               <img
-                src={logo}
+                src={LOGO_FOR_DARK_UI}
                 alt="Fourwaymedia logo"
-                className="hidden h-16 w-16 object-cover dark:block"
+                className="hidden h-16 w-16 object-cover md:h-11 md:w-11 dark:block"
               />
             </Link>
               <div className="flex shrink-0 items-center gap-2">
