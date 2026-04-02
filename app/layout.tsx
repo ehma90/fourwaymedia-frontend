@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bitter, Lexend } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/theme-provider";
+import { themeInitScript, THEME_STORAGE_KEY } from "@/lib/theme-init";
 
 const bitter = Bitter({
   variable: "--font-bitter",
@@ -25,8 +26,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
+      </head>
       <body className={`${bitter.variable} ${lexend.variable} antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="dark"
+          enableSystem
+          storageKey={THEME_STORAGE_KEY}
+        >
           {children}
         </ThemeProvider>
       </body>
