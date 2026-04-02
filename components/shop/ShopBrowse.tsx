@@ -1,6 +1,6 @@
 "use client";
 
-import { SlidersHorizontal, X } from "lucide-react";
+import { Maximize2, Minimize2, Search, SlidersHorizontal, X } from "lucide-react";
 import { useCallback, useMemo, useState } from "react";
 
 import { ShopCategoryTabs } from "@/components/shop/ShopCategoryTabs";
@@ -16,6 +16,8 @@ import {
   type ShopTemplate,
   type ShopTopCategoryId,
 } from "@/mock-data/shop-templates";
+import { inputFieldClassName } from "@/lib/input-classes";
+import { cn } from "@/lib/utils";
 
 export function ShopBrowse() {
   const [activeCategory, setActiveCategory] =
@@ -29,12 +31,23 @@ export function ShopBrowse() {
   const [selectedTemplate, setSelectedTemplate] =
     useState<ShopTemplate | null>(null);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [browseExpanded, setBrowseExpanded] = useState(false);
 
-  const filteredTemplates = useMemo(
+  const baseFiltered = useMemo(
     () =>
       filterShopTemplates(shopTemplates, activeCategory, appliedFilters),
     [activeCategory, appliedFilters],
   );
+
+  const displayTemplates = useMemo(() => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return baseFiltered;
+    return baseFiltered.filter((t) => {
+      const haystack = `${t.title} ${t.cardBlurb}`.toLowerCase();
+      return haystack.includes(q);
+    });
+  }, [baseFiltered, searchQuery]);
 
   const applyDraft = useCallback(() => {
     const next = cloneAppliedFilters(draftFilters);
@@ -62,35 +75,84 @@ export function ShopBrowse() {
       className=" py-14 sm:py-16 dark:border-white/10"
       aria-labelledby="shop-browse-heading"
     >
-      <div className="mx-auto max-w-7xl px-6">
-        <div className="max-w-2xl">
-          <h2
-            id="shop-browse-heading"
-            className="text-2xl font-semibold tracking-tight text-copy-primary sm:text-3xl"
+      <div
+        className={cn(
+          "mx-auto w-full px-6",
+          browseExpanded ? "max-w-none" : "max-w-7xl",
+        )}
+      >
+        <div className="flex flex-row items-start justify-between gap-4">
+          <div className="min-w-0 max-w-2xl">
+            <h2
+              id="shop-browse-heading"
+              className="text-2xl font-semibold tracking-tight text-copy-primary sm:text-3xl"
+            >
+              Browse templates
+            </h2>
+            <p className="mt-2 text-base leading-relaxed text-copy-body sm:text-lg">
+              Filter by format and specs, then open a template for details and
+              purchase options.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setBrowseExpanded((v) => !v)}
+            className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-200/90 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 md:inline-flex dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+            aria-label={
+              browseExpanded ? "Use normal browse width" : "Expand browse width"
+            }
+            aria-pressed={browseExpanded}
+            title={
+              browseExpanded ? "Return to standard width" : "Use full width"
+            }
           >
-            Browse templates
-          </h2>
-          <p className="mt-2 text-base leading-relaxed text-copy-body sm:text-lg">
-            Filter by format and specs, then open a template for details and
-            purchase options.
-          </p>
+            {browseExpanded ? (
+              <Minimize2 className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+            ) : (
+              <Maximize2 className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+            )}
+          </button>
         </div>
 
-        {/* Toolbar: categories + mobile filters */}
-        <div className="mt-8 flex items-center gap-3 lg:mt-10">
+        {/* Toolbar: categories | search + mobile filters (right) */}
+        <div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-10">
           <ShopCategoryTabs
             activeId={activeCategory}
             onChange={setActiveCategory}
-            className="lg:max-w-none"
+            className="min-w-0 flex-1 basis-full sm:basis-auto lg:max-w-none"
           />
-          <button
-            type="button"
-            onClick={openMobileFilters}
-            className="flex shrink-0 items-center gap-2 rounded-full border border-neutral-200/90 bg-white px-4 py-2 text-sm font-medium text-neutral-800 shadow-sm lg:hidden dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-100"
-          >
-            <SlidersHorizontal className="h-4 w-4" aria-hidden />
-            Filters
-          </button>
+          <div className="ml-auto flex min-w-0 flex-1 basis-full items-center justify-end gap-3 sm:flex-initial sm:basis-auto">
+            <div className="relative w-full max-w-sm shrink-0 sm:min-w-[220px]">
+              <label htmlFor="shop-search" className="sr-only">
+                Search templates
+              </label>
+              <Search
+                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+                aria-hidden
+              />
+              <input
+                id="shop-search"
+                type="search"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search templates…"
+                autoComplete="off"
+                className={cn(
+                  inputFieldClassName,
+                  "h-10 w-full pl-9 pr-3 text-sm",
+                )}
+              />
+            </div>
+            <button
+              type="button"
+              onClick={openMobileFilters}
+              className="flex shrink-0 items-center gap-2 rounded-full border border-neutral-200/90 bg-white px-4 py-2 text-sm font-medium text-neutral-800 shadow-sm lg:hidden dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-100"
+            >
+              <SlidersHorizontal className="h-4 w-4" aria-hidden />
+              Filters
+            </button>
+          </div>
         </div>
 
         <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10">
@@ -111,25 +173,32 @@ export function ShopBrowse() {
           </aside>
 
           <div className="min-w-0 flex-1">
-            {filteredTemplates.length === 0 ? (
+            {baseFiltered.length === 0 ? (
               <p className="rounded-2xl border border-dashed border-neutral-300/90 bg-neutral-50/80 px-6 py-12 text-center text-sm text-neutral-600 dark:border-white/15 dark:bg-neutral-900/30 dark:text-neutral-400">
                 No templates match these filters. Try clearing filters or
                 choosing another category.
               </p>
+            ) : displayTemplates.length === 0 ? (
+              <p className="rounded-2xl border border-dashed border-neutral-300/90 bg-neutral-50/80 px-6 py-12 text-center text-sm text-neutral-600 dark:border-white/15 dark:bg-neutral-900/30 dark:text-neutral-400">
+                No templates match &ldquo;{searchQuery.trim()}&rdquo;. Try a
+                different search.
+              </p>
             ) : (
-              <div>
-                <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                  {filteredTemplates.map((t) => (
-                    <li key={t.id}>
-                      <ShopTemplateCard
-                        template={t}
-                        onOpen={() => setSelectedTemplate(t)}
-                      />
-                    </li>
-                  ))}
-                </ul>
-                {/* search bar */}
-              </div>
+              <ul
+                className={cn(
+                  "grid grid-cols-1 gap-6 sm:grid-cols-2",
+                  browseExpanded ? "xl:grid-cols-4" : "xl:grid-cols-3",
+                )}
+              >
+                {displayTemplates.map((t) => (
+                  <li key={t.id}>
+                    <ShopTemplateCard
+                      template={t}
+                      onOpen={() => setSelectedTemplate(t)}
+                    />
+                  </li>
+                ))}
+              </ul>
             )}
           </div>
         </div>
