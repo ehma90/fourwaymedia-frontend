@@ -27,16 +27,7 @@ const topRow = [
       { label: "Marketing", href: "#" },
     ],
   },
-  {
-    title: "Solutions",
-    links: [
-      { label: "Startups", href: "#" },
-      { label: "Freelancer", href: "#" },
-      { label: "Creator", href: "#" },
-      { label: "Brands", href: "#" },
-      { label: "Marketing Teams", href: "#" },
-    ],
-  },
+
 ];
 
 const bottomRow = [
