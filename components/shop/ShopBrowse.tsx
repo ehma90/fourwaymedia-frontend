@@ -117,16 +117,19 @@ export function ShopBrowse() {
                 choosing another category.
               </p>
             ) : (
-              <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
-                {filteredTemplates.map((t) => (
-                  <li key={t.id}>
-                    <ShopTemplateCard
-                      template={t}
-                      onOpen={() => setSelectedTemplate(t)}
-                    />
-                  </li>
-                ))}
-              </ul>
+              <div>
+                <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-3">
+                  {filteredTemplates.map((t) => (
+                    <li key={t.id}>
+                      <ShopTemplateCard
+                        template={t}
+                        onOpen={() => setSelectedTemplate(t)}
+                      />
+                    </li>
+                  ))}
+                </ul>
+                {/* search bar */}
+              </div>
             )}
           </div>
         </div>

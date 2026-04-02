@@ -4,7 +4,9 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import { Button } from "../ui/button";
+
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 /** Placeholder marketplace visuals — swap URLs when final assets are ready */
 const MARKETPLACE_SLIDES = [
@@ -83,13 +85,14 @@ export function ShopDigital() {
               Production-ready templates and creative assets, built for
               real-world use.
             </p>
-            <Link href="/shop">
-              <Button
-                variant="primary"
-                className="mt-8 inline-flex h-11 min-w-[140px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-5 py-2 text-sm font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base"
-              >
-                Shop Now
-              </Button>
+            <Link
+              href="/shop"
+              className={cn(
+                buttonVariants({ variant: "primary" }),
+                "mt-8 inline-flex h-11 min-w-[140px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-5 py-2 text-sm font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base",
+              )}
+            >
+              Shop Now
             </Link>
           </div>
 

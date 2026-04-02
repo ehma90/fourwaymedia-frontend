@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
+import { SocialAuthSection } from "@/components/auth/SocialAuthSection";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -126,7 +127,9 @@ export function SignUpForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-neutral-600 dark:text-neutral-400">
+      <SocialAuthSection />
+
+      <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-400">
         Already have an account?{" "}
         <Link
           href="/sign-in"
