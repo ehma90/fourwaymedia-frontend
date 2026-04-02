@@ -98,7 +98,7 @@ export function Navbar() {
               href="/sign-up"
               className={cn(
                 buttonVariants({ variant: "primary" }),
-                "inline-flex h-9 min-w-0 bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-4 text-sm font-medium text-white md:h-10 md:min-w-[120px] md:px-8 md:text-[16px]",
+                "inline-flex h-9 min-w-0 px-4 text-sm font-medium md:h-10 md:min-w-[120px] md:px-8 md:text-[16px]",
               )}
             >
               Sign up
@@ -201,7 +201,7 @@ export function Navbar() {
                     href="/sign-up"
                     className={cn(
                       buttonVariants({ variant: "primary" }),
-                      "h-11 w-full justify-center bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-[16px] font-medium text-white",
+                      "h-11 w-full justify-center text-[16px] font-medium",
                     )}
                     onClick={() => setMobileOpen(false)}
                   >

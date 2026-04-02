@@ -89,7 +89,7 @@ export function ShopDigital() {
               href="/shop"
               className={cn(
                 buttonVariants({ variant: "primary" }),
-                "mt-8 inline-flex h-11 min-w-[140px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-5 py-2 text-sm font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base",
+                "mt-8 inline-flex h-11 min-w-[140px] px-5 py-2 text-sm font-medium md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base",
               )}
             >
               Shop Now

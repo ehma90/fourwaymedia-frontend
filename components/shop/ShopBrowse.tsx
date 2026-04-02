@@ -7,6 +7,7 @@ import { ShopCategoryTabs } from "@/components/shop/ShopCategoryTabs";
 import { ShopFilterPanel } from "@/components/shop/ShopFilterPanel";
 import { ShopTemplateCard } from "@/components/shop/ShopTemplateCard";
 import { ShopTemplateModal } from "@/components/shop/ShopTemplateModal";
+import { buttonVariants } from "@/components/ui/button";
 import {
   cloneAppliedFilters,
   emptyAppliedFilters,
@@ -248,7 +249,10 @@ export function ShopBrowse() {
               <button
                 type="button"
                 onClick={applyDraft}
-                className="h-11 w-full rounded-xl bg-linear-to-r from-[#DC4437] to-[#FEC107] text-sm font-medium text-white shadow-[0_8px_18px_rgba(220,68,55,0.25)]"
+                className={cn(
+                  buttonVariants({ variant: "primary" }),
+                  "h-11 w-full justify-center text-sm",
+                )}
               >
                 Apply filters
               </button>

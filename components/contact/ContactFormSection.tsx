@@ -186,7 +186,7 @@ export function ContactFormSection() {
                 <div className="flex justify-center pt-1">
                   <Button
                     variant="primary"
-                    className="inline-flex h-10 min-w-[120px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-8 text-[16px] font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
+                    className="inline-flex h-10 min-w-[120px] px-8 text-[16px] font-medium"
                   >
                     Send Message
                   </Button>

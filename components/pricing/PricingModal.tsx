@@ -143,7 +143,7 @@ export function PricingModal({ open, onClose }: PricingModalProps) {
                       onClick={onClose}
                       className={cn(
                         buttonVariants({ variant: "primary" }),
-                        "mt-8 inline-flex h-12 w-full items-center justify-center px-6 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]",
+                        "mt-8 inline-flex h-12 w-full items-center justify-center px-6 text-base font-medium",
                       )}
                     >
                       {plan.ctaLabel}

@@ -18,13 +18,12 @@ export function ThemeToggle({ className }: ThemeToggleProps = {}) {
 
   return (
     <div>
-      <Button
+      <button
         type="button"
-        size="sm"
         aria-label={toggleLabel}
         title={toggleLabel}
         onClick={() => setTheme(isDark ? "light" : "dark")}
-        className={cn("gap-1 bg-gray-600 text-white", className)}
+        className={cn("gap-1 cursor-pointer rounded-xl h-9 px-2.5 flex items-center justify-center bg-gray-600 text-white", className)}
       >
         <AnimatePresence mode="wait" initial={false}>
           {isDark ? (
@@ -36,7 +35,7 @@ export function ThemeToggle({ className }: ThemeToggleProps = {}) {
               transition={{ duration: 0.2, ease: "easeInOut" }}
               className="inline-flex"
             >
-              <Moon size={16} className="text-current" />
+              <Moon size={18} className="text-current" />
             </motion.span>
           ) : (
             <motion.span
@@ -47,11 +46,11 @@ export function ThemeToggle({ className }: ThemeToggleProps = {}) {
               transition={{ duration: 0.2, ease: "easeInOut" }}
               className="inline-flex"
             >
-              <Sun size={16} className="text-current" />
+              <Sun size={18} className="text-current" />
             </motion.span>
           )}
         </AnimatePresence>
-      </Button>
+      </button>
     </div>
   );
 }

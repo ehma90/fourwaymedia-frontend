@@ -1,5 +1,6 @@
 "use client";
 
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import {
   shopFilterGroups,
@@ -78,7 +79,10 @@ export function ShopFilterPanel({
           <button
             type="button"
             onClick={onApply}
-            className="h-10 rounded-xl bg-linear-to-r from-[#DC4437] to-[#FEC107] px-4 text-sm font-medium text-white shadow-[0_8px_18px_rgba(220,68,55,0.25)] hover:brightness-110"
+            className={cn(
+              buttonVariants({ variant: "primary" }),
+              "h-10 justify-center px-4 text-sm",
+            )}
           >
             Apply
           </button>

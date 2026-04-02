@@ -118,7 +118,7 @@ export function ServiceCategoryModal({ item, onClose }: ServiceCategoryModalProp
             onClick={onClose}
             className={cn(
               buttonVariants({ variant: "primary" }),
-              "h-10 min-w-[120px] justify-center px-8 text-base font-medium shadow-[0_10px_22px_rgba(220,68,55,0.35)] dark:shadow-[0_10px_26px_rgba(220,68,55,0.45)]",
+              "h-10 min-w-[120px] justify-center px-8 text-base font-medium",
             )}
           >
             Contact us

@@ -1,5 +1,8 @@
 import Link from "next/link";
 
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+
 // const HERO_BG =
 //   "https://ik.imagekit.io/vp72mg6kz/Homepage/Reel2024Fastforgif-ezgif-ezgif.com-video-to-gif-converter.gif";
 const HERO_BG_2 =
@@ -29,7 +32,10 @@ export function HeroSection() {
         <div className="mt-8 flex w-full max-w-md flex-row flex-nowrap items-center justify-center gap-2 self-stretch sm:max-w-none sm:gap-4">
           <Link
             href="/shop"
-            className="inline-flex h-11 min-w-0 flex-1 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-4 py-2 text-sm font-medium text-white transition-all hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40 whitespace-nowrap sm:min-w-[135px] sm:flex-none sm:px-8 sm:py-3 sm:text-base md:h-14"
+            className={cn(
+              buttonVariants({ variant: "primary" }),
+              "inline-flex h-11 min-w-0 flex-1 items-center justify-center px-4 py-2 whitespace-nowrap sm:min-w-[135px] sm:flex-none sm:px-8 sm:py-3 sm:text-base md:h-14",
+            )}
           >
             Shop Template
           </Link>
