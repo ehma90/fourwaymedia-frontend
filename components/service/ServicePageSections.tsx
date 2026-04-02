@@ -24,7 +24,7 @@ export function ServicePageSections() {
 
   return (
     <section
-      className="border-t border-white/10 bg-[#0D0D0D] py-16 sm:py-24"
+      className="border-t border-black/10 bg-background py-16 dark:border-white/10 sm:py-24"
       aria-labelledby="service-offerings-heading"
     >
       <div className="mx-auto max-w-6xl px-6">
@@ -45,10 +45,10 @@ export function ServicePageSections() {
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.5, delay: 0.05 * sectionIndex, ease: easeOut }}
             >
-              <h3 className="text-2xl font-bold tracking-tight text-white sm:text-3xl md:text-[2rem]">
+              <h3 className="text-2xl font-bold tracking-tight text-copy-primary sm:text-3xl md:text-[2rem]">
                 {section.title}
               </h3>
-              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-[#A0A0A0] sm:text-base">
+              <p className="mt-4 max-w-3xl text-sm leading-relaxed text-copy-body sm:text-base">
                 {section.bullets}
               </p>
 
@@ -74,7 +74,7 @@ export function ServicePageSections() {
                     key={`${section.title}-${i}`}
                     type="button"
                     onClick={() => openModalForTitle(section.title)}
-                    className="group relative w-full overflow-hidden rounded-xl border border-white/10 bg-neutral-900/50 text-left outline-none transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_16px_48px_rgba(0,0,0,0.45)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0D0D0D] sm:rounded-2xl"
+                    className="group relative w-full overflow-hidden rounded-xl border border-black/10 bg-white text-left shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-neutral-900/50 dark:shadow-none dark:hover:shadow-[0_16px_48px_rgba(0,0,0,0.45)] sm:rounded-2xl"
                     aria-label={`${section.title}. View details.`}
                   >
                     <div className={imgWrapClass}>

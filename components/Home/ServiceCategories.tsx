@@ -29,7 +29,7 @@ function CategoryCard({
         decorative ? undefined : `${item.title}. Open details.`
       }
     >
-      <div className="relative aspect-4/3 min-h-96 overflow-hidden">
+      <div className="relative aspect-4/3 min-h-72 lg:min-h-96 overflow-hidden">
         <img
           src={item.image}
           alt=""

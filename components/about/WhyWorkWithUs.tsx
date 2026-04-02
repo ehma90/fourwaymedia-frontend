@@ -39,10 +39,7 @@ export function WhyWorkWithUs() {
             Why{" "}
             <span className="relative inline-block">
               <span className="relative z-0">work</span>
-              <span
-                className="absolute -bottom-1 left-0 h-0.5 w-full rounded-full bg-[#e8a317] sm:-bottom-1.5 sm:h-0.5 dark:bg-[#f2b01e]"
-                aria-hidden
-              />
+              
             </span>{" "}
             with us
           </h2>

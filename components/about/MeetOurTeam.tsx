@@ -97,19 +97,7 @@ export function MeetOurTeam() {
             id="meet-team-heading"
             className="font-[family-name:var(--font-lexend),system-ui,sans-serif] text-3xl font-bold tracking-tight sm:text-4xl md:text-[2.5rem]"
           >
-            <span className="text-neutral-900 dark:text-white">Meet our </span>
-            <span className="relative inline-block text-[#DC4437] dark:text-[#f97316]">
-              Team
-              <motion.span
-                className="absolute -bottom-1 left-1/2 block h-0.5 w-full max-w-12 -translate-x-1/2 rounded-full bg-[#DC4437] dark:bg-[#f97316] sm:-bottom-1.5 sm:h-0.5"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.55, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transformOrigin: "center" }}
-                aria-hidden
-              />
-            </span>
+            <span className="text-neutral-900 dark:text-white">Meet our Team</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-400">
             Meet the leaders shaping our direction through strategy, creativity, and
@@ -182,7 +170,7 @@ export function MeetOurTeam() {
           ))}
         </motion.ul>
 
-       
+
       </div>
     </section>
   );
