@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type ThemeToggleProps = {
@@ -23,7 +22,10 @@ export function ThemeToggle({ className }: ThemeToggleProps = {}) {
         aria-label={toggleLabel}
         title={toggleLabel}
         onClick={() => setTheme(isDark ? "light" : "dark")}
-        className={cn("gap-1 cursor-pointer rounded-xl h-9 px-2.5 flex items-center justify-center bg-gray-600 text-white", className)}
+        className={cn(
+          "flex h-9 cursor-pointer items-center justify-center gap-1 rounded-xl bg-gray-600 px-2.5 text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40",
+          className,
+        )}
       >
         <AnimatePresence mode="wait" initial={false}>
           {isDark ? (
