@@ -143,7 +143,7 @@ export function PricingModal({ open, onClose }: PricingModalProps) {
                       onClick={onClose}
                       className={cn(
                         buttonVariants({ variant: "primary" }),
-                        "mt-8 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-copy-primary px-6 text-base font-medium text-background shadow-none hover:brightness-110 dark:bg-white dark:text-neutral-950 dark:hover:brightness-95",
+                        "mt-8 inline-flex h-12 w-full items-center justify-center px-6 text-base font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)]",
                       )}
                     >
                       {plan.ctaLabel}
@@ -154,7 +154,7 @@ export function PricingModal({ open, onClose }: PricingModalProps) {
                       onClick={onClose}
                       className={cn(
                         buttonVariants({ variant: "outline" }),
-                        "mt-8 flex h-12 w-full items-center justify-center rounded-xl border-2 border-black/15 bg-transparent px-6 text-base font-medium text-copy-primary hover:bg-black/[0.04] dark:border-white/20 dark:hover:bg-white/5",
+                        "navbar-outline-button mt-8 inline-flex h-12 w-full items-center justify-center border-2 px-6 text-base font-medium text-white",
                       )}
                     >
                       {plan.ctaLabel}

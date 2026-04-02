@@ -20,7 +20,7 @@ const MARKETPLACE_SLIDES = [
     src: "https://ik.imagekit.io/vp72mg6kz/Homepage/0a1850f1617c2e0d083a0a6ae9643a1a8f7c563a.jpg",
     alt: "Social Media Post",
   },
- 
+
 ] as const;
 
 export function ShopDigital() {
@@ -83,12 +83,14 @@ export function ShopDigital() {
               Production-ready templates and creative assets, built for
               real-world use.
             </p>
-            <Button
-              variant="primary"
-              className="mt-8 inline-flex h-11 min-w-[140px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-5 py-2 text-sm font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base"
-            >
-              Shop Now
-            </Button>
+            <Link href="/shop">
+              <Button
+                variant="primary"
+                className="mt-8 inline-flex h-11 min-w-[140px] bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] px-5 py-2 text-sm font-medium text-white shadow-[0_10px_22px_rgba(220,68,55,0.35)] md:h-14 md:min-w-[180px] md:px-8 md:py-3 md:text-base"
+              >
+                Shop Now
+              </Button>
+            </Link>
           </div>
 
           {/* Carousel — gradient frame, glow from top-left */}
@@ -119,7 +121,7 @@ export function ShopDigital() {
                 </button>
 
                 <div ref={emblaRef} className="overflow-hidden pl-9 pr-9 sm:pl-11 sm:pr-11">
-                  
+
                   <div className="flex touch-pan-y">
                     {MARKETPLACE_SLIDES.map((slide) => (
                       <div
