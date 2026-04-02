@@ -5,6 +5,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 
 const logoFontClass =
@@ -39,7 +40,7 @@ export function SignInForm() {
             type="email"
             autoComplete="email"
             placeholder="Enter your email"
-            className="h-11 w-full rounded-xl border border-neutral-200 bg-white px-4 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#DC4437]/50 focus:ring-2 focus:ring-[#FEC107]/30 dark:border-neutral-600 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500"
+            className={inputFieldClassName}
           />
         </div>
 
@@ -57,7 +58,7 @@ export function SignInForm() {
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
               placeholder="Enter your password"
-              className="h-11 w-full rounded-xl border border-neutral-200 bg-white py-2 pr-12 pl-4 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#DC4437]/50 focus:ring-2 focus:ring-[#FEC107]/30 dark:border-neutral-600 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500"
+              className={cn(inputFieldClassName, "pr-12")}
             />
             <button
               type="button"

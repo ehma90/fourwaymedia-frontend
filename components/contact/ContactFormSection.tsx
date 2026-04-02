@@ -3,21 +3,14 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+import { formFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-const ACCENT = "#FEC107";
-
 const labelClass =
   "mb-2 block text-xs font-semibold uppercase tracking-[0.12em] text-neutral-900 dark:text-white";
-
-const inputClass = cn(
-  "w-full rounded-lg border border-neutral-300 bg-white px-4 py-3 text-sm text-neutral-900 placeholder:text-neutral-500 outline-none transition-colors",
-  "focus:border-[#DC4437]/60 focus:ring-2 focus:ring-[#FEC107]/20",
-  "dark:border-neutral-700 dark:bg-neutral-800/80 dark:text-white dark:placeholder:text-neutral-500 dark:focus:border-[#FEC107]/50",
-);
 
 const SOCIAL = [
   {
@@ -121,7 +114,7 @@ export function ContactFormSection() {
                       type="text"
                       autoComplete="name"
                       placeholder="Your name"
-                      className={inputClass}
+                      className={formFieldClassName}
                     />
                   </div>
                   <div>
@@ -134,7 +127,7 @@ export function ContactFormSection() {
                       type="text"
                       autoComplete="organization"
                       placeholder="Company name"
-                      className={inputClass}
+                      className={formFieldClassName}
                     />
                   </div>
                 </div>
@@ -149,7 +142,7 @@ export function ContactFormSection() {
                       type="tel"
                       autoComplete="tel"
                       placeholder="Phone number"
-                      className={inputClass}
+                      className={formFieldClassName}
                     />
                   </div>
                   <div>
@@ -162,7 +155,7 @@ export function ContactFormSection() {
                       type="email"
                       autoComplete="email"
                       placeholder="you@example.com"
-                      className={inputClass}
+                      className={formFieldClassName}
                     />
                   </div>
                 </div>
@@ -175,7 +168,7 @@ export function ContactFormSection() {
                     name="subject"
                     type="text"
                     placeholder="What is this about?"
-                    className={inputClass}
+                    className={formFieldClassName}
                   />
                 </div>
                 <div>
@@ -187,7 +180,7 @@ export function ContactFormSection() {
                     name="message"
                     rows={5}
                     placeholder="Your message"
-                    className={cn(inputClass, "min-h-[140px] resize-y")}
+                    className={cn(formFieldClassName, "min-h-[140px] resize-y")}
                   />
                 </div>
                 <div className="flex justify-center pt-1">

@@ -4,14 +4,12 @@ import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
+import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
 const logoFontClass =
   "font-[family-name:var(--font-sign-up-logo),cursive] text-3xl sm:text-[2rem]";
-
-const inputClassName =
-  "h-11 w-full rounded-lg border border-neutral-200 bg-white px-3.5 text-sm text-neutral-900 placeholder:text-neutral-400 outline-none transition-colors focus:border-[#f27121]/50 focus:ring-2 focus:ring-[#e94057]/20 dark:border-neutral-600 dark:bg-neutral-950 dark:text-white dark:placeholder:text-neutral-500";
 
 export function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +40,7 @@ export function SignUpForm() {
             type="text"
             autoComplete="name"
             placeholder="Enter your full name"
-            className={inputClassName}
+            className={inputFieldClassName}
           />
         </div>
 
@@ -59,7 +57,7 @@ export function SignUpForm() {
             type="email"
             autoComplete="email"
             placeholder="Enter your email"
-            className={inputClassName}
+            className={inputFieldClassName}
           />
         </div>
 
@@ -77,7 +75,7 @@ export function SignUpForm() {
               type={showPassword ? "text" : "password"}
               autoComplete="new-password"
               placeholder="Create a strong password"
-              className={`${inputClassName} pr-12`}
+              className={cn(inputFieldClassName, "pr-12")}
             />
             <button
               type="button"
