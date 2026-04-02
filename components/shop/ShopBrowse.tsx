@@ -116,14 +116,14 @@ export function ShopBrowse() {
         </div>
 
         {/* Toolbar: categories | search + mobile filters (right) */}
-        <div className="mt-8 flex flex-wrap items-center gap-3 lg:mt-10">
+        <div className="mt-8 flex min-w-0 flex-wrap items-center gap-3 lg:mt-10">
           <ShopCategoryTabs
             activeId={activeCategory}
             onChange={setActiveCategory}
             className="min-w-0 flex-1 basis-full sm:basis-auto lg:max-w-none"
           />
-          <div className="ml-auto flex min-w-0 flex-1 basis-full items-center justify-end gap-3 sm:flex-initial sm:basis-auto">
-            <div className="relative w-full max-w-sm shrink-0 sm:min-w-[220px]">
+          <div className="flex w-full min-w-0 basis-full items-center gap-3 sm:ml-auto sm:w-auto sm:flex-initial sm:basis-auto sm:justify-end">
+            <div className="relative min-w-0 flex-1 sm:max-w-sm sm:min-w-[220px] sm:shrink-0">
               <label htmlFor="shop-search" className="sr-only">
                 Search templates
               </label>
