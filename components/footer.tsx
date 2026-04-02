@@ -1,6 +1,9 @@
 "use client";
 import { useTheme } from "next-themes";
 import Link from "next/link";
+import { useState } from "react";
+
+import { PricingModal } from "@/components/pricing/PricingModal";
 
 const LIGHT_LOGO =
   "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
@@ -30,27 +33,29 @@ const topRow = [
 
 ];
 
-const bottomRow = [
-  {
-    title: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Career", href: "#" },
-      { label: "FAQ", href: "#" },
-      { label: "Term & Service", href: "#" },
-      { label: "Privacy Policy", href: "#" },
-      { label: "Cookies Policy", href: "#" },
-    ],
-  },
-  {
-    title: "Get help",
-    links: [
-      { label: "Pricing", href: "#" },
-      { label: "Support", href: "#" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
-];
+function getBottomRow(onOpenPricing: () => void) {
+  return [
+    {
+      title: "Company",
+      links: [
+        { label: "About", href: "/about" },
+        { label: "Career", href: "#" },
+        { label: "FAQ", href: "#" },
+        { label: "Term & Service", href: "#" },
+        { label: "Privacy Policy", href: "#" },
+        { label: "Cookies Policy", href: "#" },
+      ],
+    },
+    {
+      title: "Get help",
+      links: [
+        { label: "Pricing", onClick: onOpenPricing },
+        { label: "Support", href: "#" },
+        { label: "Contact", href: "/contact" },
+      ],
+    },
+  ] as const;
+}
 
 function InstagramIcon() {
   return (
@@ -78,19 +83,29 @@ function XIcon() {
   );
 }
 
-function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+type FooterLink =
+  | { label: string; href: string }
+  | { label: string; onClick: () => void };
+
+function FooterColumn({ title, links }: { title: string; links: readonly FooterLink[] }) {
+  const linkClassName =
+    "cursor-pointer text-left text-sm text-copy-body transition-colors hover:text-copy-primary";
+
   return (
     <div>
       <h4 className="mb-4 text-base font-semibold text-copy-primary">{title}</h4>
       <ul className="flex flex-col gap-2.5">
         {links.map((link) => (
           <li key={link.label}>
-            <Link
-              href={link.href}
-              className="text-sm text-copy-body transition-colors hover:text-copy-primary"
-            >
-              {link.label}
-            </Link>
+            {"href" in link ? (
+              <Link href={link.href} className={linkClassName}>
+                {link.label}
+              </Link>
+            ) : (
+              <button type="button" onClick={link.onClick} className={linkClassName}>
+                {link.label}
+              </button>
+            )}
           </li>
         ))}
       </ul>
@@ -99,9 +114,12 @@ function FooterColumn({ title, links }: { title: string; links: { label: string;
 }
 
 export function Footer() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme } = useTheme();
+  const [pricingOpen, setPricingOpen] = useState(false);
   const isDark = resolvedTheme === "dark";
   const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
+  const bottomRow = getBottomRow(() => setPricingOpen(true));
+
   return (
     <footer className="text-copy-primary border-t border-copy-body/15">
       <div className="mx-auto max-w-6xl px-6 pb-8 pt-16">
@@ -163,7 +181,7 @@ export function Footer() {
         </div>
       </div>
 
-    
+      <PricingModal open={pricingOpen} onClose={() => setPricingOpen(false)} />
     </footer>
   );
 }
