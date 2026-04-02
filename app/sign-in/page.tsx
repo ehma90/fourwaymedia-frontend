@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { Dancing_Script } from "next/font/google";
 
+import { BackButton } from "@/components/auth/BackButton";
 import { SignInForm } from "@/components/auth/SignInForm";
 import { SignInShowcase } from "@/components/auth/SignInShowcase";
 
@@ -14,12 +14,7 @@ export default function SignInPage() {
     <div
       className={`${logoFont.variable} min-h-screen bg-neutral-100 text-foreground dark:bg-neutral-950`}
     >
-      <Link
-        href="/"
-        className="absolute left-4 top-4 z-10 rounded-lg px-3 py-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white sm:left-6 sm:top-6"
-      >
-        ← Back to home
-      </Link>
+      <BackButton className="absolute left-4 top-4 z-10 rounded-lg px-3 py-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white sm:left-6 sm:top-6" />
 
       <div className="flex min-h-screen flex-col lg:flex-row">
         {/* Left: form */}
