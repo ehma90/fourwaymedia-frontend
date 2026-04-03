@@ -173,20 +173,29 @@ export function DashboardShell({ children }: DashboardShellProps) {
       <div className="flex min-h-screen flex-col md:flex-row">
         <aside className="flex min-h-0 shrink-0 flex-col border-b border-zinc-200 bg-white md:min-h-screen md:w-68 md:border-b-0 md:border-r dark:border-zinc-800 dark:bg-zinc-950">
           <div className="flex min-h-0 flex-1 flex-col gap-4 px-4 py-3 md:py-5">
-            <div className="flex items-center justify-between gap-3">
-            <Link href="/" aria-label="Fourwaymedia home">
-              <img
-                src={LOGO_FOR_LIGHT_UI}
-                alt="Fourwaymedia logo"
-                className="h-16 w-16 object-cover md:h-11 md:w-11 dark:hidden"
-              />
-              <img
-                src={LOGO_FOR_DARK_UI}
-                alt="Fourwaymedia logo"
-                className="hidden h-16 w-16 object-cover md:h-11 md:w-11 dark:block"
-              />
-            </Link>
-              <div className="flex shrink-0 items-center gap-2">
+            <div className="flex items-center justify-between gap-2">
+              <Link href="/" aria-label="Fourwaymedia home" className="min-w-0 shrink">
+                <img
+                  src={LOGO_FOR_LIGHT_UI}
+                  alt="Fourwaymedia logo"
+                  className="h-16 w-16 object-cover md:h-11 md:w-11 dark:hidden"
+                />
+                <img
+                  src={LOGO_FOR_DARK_UI}
+                  alt="Fourwaymedia logo"
+                  className="hidden h-16 w-16 object-cover md:h-11 md:w-11 dark:block"
+                />
+              </Link>
+              <div className="flex shrink-0 items-center gap-2 md:gap-3">
+                <ThemeToggle />
+                <Link
+                  href="/dashboard/settings"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
+                  aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
+                  title={MOCK_USER_DISPLAY_NAME}
+                >
+                  {userInitials}
+                </Link>
                 <button
                   type="button"
                   className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-800 transition-colors hover:bg-zinc-100 md:hidden dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
@@ -226,7 +235,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               aria-label="Close menu"
               onClick={() => setMobileOpen(false)}
             />
-            <div className="fixed inset-x-0 top-[calc(3.5rem+1px)] z-50 max-h-[min(70vh,calc(100vh-5rem))] overflow-y-auto border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden">
+            <div className="fixed inset-x-0 top-22 z-50 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden">
               <nav className="flex flex-col" aria-label="Dashboard">
                 <div className="flex flex-col gap-0.5">
                   {navItems.map((item) => {
@@ -249,21 +258,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
         )}
 
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50">
-          <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8">
+          <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8">
             <h1 className="min-w-0 font-[family-name:var(--font-bitter)] text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl dark:text-zinc-50">
               {pageTitle}
             </h1>
-            <div className="flex shrink-0 items-center gap-2 md:gap-3">
-              <ThemeToggle />
-              <Link
-                href="/dashboard/settings"
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-8 md:w-8 md:text-sm"
-                aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
-                title={MOCK_USER_DISPLAY_NAME}
-              >
-                {userInitials}
-              </Link>
-            </div>
           </header>
           <div className="flex-1 px-4 py-6 md:px-8 md:py-10">{children}</div>
         </main>
