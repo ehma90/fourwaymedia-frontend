@@ -116,50 +116,65 @@ export function ShopBrowse() {
           </button>
         </div>
 
-        {/* Toolbar: categories | search + mobile filters (right) */}
-        <div className="mt-8 flex min-w-0 flex-wrap items-center gap-3 lg:mt-10">
-          <ShopCategoryTabs
-            activeId={activeCategory}
-            onChange={setActiveCategory}
-            className="min-w-0 flex-1 basis-full sm:basis-auto lg:max-w-none"
-          />
-          <div className="flex w-full min-w-0 basis-full items-center gap-3 sm:ml-auto sm:w-auto sm:flex-initial sm:basis-auto sm:justify-end">
-            <div className="relative min-w-0 flex-1 sm:max-w-sm sm:min-w-[220px] sm:shrink-0">
-              <label htmlFor="shop-search" className="sr-only">
-                Search templates
-              </label>
-              <Search
-                className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
-                aria-hidden
-              />
-              <input
-                id="shop-search"
-                type="search"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search templates…"
-                autoComplete="off"
-                className={cn(
-                  inputFieldClassName,
-                  "h-10 w-full pl-9 pr-3 text-sm",
-                )}
-              />
+        {/* Toolbar: sticky below navbar; template grid scrolls underneath */}
+        <div
+          className={cn(
+            "sticky z-40 -mx-6 mt-8 border-b border-neutral-200/90 bg-background/95 px-6 py-3 backdrop-blur-md supports-backdrop-filter:bg-background/80 lg:mt-10 lg:mx-0 lg:px-0 dark:border-white/10",
+            // top-20 (5rem) clears the marketing navbar (~sticky top-0 z-50)
+            "top-20",
+          )}
+        >
+          <div className="flex min-w-0 flex-wrap items-center gap-3">
+            <ShopCategoryTabs
+              activeId={activeCategory}
+              onChange={setActiveCategory}
+              className="min-w-0 flex-1 basis-full sm:basis-auto lg:max-w-none"
+            />
+            <div className="flex w-full min-w-0 basis-full items-center gap-3 sm:ml-auto sm:w-auto sm:flex-initial sm:basis-auto sm:justify-end">
+              <div className="relative min-w-0 flex-1 sm:max-w-sm sm:min-w-[220px] sm:shrink-0">
+                <label htmlFor="shop-search" className="sr-only">
+                  Search templates
+                </label>
+                <Search
+                  className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+                  aria-hidden
+                />
+                <input
+                  id="shop-search"
+                  type="search"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search templates…"
+                  autoComplete="off"
+                  className={cn(
+                    inputFieldClassName,
+                    "h-10 w-full pl-9 pr-3 text-sm",
+                  )}
+                />
+              </div>
+              <button
+                type="button"
+                onClick={openMobileFilters}
+                className="flex shrink-0 items-center gap-2 rounded-full border border-neutral-200/90 bg-white px-4 py-2 text-sm font-medium text-neutral-800 shadow-sm lg:hidden dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-100"
+              >
+                <SlidersHorizontal className="h-4 w-4" aria-hidden />
+                Filters
+              </button>
             </div>
-            <button
-              type="button"
-              onClick={openMobileFilters}
-              className="flex shrink-0 items-center gap-2 rounded-full border border-neutral-200/90 bg-white px-4 py-2 text-sm font-medium text-neutral-800 shadow-sm lg:hidden dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-100"
-            >
-              <SlidersHorizontal className="h-4 w-4" aria-hidden />
-              Filters
-            </button>
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10">
-          {/* Desktop sidebar */}
-          <aside className="hidden w-[272px] shrink-0 lg:block">
-            <div className="sticky top-24 rounded-2xl border border-neutral-200/90 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-neutral-900/50">
+        {/* Default align-items: stretch so aside is as tall as the template column — required for inner position:sticky */}
+        <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:gap-10">
+          {/* Desktop sidebar — sticky under navbar + toolbar row */}
+          <aside className="hidden min-h-0 w-[272px] shrink-0 lg:block">
+            <div
+              className={cn(
+                "sticky rounded-2xl border border-neutral-200/90 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-neutral-900/50",
+                // ~5rem navbar + ~4.5rem toolbar so the card sits below the stuck toolbar
+                "top-38",
+              )}
+            >
               <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                 Filters
               </h3>

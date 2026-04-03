@@ -89,14 +89,14 @@ type FooterLink =
 
 function FooterColumn({ title, links }: { title: string; links: readonly FooterLink[] }) {
   const linkClassName =
-    "cursor-pointer text-left text-sm text-copy-body transition-colors hover:text-copy-primary";
+    "block w-full cursor-pointer text-left text-sm text-copy-body transition-colors hover:text-copy-primary";
 
   return (
-    <div>
+    <div className="min-w-0">
       <h4 className="mb-4 text-base font-semibold text-copy-primary">{title}</h4>
-      <ul className="flex flex-col gap-2.5">
+      <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
         {links.map((link) => (
-          <li key={link.label}>
+          <li key={link.label} className="m-0 p-0">
             {"href" in link ? (
               <Link href={link.href} className={linkClassName}>
                 {link.label}
@@ -118,13 +118,13 @@ export function Footer() {
   const [pricingOpen, setPricingOpen] = useState(false);
   const isDark = resolvedTheme === "dark";
   const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
-  const bottomRow = getBottomRow(() => setPricingOpen(true));
+  const navColumns = [...topRow, ...getBottomRow(() => setPricingOpen(true))];
 
   return (
     <footer className="text-copy-primary border-t border-copy-body/15">
-      <div className="mx-auto max-w-6xl px-6 pb-8 pt-16">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-[220px_1fr]">
-          <div className="flex flex-col gap-5">
+      <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10 xl:gap-12">
+          <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
             <Link href="/" aria-label="Fourwaymedia home">
               <img
                 src={logo}
@@ -165,18 +165,10 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-10">
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
-              {topRow.map((col) => (
-                <FooterColumn key={col.title} {...col} />
-              ))}
-            </div>
-
-            <div className="grid grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-3">
-              {bottomRow.map((col) => (
-                <FooterColumn key={col.title} {...col} />
-              ))}
-            </div>
+          <div className="grid min-w-0 flex-1 grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
+            {navColumns.map((col) => (
+              <FooterColumn key={col.title} {...col} />
+            ))}
           </div>
         </div>
       </div>

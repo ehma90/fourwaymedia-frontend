@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
 import { cn } from "@/lib/utils";
 
 /** Light chrome (no `html.dark`) — dark mark on light sidebar */
@@ -24,9 +25,6 @@ const LOGO_FOR_LIGHT_UI =
 /** Dark chrome — light mark on dark sidebar (do not pick via useTheme; `resolvedTheme` is undefined on first paint) */
 const LOGO_FOR_DARK_UI =
   "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
-
-/** Phase A mock — replace with API subscription state */
-const MOCK_IS_SUBSCRIBED = false;
 
 /** Phase A mock — replace with session / profile API */
 const MOCK_USER_DISPLAY_NAME = "Jane Doe";
@@ -45,6 +43,7 @@ const DASHBOARD_ROUTE_TITLES: Record<string, string> = {
   "/dashboard/billing": "Billing",
   "/dashboard/notifications": "Notifications",
   "/dashboard/settings": "Account",
+  "/dashboard/purchases": "Purchases",
 };
 
 function getDashboardPageTitle(pathname: string): string {
@@ -62,28 +61,27 @@ function getDashboardPageTitle(pathname: string): string {
 
 type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
 
-const baseNav: NavItem[] = [
-  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  { href: "/dashboard/downloads", label: "Downloads", icon: Download },
-  { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
-  { href: "/dashboard/settings", label: "Account", icon: Settings },
-];
-
+/** Subscription upsell vs Premium routes — see plan: subscription hidden when subscribed; billing + downloads when subscribed. */
 function buildNavItems(isSubscribed: boolean): NavItem[] {
-  const items: NavItem[] = [...baseNav];
-  if (!isSubscribed) {
-    items.splice(2, 0, {
+  const items: NavItem[] = [
+    { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  ];
+  if (isSubscribed) {
+    items.push(
+      { href: "/dashboard/downloads", label: "Downloads", icon: Download },
+      { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
+    );
+  } else {
+    items.push({
       href: "/dashboard/subscription",
       label: "Subscription",
       icon: Sparkles,
     });
-  } else {
-    items.splice(2, 0, {
-      href: "/dashboard/billing",
-      label: "Billing",
-      icon: CreditCard,
-    });
   }
+  items.push(
+    { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
+    { href: "/dashboard/settings", label: "Account", icon: Settings },
+  );
   return items;
 }
 
@@ -127,7 +125,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const navItems = buildNavItems(MOCK_IS_SUBSCRIBED);
+  const { isSubscribed } = useDashboardSubscription();
+  const navItems = buildNavItems(isSubscribed);
 
   const handleLogout = () => {
     // Phase A stub — replace with session clear + auth sign-out
