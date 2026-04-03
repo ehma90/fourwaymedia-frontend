@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 import { SocialAuthSection } from "@/components/auth/SocialAuthSection";
 import { inputFieldClassName } from "@/lib/input-classes";
+import { useMockAuth } from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
@@ -13,7 +15,15 @@ const logoFontClass =
   "font-[family-name:var(--font-sign-up-logo),cursive] text-3xl sm:text-[2rem]";
 
 export function SignUpForm() {
+  const router = useRouter();
+  const { signIn } = useMockAuth();
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    signIn();
+    router.push("/dashboard");
+  };
 
   return (
     <div className="w-full max-w-[520px] rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.06)] sm:p-10 dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
@@ -27,7 +37,7 @@ export function SignUpForm() {
         </p>
       </div>
 
-      <form className="mt-8 space-y-5" noValidate>
+      <form className="mt-8 space-y-5" noValidate onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="signup-name"

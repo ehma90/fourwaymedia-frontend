@@ -3,11 +3,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 
+import { UserMenu } from "@/components/navbar/UserMenu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { useMockAuth } from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -19,8 +21,16 @@ const navLinks = [
 
 export function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { isAuthenticated, signOut } = useMockAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const titleId = useId();
+
+  const handleSignOutFromDrawer = () => {
+    setMobileOpen(false);
+    signOut();
+    router.push("/");
+  };
 
   const isActiveLink = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
@@ -84,26 +94,32 @@ export function Navbar() {
 
         <div className="ml-auto flex items-center gap-2 md:gap-3">
           <ThemeToggle />
-          <div className="hidden items-center gap-3 md:flex">
-            <Link
-              href="/sign-in"
-              className={cn(
-                buttonVariants({ variant: "outline" }),
-                "navbar-outline-button inline-flex h-9 min-w-0 border-2 px-4 text-sm font-medium text-white md:h-10 md:min-w-[120px] md:px-8 md:text-[16px]",
-              )}
-            >
-              Sign in
-            </Link>
-            <Link
-              href="/sign-up"
-              className={cn(
-                buttonVariants({ variant: "primary" }),
-                "inline-flex h-9 min-w-0 px-4 text-sm font-medium md:h-10 md:min-w-[120px] md:px-8 md:text-[16px]",
-              )}
-            >
-              Sign up
-            </Link>
-          </div>
+          {isAuthenticated ? (
+            <div className="flex items-center">
+              <UserMenu />
+            </div>
+          ) : (
+            <div className="hidden items-center gap-3 md:flex">
+              <Link
+                href="/sign-in"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "navbar-outline-button inline-flex h-9 min-w-0 border-2 px-4 text-sm font-medium text-white md:h-10 md:min-w-[120px] md:px-8 md:text-[16px]",
+                )}
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/sign-up"
+                className={cn(
+                  buttonVariants({ variant: "primary" }),
+                  "inline-flex h-9 min-w-0 px-4 text-sm font-medium md:h-10 md:min-w-[120px] md:px-8 md:text-[16px]",
+                )}
+              >
+                Sign up
+              </Link>
+            </div>
+          )}
           <Button
             type="button"
             variant="outline"
@@ -186,28 +202,53 @@ export function Navbar() {
                 ))}
               </nav>
               <div className="border-t border-black/10 p-4 dark:border-white/10">
-                <div className="flex flex-col gap-2">
-                  <Link
-                    href="/sign-in"
-                    className={cn(
-                      buttonVariants({ variant: "outline" }),
-                      "navbar-outline-button h-11 w-full justify-center border-2 text-[16px] font-medium text-white",
-                    )}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    Sign in
-                  </Link>
-                  <Link
-                    href="/sign-up"
-                    className={cn(
-                      buttonVariants({ variant: "primary" }),
-                      "h-11 w-full justify-center text-[16px] font-medium",
-                    )}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    Sign up
-                  </Link>
-                </div>
+                {isAuthenticated ? (
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href="/dashboard"
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "navbar-outline-button h-11 w-full justify-center border-2 text-[16px] font-medium text-white",
+                      )}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Dashboard
+                    </Link>
+                    <button
+                      type="button"
+                      className={cn(
+                        buttonVariants({ variant: "primary" }),
+                        "h-11 w-full justify-center text-[16px] font-medium",
+                      )}
+                      onClick={handleSignOutFromDrawer}
+                    >
+                      Sign out
+                    </button>
+                  </div>
+                ) : (
+                  <div className="flex flex-col gap-2">
+                    <Link
+                      href="/sign-in"
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "navbar-outline-button h-11 w-full justify-center border-2 text-[16px] font-medium text-white",
+                      )}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Sign in
+                    </Link>
+                    <Link
+                      href="/sign-up"
+                      className={cn(
+                        buttonVariants({ variant: "primary" }),
+                        "h-11 w-full justify-center text-[16px] font-medium",
+                      )}
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      Sign up
+                    </Link>
+                  </div>
+                )}
               </div>
             </motion.div>
           </>

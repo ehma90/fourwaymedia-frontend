@@ -17,6 +17,10 @@ import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
+import {
+  MOCK_USER_DISPLAY_NAME,
+  useMockAuth,
+} from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
 
 /** Light chrome (no `html.dark`) — dark mark on light sidebar */
@@ -25,9 +29,6 @@ const LOGO_FOR_LIGHT_UI =
 /** Dark chrome — light mark on dark sidebar (do not pick via useTheme; `resolvedTheme` is undefined on first paint) */
 const LOGO_FOR_DARK_UI =
   "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
-
-/** Phase A mock — replace with session / profile API */
-const MOCK_USER_DISPLAY_NAME = "Jane Doe";
 
 function getInitials(displayName: string): string {
   const parts = displayName.trim().split(/\s+/).filter(Boolean);
@@ -124,12 +125,13 @@ function SidebarMenuFooter({
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
+  const { signOut } = useMockAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isSubscribed } = useDashboardSubscription();
   const navItems = buildNavItems(isSubscribed);
 
   const handleLogout = () => {
-    // Phase A stub — replace with session clear + auth sign-out
+    signOut();
     router.push("/sign-in");
   };
 
