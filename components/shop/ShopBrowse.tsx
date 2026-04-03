@@ -1,7 +1,8 @@
 "use client";
 
+import { AnimatePresence, motion } from "framer-motion";
 import { Maximize2, Minimize2, Search, SlidersHorizontal, X } from "lucide-react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ShopCategoryTabs } from "@/components/shop/ShopCategoryTabs";
 import { ShopFilterPanel } from "@/components/shop/ShopFilterPanel";
@@ -70,6 +71,20 @@ export function ShopBrowse() {
     setDraftFilters(cloneAppliedFilters(appliedFilters));
     setMobileFiltersOpen(false);
   }, [appliedFilters]);
+
+  useEffect(() => {
+    if (!mobileFiltersOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeMobileFilters();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prev;
+    };
+  }, [mobileFiltersOpen, closeMobileFilters]);
 
   return (
     <section
@@ -221,67 +236,84 @@ export function ShopBrowse() {
       </div>
 
       {/* Mobile filter drawer */}
-      {mobileFiltersOpen ? (
-        <div
-          className="fixed inset-0 z-150 lg:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="mobile-filters-title"
-        >
-          <button
-            type="button"
-            aria-label="Close filters"
-            className="absolute inset-0 bg-black/40 backdrop-blur-[6px]"
-            onClick={closeMobileFilters}
-          />
-          <div className="absolute inset-y-0 right-0 flex w-full max-w-sm flex-col border-l border-neutral-200/90 bg-[#f7f3eb] shadow-2xl dark:border-white/10 dark:bg-[#252525]">
-            <div className="flex items-center justify-between border-b border-[#e0dcd4] px-4 py-4 dark:border-neutral-700">
-              <h3
-                id="mobile-filters-title"
-                className="text-lg font-semibold text-neutral-900 dark:text-white"
-              >
-                Filters
-              </h3>
-              <button
-                type="button"
-                onClick={closeMobileFilters}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#c4c0b8] bg-[#f7f3eb] text-neutral-700 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200"
-                aria-label="Close"
-              >
-                <X className="h-5 w-5" strokeWidth={1.75} aria-hidden />
-              </button>
-            </div>
-            <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
-              <ShopFilterPanel
-                draft={draftFilters}
-                onDraftChange={setDraftFilters}
-                onClear={clearDraft}
-                onApply={applyDraft}
-                showActions={false}
-              />
-            </div>
-            <div className="flex flex-col gap-2 border-t border-[#e0dcd4] bg-[#f2ede4] p-4 dark:border-neutral-700 dark:bg-[#1f1f1f]">
-              <button
-                type="button"
-                onClick={applyDraft}
-                className={cn(
-                  buttonVariants({ variant: "primary" }),
-                  "h-11 w-full justify-center text-sm",
-                )}
-              >
-                Apply filters
-              </button>
-              <button
-                type="button"
-                onClick={clearDraft}
-                className="h-10 w-full rounded-xl border border-neutral-300 text-sm font-medium text-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
-              >
-                Clear
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+      <AnimatePresence>
+        {mobileFiltersOpen ? (
+          <>
+            <motion.button
+              key="shop-mobile-filters-backdrop"
+              type="button"
+              aria-label="Close filters"
+              className="fixed inset-0 z-150 bg-black/40 backdrop-blur-[6px] lg:hidden"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.22, ease: [0.32, 0.72, 0, 1] }}
+              onClick={closeMobileFilters}
+            />
+            <motion.div
+              key="shop-mobile-filters-panel"
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="mobile-filters-title"
+              className="fixed inset-y-0 right-0 z-160 flex w-full max-w-xs flex-col border-l border-neutral-200/90 bg-[#f7f3eb] shadow-2xl lg:hidden dark:border-white/10 dark:bg-[#252525]"
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{
+                type: "spring",
+                damping: 32,
+                stiffness: 380,
+                mass: 0.85,
+              }}
+            >
+              <div className="flex items-center justify-between border-b border-[#e0dcd4] px-4 py-4 dark:border-neutral-700">
+                <h3
+                  id="mobile-filters-title"
+                  className="text-lg font-semibold text-neutral-900 dark:text-white"
+                >
+                  Filters
+                </h3>
+                <button
+                  type="button"
+                  onClick={closeMobileFilters}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-[#c4c0b8] bg-[#f7f3eb] text-neutral-700 dark:border-neutral-600 dark:bg-neutral-800 dark:text-neutral-200"
+                  aria-label="Close"
+                >
+                  <X className="h-5 w-5" strokeWidth={1.75} aria-hidden />
+                </button>
+              </div>
+              <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
+                <ShopFilterPanel
+                  draft={draftFilters}
+                  onDraftChange={setDraftFilters}
+                  onClear={clearDraft}
+                  onApply={applyDraft}
+                  showActions={false}
+                />
+              </div>
+              <div className="flex flex-col gap-2 border-t border-[#e0dcd4] bg-[#f2ede4] p-4 dark:border-neutral-700 dark:bg-[#1f1f1f]">
+                <button
+                  type="button"
+                  onClick={applyDraft}
+                  className={cn(
+                    buttonVariants({ variant: "primary" }),
+                    "h-11 w-full justify-center text-sm",
+                  )}
+                >
+                  Apply filters
+                </button>
+                <button
+                  type="button"
+                  onClick={clearDraft}
+                  className="h-10 w-full rounded-xl border border-neutral-300 text-sm font-medium text-neutral-800 dark:border-neutral-600 dark:text-neutral-200"
+                >
+                  Clear
+                </button>
+              </div>
+            </motion.div>
+          </>
+        ) : null}
+      </AnimatePresence>
 
       <ShopTemplateModal
         template={selectedTemplate}

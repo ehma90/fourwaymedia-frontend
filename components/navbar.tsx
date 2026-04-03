@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
-import { Menu, X } from "lucide-react";
+import { LogOut, Menu, X } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 
@@ -204,25 +204,14 @@ export function Navbar() {
               <div className="border-t border-black/10 p-4 dark:border-white/10">
                 {isAuthenticated ? (
                   <div className="flex flex-col gap-2">
-                    <Link
-                      href="/dashboard"
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "navbar-outline-button h-11 w-full justify-center border-2 text-[16px] font-medium text-white",
-                      )}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      Dashboard
-                    </Link>
                     <button
                       type="button"
-                      className={cn(
-                        buttonVariants({ variant: "primary" }),
-                        "h-11 w-full justify-center text-[16px] font-medium",
-                      )}
+                      role="menuitem"
+                      className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm text-red-700 transition-colors hover:bg-red-500/10 dark:text-red-300 dark:hover:bg-red-500/15 cursor-pointer"
                       onClick={handleSignOutFromDrawer}
                     >
-                      Sign out
+                      <LogOut size={18} className="shrink-0 opacity-90" aria-hidden />
+                      Logout
                     </button>
                   </div>
                 ) : (
