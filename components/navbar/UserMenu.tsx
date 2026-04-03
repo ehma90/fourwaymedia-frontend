@@ -33,7 +33,7 @@ function buildDashboardMenuItems(isSubscribed: boolean): MenuNavItem[] {
   ];
   if (isSubscribed) {
     items.push(
-      { href: "/dashboard/downloads", label: "Downloads", icon: Download },
+      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
       { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
     );
   } else {

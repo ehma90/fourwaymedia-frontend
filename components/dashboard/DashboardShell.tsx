@@ -39,7 +39,7 @@ function getInitials(displayName: string): string {
 
 const DASHBOARD_ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Overview",
-  "/dashboard/downloads": "Downloads",
+  "/dashboard/downloads": "My downloads",
   "/dashboard/subscription": "Subscription",
   "/dashboard/billing": "Billing",
   "/dashboard/notifications": "Notifications",
@@ -69,7 +69,7 @@ function buildNavItems(isSubscribed: boolean): NavItem[] {
   ];
   if (isSubscribed) {
     items.push(
-      { href: "/dashboard/downloads", label: "Downloads", icon: Download },
+      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
       { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
     );
   } else {

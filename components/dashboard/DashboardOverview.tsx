@@ -103,7 +103,7 @@ export function DashboardOverview() {
                   className={cn(buttonVariants({ variant: "primary" }), "inline-flex h-10 items-center gap-2 px-4 text-sm")}
                 >
                   <Download className="h-4 w-4" aria-hidden />
-                  Downloads
+                  My downloads
                 </Link>
               </div>
             </div>
@@ -132,7 +132,7 @@ export function DashboardOverview() {
             />
           ) : (
             <>
-              <QuickLink href="/dashboard/downloads" label="Downloads" icon={Download} />
+              <QuickLink href="/dashboard/downloads" label="My downloads" icon={Download} />
               <QuickLink href="/dashboard/billing" label="Billing" icon={CreditCard} />
             </>
           )}
@@ -168,7 +168,7 @@ export function DashboardOverview() {
             <div className="flex items-start gap-2">
               <Download className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" aria-hidden />
               <div className="min-w-0">
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Downloads</p>
+                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">My downloads</p>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
                   0 items available in your library.
                 </p>
@@ -176,7 +176,7 @@ export function DashboardOverview() {
                   href="/dashboard/downloads"
                   className="mt-2 inline-block text-sm font-medium text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
                 >
-                  Go to downloads
+                  Go to my downloads
                 </Link>
               </div>
             </div>
