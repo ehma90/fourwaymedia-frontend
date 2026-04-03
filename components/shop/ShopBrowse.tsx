@@ -255,7 +255,7 @@ export function ShopBrowse() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="mobile-filters-title"
-              className="fixed inset-y-0 right-0 z-160 flex w-full max-w-xs flex-col border-l border-neutral-200/90 bg-[#f7f3eb] shadow-2xl lg:hidden dark:border-white/10 dark:bg-[#252525]"
+              className="fixed inset-y-0 right-0 z-160 flex w-full max-w-[200px] flex-col border-l border-neutral-200/90 bg-[#f7f3eb] shadow-2xl lg:hidden dark:border-white/10 dark:bg-[#252525]"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

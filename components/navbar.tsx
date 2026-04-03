@@ -155,7 +155,7 @@ export function Navbar() {
               role="dialog"
               aria-modal="true"
               aria-labelledby={titleId}
-              className="fixed inset-y-0 right-0 z-70 flex w-[min(100vw-2.5rem,20rem)] flex-col border-l border-black/10 bg-background/95 text-foreground shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/95 md:hidden"
+              className="fixed inset-y-0 right-0 z-70 flex w-[min(100vw-10.5rem,20rem)] flex-col border-l border-black/10 bg-background/95 text-foreground shadow-2xl backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/95 md:hidden"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
