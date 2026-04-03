@@ -257,13 +257,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <ThemeToggle />
               <Link
                 href="/dashboard/settings"
-                className="rounded-full ring-2 ring-zinc-300 ring-offset-2 ring-offset-white transition-opacity hover:opacity-90 focus-visible:outline-none focus-visible:ring-amber-500/50 dark:ring-zinc-700 dark:ring-offset-zinc-950 dark:focus-visible:ring-amber-400/60"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-8 md:w-8 md:text-sm"
                 aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
                 title={MOCK_USER_DISPLAY_NAME}
               >
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-zinc-600 to-zinc-800 text-xs font-semibold uppercase tracking-wide text-white">
-                  {userInitials}
-                </span>
+                {userInitials}
               </Link>
             </div>
           </header>
