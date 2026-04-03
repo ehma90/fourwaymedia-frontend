@@ -102,7 +102,7 @@ export function UserMenu() {
         aria-controls={open ? `user-menu-${menuId}` : undefined}
         onClick={() => setOpen((o) => !o)}
         className={cn(
-          "flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-white/20 bg-white/5 px-2 text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40 md:h-10 md:gap-2 md:px-2.5",
+          "flex h-9 cursor-pointer items-center gap-1.5 rounded-xl px-2 text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40 md:h-10 md:gap-2 md:px-2.5",
         )}
       >
         <span
