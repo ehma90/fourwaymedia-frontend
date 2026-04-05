@@ -23,7 +23,7 @@ export function ThemeToggle({ className }: ThemeToggleProps = {}) {
         title={toggleLabel}
         onClick={() => setTheme(isDark ? "light" : "dark")}
         className={cn(
-          "flex h-9 cursor-pointer items-center justify-center gap-1 rounded-xl bg-gray-600 px-2.5 text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40",
+          "flex h-9 md:h-10 cursor-pointer items-center justify-center gap-1 rounded-xl bg-transparent border border-white/20 px-2.5 md:px-3 hover:bg-white/10 text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40",
           className,
         )}
       >

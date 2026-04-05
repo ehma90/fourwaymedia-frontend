@@ -187,15 +187,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 />
               </Link>
               <div className="flex shrink-0 items-center gap-2 md:gap-3">
-                <ThemeToggle />
-                <Link
-                  href="/dashboard/settings"
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
-                  aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
-                  title={MOCK_USER_DISPLAY_NAME}
-                >
-                  {userInitials}
-                </Link>
+
                 <button
                   type="button"
                   className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-800 transition-colors hover:bg-zinc-100 md:hidden dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
@@ -258,10 +250,21 @@ export function DashboardShell({ children }: DashboardShellProps) {
         )}
 
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50">
-          <header className="sticky top-0 z-30 border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8">
+          <header className="sticky top-0 z-30 flex items-center justify-between border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8">
             <h1 className="min-w-0 font-[family-name:var(--font-bitter)] text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl dark:text-zinc-50">
               {pageTitle}
             </h1>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Link
+                href="/dashboard/settings"
+                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
+                aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
+                title={MOCK_USER_DISPLAY_NAME}
+              >
+                {userInitials}
+              </Link>
+            </div>
           </header>
           <div className="flex-1 px-4 py-6 md:px-8 md:py-10">{children}</div>
         </main>
