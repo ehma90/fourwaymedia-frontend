@@ -137,7 +137,7 @@ export function DashboardOverview() {
             </>
           )}
           <QuickLink href="/dashboard/notifications" label="Notifications" icon={Bell} />
-          <QuickLink href="/dashboard/settings" label="Account" icon={Settings} />
+          <QuickLink href="/dashboard/account" label="Account" icon={Settings} />
         </ul>
       </section>
 

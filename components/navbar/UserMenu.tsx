@@ -45,7 +45,7 @@ function buildDashboardMenuItems(isSubscribed: boolean): MenuNavItem[] {
   }
   items.push(
     { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
-    { href: "/dashboard/settings", label: "Account", icon: Settings },
+    { href: "/dashboard/account", label: "Account", icon: Settings },
   );
   return items;
 }
