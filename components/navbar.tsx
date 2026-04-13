@@ -93,7 +93,7 @@ export function Navbar() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2 md:gap-3">
-          <ThemeToggle />
+          <ThemeToggle variant="onDark" />
           {isAuthenticated ? (
             <div className="flex items-center">
               <UserMenu />

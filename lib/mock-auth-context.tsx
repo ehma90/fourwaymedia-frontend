@@ -14,6 +14,9 @@ const STORAGE_KEY = "fourwaymedia-mock-auth";
 
 /** Phase A mock — replace with session / profile API */
 export const MOCK_USER_DISPLAY_NAME = "Jane Doe";
+export const MOCK_USER_EMAIL = "jane@example.com";
+/** Prefill avatar when you have a stored URL; `null` shows initials placeholder */
+export const MOCK_USER_AVATAR_URL: string | null = null;
 
 type MockAuthContextValue = {
   isAuthenticated: boolean;
