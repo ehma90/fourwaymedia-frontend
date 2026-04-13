@@ -62,7 +62,20 @@ export function PricingPlansSection({
                   : "border-black/10 dark:border-white/10",
               )}
             >
-            
+              {plan.badge ? (
+                <div className="absolute -top-3 left-1/2 z-10 -translate-x-1/2 sm:left-auto sm:right-5 sm:translate-x-0">
+                  <span
+                    className={cn(
+                      "inline-flex rounded-full px-3 py-1 text-xs font-semibold tracking-wide",
+                      isPremium
+                        ? "bg-emerald-600 text-white shadow-sm dark:bg-emerald-500"
+                        : "bg-copy-primary/10 text-copy-primary",
+                    )}
+                  >
+                    {plan.badge}
+                  </span>
+                </div>
+              ) : null}
 
               <div className="text-center sm:text-left">
                 <h3 className="text-lg font-semibold text-copy-primary">{plan.name}</h3>

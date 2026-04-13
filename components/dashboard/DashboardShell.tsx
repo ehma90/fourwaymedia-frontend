@@ -265,7 +265,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <Link
-                href="/dashboard/settings"
+                href="/dashboard/account"
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
                 aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
                 title={MOCK_USER_DISPLAY_NAME}
