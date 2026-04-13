@@ -13,15 +13,15 @@ export type UploadProfilePhotoErrorBody = {
   error: string;
 };
 
-const MAX_CLIENT_BYTES = 5 * 1024 * 1024;
-const ACCEPT_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+const MAX_CLIENT_BYTES = 2 * 1024 * 1024;
+const ACCEPT_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
 export function validateProfilePhotoFile(file: File): string | null {
   if (!ACCEPT_TYPES.includes(file.type)) {
-    return "Please choose a JPEG, PNG, WebP, or GIF image.";
+    return "Please choose a JPEG, PNG, or WebP image.";
   }
   if (file.size > MAX_CLIENT_BYTES) {
-    return "Image must be 5 MB or smaller.";
+    return "Image must be 2 MB or smaller.";
   }
   return null;
 }

@@ -2,8 +2,8 @@ import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
 
-const MAX_BYTES = 5 * 1024 * 1024;
-const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp", "image/gif"]);
+const MAX_BYTES = 2 * 1024 * 1024;
+const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp"]);
 
 type CloudinaryUploadResponse = {
   secure_url?: string;
@@ -40,14 +40,14 @@ export async function POST(request: Request) {
 
   if (!ALLOWED.has(file.type)) {
     return NextResponse.json(
-      { error: "Invalid file type. Use JPEG, PNG, WebP, or GIF." },
+      { error: "Invalid file type. Use JPEG, PNG, or WebP." },
       { status: 400 },
     );
   }
 
   if (file.size > MAX_BYTES) {
     return NextResponse.json(
-      { error: "File too large. Maximum size is 5 MB." },
+      { error: "File too large. Maximum size is 2 MB." },
       { status: 400 },
     );
   }

@@ -172,7 +172,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
       <div className="flex min-h-screen flex-col md:flex-row">
         <aside className="flex min-h-0 shrink-0 flex-col border-b border-zinc-200 bg-white md:min-h-screen md:w-68 md:border-b-0 md:border-r dark:border-zinc-800 dark:bg-zinc-950">
-          <div className="flex min-h-0 flex-1 flex-col gap-4 px-4 py-3 md:py-5">
+          <div className="flex min-h-0 flex-1 flex-col gap-4 px-4 md:py-5">
             <div className="flex items-center justify-between gap-2">
               <Link href="/" aria-label="Fourwaymedia home" className="min-w-0 shrink">
                 <img
@@ -237,9 +237,9 @@ export function DashboardShell({ children }: DashboardShellProps) {
               aria-label="Close menu"
               onClick={() => setMobileOpen(false)}
             />
-            <div className="fixed inset-x-0 top-22 z-50 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden">
+            <div className="fixed inset-x-0 top-[65px] right-1 rounded-xl w-60 ml-auto z-50 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden ">
               <nav className="flex flex-col" aria-label="Dashboard">
-                <div className="flex flex-col gap-0.5 mb-3">
+                <div className="flex flex-col gap-0.5 my-3">
                   {navItems.map((item) => {
                     const Icon = item.icon;
                     return (
@@ -262,9 +262,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50">
           <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
 
-            <h1 className="min-w-0 font-[family-name:var(--font-bitter)] text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl dark:text-zinc-50">
-              {pageTitle}
-            </h1>
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <Link

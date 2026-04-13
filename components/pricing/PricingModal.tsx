@@ -1,13 +1,10 @@
 "use client";
 
-import { Check, X } from "lucide-react";
-import Link from "next/link";
+import { X } from "lucide-react";
 import { useCallback, useEffect, useId, useRef } from "react";
 import { createPortal } from "react-dom";
 
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { pricingModalCopy, pricingPlans } from "@/mock-data/pricing-plans";
+import { PricingPlansSection } from "@/components/pricing/PricingPlansSection";
 
 type PricingModalProps = {
   open: boolean;
@@ -67,103 +64,7 @@ export function PricingModal({ open, onClose }: PricingModalProps) {
         </button>
 
         <div className="overflow-y-auto px-6 pb-8 pt-14 sm:px-8 sm:py-10 sm:pt-16">
-          <div className="text-center">
-            <h2
-              id={titleId}
-              className="text-2xl font-bold tracking-tight text-copy-primary sm:text-3xl"
-            >
-              {pricingModalCopy.title}
-            </h2>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-copy-body sm:text-base">
-              {pricingModalCopy.subtitle}
-            </p>
-          </div>
-
-          <div className="mt-10 grid gap-6 sm:grid-cols-2 sm:gap-5">
-            {pricingPlans.map((plan) => {
-              const isPremium = plan.id === "premium";
-              return (
-                <div
-                  key={plan.id}
-                  className={cn(
-                    "relative flex flex-col rounded-2xl border bg-background p-6 sm:p-7",
-                    isPremium
-                      ? "border-copy-primary/25 shadow-md dark:border-white/20"
-                      : "border-black/10 dark:border-white/10",
-                  )}
-                >
-                  {plan.badge ? (
-                    <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-copy-primary px-3 py-1 text-xs font-medium text-background">
-                      {plan.badge}
-                    </span>
-                  ) : null}
-
-                  <div className="text-center sm:text-left">
-                    <h3 className="text-lg font-semibold text-copy-primary">{plan.name}</h3>
-                    <div className="mt-4 flex flex-wrap items-baseline justify-center gap-1 sm:justify-start">
-                      <span
-                        className={cn(
-                          "text-4xl font-bold tabular-nums tracking-tight sm:text-[2.75rem]",
-                          isPremium
-                            ? "text-emerald-600 dark:text-emerald-400"
-                            : "text-copy-primary",
-                        )}
-                      >
-                        {plan.price}
-                      </span>
-                      {plan.pricePeriod ? (
-                        <span className="text-sm font-medium text-copy-body">{plan.pricePeriod}</span>
-                      ) : null}
-                    </div>
-                    {plan.priceNote ? (
-                      <p className="mt-2 text-xs leading-relaxed text-copy-body sm:text-sm">
-                        {plan.priceNote}
-                      </p>
-                    ) : null}
-                    <p className="mt-3 text-sm text-copy-body">{plan.tagline}</p>
-                  </div>
-
-                  <ul className="mt-6 flex flex-1 flex-col gap-3 text-left text-sm text-copy-primary sm:text-[15px]">
-                    {plan.bullets.map((line) => (
-                      <li key={line} className="flex gap-2.5 leading-snug">
-                        <Check
-                          className="mt-0.5 h-4 w-4 shrink-0 text-copy-body"
-                          strokeWidth={2}
-                          aria-hidden
-                        />
-                        <span className="text-copy-body">{line}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {isPremium ? (
-                    // TODO: Stripe Checkout — replace href when subscription checkout is ready
-                    <Link
-                      href="/sign-up"
-                      onClick={onClose}
-                      className={cn(
-                        buttonVariants({ variant: "primary" }),
-                        "mt-8 inline-flex h-12 w-full items-center justify-center px-6 text-base font-medium",
-                      )}
-                    >
-                      {plan.ctaLabel}
-                    </Link>
-                  ) : (
-                    <Link
-                      href="/sign-up"
-                      onClick={onClose}
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "navbar-outline-button mt-8 inline-flex h-12 w-full items-center justify-center border-2 px-6 text-base font-medium text-white",
-                      )}
-                    >
-                      {plan.ctaLabel}
-                    </Link>
-                  )}
-                </div>
-              );
-            })}
-          </div>
+          <PricingPlansSection titleId={titleId} onCtaNavigate={onClose} />
         </div>
       </div>
     </div>,
