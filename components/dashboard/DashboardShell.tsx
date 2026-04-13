@@ -187,6 +187,17 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 />
               </Link>
               <div className="flex shrink-0 items-center gap-2 md:gap-3">
+                <div className="flex items-center gap-2">
+                  <ThemeToggle />
+                  <Link
+                    href="/dashboard/settings"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
+                    aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
+                    title={MOCK_USER_DISPLAY_NAME}
+                  >
+                    {userInitials}
+                  </Link>
+                </div>
 
                 <button
                   type="button"
@@ -254,17 +265,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
             <h1 className="min-w-0 font-[family-name:var(--font-bitter)] text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl dark:text-zinc-50">
               {pageTitle}
             </h1>
-            <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <Link
-                href="/dashboard/settings"
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
-                aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
-                title={MOCK_USER_DISPLAY_NAME}
-              >
-                {userInitials}
-              </Link>
-            </div>
+
           </header>
           <div className="flex-1 px-4 py-6 md:px-8 md:py-10">{children}</div>
         </main>

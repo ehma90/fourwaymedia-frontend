@@ -1,4 +1,4 @@
-export default function DashboardSettingsPage() {
+export default function DashboardAccountPage() {
   return (
     <div className="mx-auto max-w-3xl space-y-3">
       <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">

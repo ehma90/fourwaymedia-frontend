@@ -88,7 +88,7 @@ export function ShopBrowse() {
 
   return (
     <section
-      className=" py-14 sm:py-16 dark:border-white/10"
+      className="pt-5 pb-14 sm:py-16 dark:border-white/10"
       aria-labelledby="shop-browse-heading"
     >
       <div
