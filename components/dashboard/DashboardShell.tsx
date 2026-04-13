@@ -73,11 +73,14 @@ function buildNavItems(isSubscribed: boolean): NavItem[] {
       { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
     );
   } else {
-    items.push({
-      href: "/dashboard/subscription",
-      label: "Subscription",
-      icon: Sparkles,
-    });
+    items.push(
+      {
+        href: "/dashboard/subscription",
+        label: "Subscription",
+        icon: Sparkles,
+      },
+      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
+    );
   }
   items.push(
     { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
@@ -237,7 +240,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               aria-label="Close menu"
               onClick={() => setMobileOpen(false)}
             />
-            <div className="fixed inset-x-0 top-[65px] right-1 rounded-xl w-60 ml-auto z-50 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden ">
+            <div className="fixed top-[65px] right-1 z-50 w-60 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto rounded-xl border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden">
               <nav className="flex flex-col" aria-label="Dashboard">
                 <div className="flex flex-col gap-0.5 my-3">
                   {navItems.map((item) => {
