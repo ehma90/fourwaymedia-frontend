@@ -24,7 +24,7 @@ export default function SignInPage() {
 
         {/* Right: gradient + showcase */}
         <div
-          className="relative flex flex-1 flex-col justify-center lg:min-h-screen lg:max-w-[52%] xl:max-w-none"
+          className="relative hidden md:flex flex-1 flex-col justify-center lg:min-h-screen lg:max-w-[52%] xl:max-w-none"
           style={{
             background:
               "linear-gradient(95deg, rgba(196, 104, 211, 0.6) 0%, rgba(6, 161, 33, 0.6) 100%)",

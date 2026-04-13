@@ -162,7 +162,7 @@ export function DashboardAccountContent() {
                   id="account-photo-hint"
                   className="mt-2 text-sm text-zinc-600 dark:text-zinc-400"
                 >
-                  JPEG, PNG, WebP, or GIF, up to 2 MB.
+                  JPEG, PNG, or WebP up to 2 MB.
                 </p>
                 {photoError ? (
                   <p
@@ -190,20 +190,7 @@ export function DashboardAccountContent() {
               className={inputFieldClassName}
             />
           </div>
-          <div>
-            <label htmlFor="account-email" className={labelClass}>
-              Email address
-            </label>
-            <input
-              id="account-email"
-              name="email"
-              type="email"
-              autoComplete="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={inputFieldClassName}
-            />
-          </div>
+         
           {profileMessage ? (
             <p
               id="account-profile-feedback"

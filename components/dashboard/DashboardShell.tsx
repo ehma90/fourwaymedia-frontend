@@ -191,7 +191,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   <ThemeToggle />
                   <Link
                     href="/dashboard/settings"
-                    className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
                     aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
                     title={MOCK_USER_DISPLAY_NAME}
                   >
@@ -266,7 +266,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <ThemeToggle />
               <Link
                 href="/dashboard/settings"
-                className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
                 aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
                 title={MOCK_USER_DISPLAY_NAME}
               >

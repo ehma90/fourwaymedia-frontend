@@ -18,7 +18,7 @@ export default function SignUpPage() {
       <BackButton className="absolute left-4 top-4 z-10 rounded-lg px-3 py-2 text-sm font-medium text-neutral-600 transition-colors hover:text-neutral-950 dark:text-neutral-400 dark:hover:text-white sm:left-6 sm:top-6" />
 
       <div className="flex min-h-screen flex-col-reverse lg:flex-row">
-        <div className="relative flex flex-1 flex-col justify-center lg:min-h-screen lg:max-w-[52%] xl:max-w-none"
+        <div className="relative hidden md:flex flex-1 flex-col justify-center lg:min-h-screen lg:max-w-[52%] xl:max-w-none"
           style={{
             background:
               "linear-gradient(95deg, rgba(196, 104, 211, 0.6) 0%, rgba(6, 161, 33, 0.6) 100%)",
