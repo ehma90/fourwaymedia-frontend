@@ -43,7 +43,7 @@ const DASHBOARD_ROUTE_TITLES: Record<string, string> = {
   "/dashboard/subscription": "Subscription",
   "/dashboard/billing": "Billing",
   "/dashboard/notifications": "Notifications",
-  "/dashboard/settings": "Account",
+  "/dashboard/account": "Account",
   "/dashboard/purchases": "Purchases",
 };
 
@@ -81,7 +81,7 @@ function buildNavItems(isSubscribed: boolean): NavItem[] {
   }
   items.push(
     { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
-    { href: "/dashboard/settings", label: "Account", icon: Settings },
+    { href: "/dashboard/account", label: "Account", icon: Settings },
   );
   return items;
 }
@@ -190,7 +190,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 <div className="md:hidden flex items-center gap-2">
                   <ThemeToggle />
                   <Link
-                    href="/dashboard/settings"
+                    href="/dashboard/account"
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
                     aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
                     title={MOCK_USER_DISPLAY_NAME}
@@ -262,6 +262,9 @@ export function DashboardShell({ children }: DashboardShellProps) {
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50">
           <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
 
+            <h1 className="min-w-0 font-[family-name:var(--font-bitter)] text-xl font-semibold tracking-tight text-zinc-900 md:text-2xl dark:text-zinc-50">
+              {pageTitle}
+            </h1>
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <Link

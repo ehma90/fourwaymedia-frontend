@@ -162,7 +162,7 @@ export function DashboardAccountContent() {
                   id="account-photo-hint"
                   className="mt-2 text-sm text-zinc-600 dark:text-zinc-400"
                 >
-                  JPEG, PNG, or WebP up to 2 MB.
+                  JPEG, PNG, WebP, or GIF up to 5 MB.
                 </p>
                 {photoError ? (
                   <p
