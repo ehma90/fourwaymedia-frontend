@@ -40,10 +40,9 @@ function DownloadAgainButton({
     <Button
       type="button"
       variant="outline"
-      size="sm"
       className={cn(
-        "w-full border-2 border-zinc-300 bg-white text-zinc-800 shadow-none hover:brightness-100 dark:border-zinc-600 dark:bg-zinc-900/80 dark:text-zinc-100 md:w-auto",
-        "shrink-0 transition-opacity duration-200",
+        "navbar-outline-button inline-flex h-9 min-w-0 items-center justify-center border-2 px-2 text-sm font-medium text-white md:h-10 md:min-w-[120px] md:px-6 ",
+        "w-full shrink-0 transition-opacity duration-200 md:w-auto",
         "opacity-100",
         "md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100",
       )}

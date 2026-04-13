@@ -19,7 +19,7 @@ export type DashboardSubscriptionState = {
  * Replace with real subscription resolution when the API exists.
  */
 export function getDashboardSubscriptionMock(): DashboardSubscriptionState {
-  const isSubscribed = false;
+  const isSubscribed = true;
   return {
     isSubscribed,
     isLoading: false,

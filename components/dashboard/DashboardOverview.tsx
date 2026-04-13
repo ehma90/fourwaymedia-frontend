@@ -3,18 +3,24 @@
 import Link from "next/link";
 import {
   Bell,
+  CalendarClock,
   CreditCard,
   Download,
   HelpCircle,
+  Inbox,
   Settings,
   Sparkles,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { useMemo } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
 import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
 import { MOCK_USER_DISPLAY_NAME } from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
+import type { DownloadedAsset } from "@/mock-data/downloads";
+import { MOCK_DOWNLOADS } from "@/mock-data/downloads";
+import { MOCK_NOTIFICATIONS } from "@/mock-data/notifications";
 
 function firstName(displayName: string): string {
   const part = displayName.trim().split(/\s+/)[0];
@@ -24,9 +30,56 @@ function firstName(displayName: string): string {
 const cardClass =
   "rounded-2xl border border-zinc-200/90 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/40";
 
+const ROLLING_30_DAYS_MS = 30 * 86_400_000;
+
+function countDownloadsRolling30Days(
+  downloads: DownloadedAsset[],
+  nowMs: number = Date.now(),
+): number {
+  const cutoff = nowMs - ROLLING_30_DAYS_MS;
+  return downloads.filter((d) => {
+    const t = new Date(d.downloadedAt).getTime();
+    return !Number.isNaN(t) && t >= cutoff;
+  }).length;
+}
+
+function lastDownloadSummary(downloads: DownloadedAsset[]): string | null {
+  if (downloads.length === 0) return null;
+  let latest = downloads[0]!;
+  let latestMs = new Date(latest.downloadedAt).getTime();
+  for (let i = 1; i < downloads.length; i++) {
+    const t = new Date(downloads[i]!.downloadedAt).getTime();
+    if (!Number.isNaN(t) && t > latestMs) {
+      latestMs = t;
+      latest = downloads[i]!;
+    }
+  }
+  if (Number.isNaN(latestMs)) return null;
+  const d = new Date(latestMs);
+  return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: "numeric" }).format(
+    d,
+  );
+}
+
 export function DashboardOverview() {
   const { isSubscribed, planName, renewalDateLabel } = useDashboardSubscription();
   const name = firstName(MOCK_USER_DISPLAY_NAME);
+
+  const unreadNotificationCount = useMemo(
+    () => MOCK_NOTIFICATIONS.filter((n) => !n.read).length,
+    [],
+  );
+  const totalNotificationCount = MOCK_NOTIFICATIONS.length;
+
+  const downloadsRolling30 = useMemo(
+    () => (isSubscribed ? countDownloadsRolling30Days(MOCK_DOWNLOADS) : 0),
+    [isSubscribed],
+  );
+  const totalLibraryCount = isSubscribed ? MOCK_DOWNLOADS.length : 0;
+  const lastDownloadLine = useMemo(
+    () => (isSubscribed ? lastDownloadSummary(MOCK_DOWNLOADS) : null),
+    [isSubscribed],
+  );
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-8">
@@ -111,6 +164,71 @@ export function DashboardOverview() {
         )}
       </section>
 
+      <section aria-labelledby="overview-metrics-heading">
+        <h2
+          id="overview-metrics-heading"
+          className="text-sm font-semibold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400"
+        >
+          Metrics
+        </h2>
+        <div
+          className={cn(
+            "mt-3 grid gap-3",
+            isSubscribed ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-2",
+          )}
+        >
+          <MetricStat
+            label="Unread"
+            value={unreadNotificationCount}
+            sublabel="Notifications"
+            icon={Inbox}
+          />
+          {isSubscribed ? (
+            <>
+              <MetricStat
+                label="Last 30 days"
+                value={downloadsRolling30}
+                sublabel="Downloads"
+                icon={Download}
+              />
+              <MetricStat
+                label="Library"
+                value={totalLibraryCount}
+                sublabel="Total templates"
+                icon={Sparkles}
+              />
+              <MetricStat
+                label="Last download"
+                value={lastDownloadLine ?? "—"}
+                sublabel={lastDownloadLine ? "Most recent" : "No activity yet"}
+                icon={CalendarClock}
+              />
+            </>
+          ) : (
+            <div
+              className={cn(
+                cardClass,
+                "flex flex-col justify-center border-dashed border-zinc-300 dark:border-zinc-600 sm:col-span-1",
+              )}
+            >
+              <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Download activity</p>
+              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                Subscribe to Premium to track rolling 30-day downloads and your library.
+              </p>
+              <Link
+                href="/dashboard/subscription"
+                className={cn(
+                  buttonVariants({ variant: "outline" }),
+                  "mt-3 inline-flex h-9 w-fit items-center border-2 px-4 text-sm",
+                )}
+              >
+                View plans
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
       <section aria-labelledby="overview-quick-heading">
         <h2
           id="overview-quick-heading"
@@ -153,7 +271,17 @@ export function DashboardOverview() {
             <Bell className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" aria-hidden />
             <div className="min-w-0">
               <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Notifications</p>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">No notifications yet.</p>
+              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                {totalNotificationCount === 0
+                  ? "No notifications yet."
+                  : unreadNotificationCount > 0
+                    ? `${unreadNotificationCount} unread${
+                        totalNotificationCount > unreadNotificationCount
+                          ? ` · ${totalNotificationCount} total`
+                          : ""
+                      }.`
+                    : "You’re all caught up."}
+              </p>
               <Link
                 href="/dashboard/notifications"
                 className="mt-2 inline-block text-sm font-medium text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
@@ -170,7 +298,13 @@ export function DashboardOverview() {
               <div className="min-w-0">
                 <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">My downloads</p>
                 <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                  0 items available in your library.
+                  {totalLibraryCount === 0
+                    ? "No templates in your library yet."
+                    : `${totalLibraryCount} template${totalLibraryCount === 1 ? "" : "s"} in your library${
+                        downloadsRolling30 > 0
+                          ? ` · ${downloadsRolling30} downloaded in the last 30 days`
+                          : ""
+                      }.`}
                 </p>
                 <Link
                   href="/dashboard/downloads"
@@ -194,6 +328,33 @@ export function DashboardOverview() {
           Contact us
         </Link>
       </p>
+    </div>
+  );
+}
+
+function MetricStat({
+  label,
+  value,
+  sublabel,
+  icon: Icon,
+}: {
+  label: string;
+  value: string | number;
+  sublabel: string;
+  icon: LucideIcon;
+}) {
+  return (
+    <div className={cn(cardClass, "flex flex-col gap-2 p-4 sm:p-5")}>
+      <div className="flex items-start justify-between gap-2">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">
+          {label}
+        </span>
+        <Icon className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden />
+      </div>
+      <p className="text-2xl font-semibold tabular-nums tracking-tight text-zinc-900 dark:text-zinc-50">
+        {value}
+      </p>
+      <p className="text-xs text-zinc-600 dark:text-zinc-400">{sublabel}</p>
     </div>
   );
 }

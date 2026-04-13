@@ -13,7 +13,7 @@ import {
 } from "@/mock-data/notifications";
 
 const cardClass =
-  "rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:border-zinc-800 dark:bg-zinc-900/40 dark:shadow-none ";
+  "rounded-2xl bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] dark:border-zinc-800 dark:bg-zinc-900/40 dark:shadow-none ";
 
 const kindIconWell: Record<NotificationKind, string> = {
   billing:
