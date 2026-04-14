@@ -62,7 +62,7 @@ function getDashboardPageTitle(pathname: string): string {
 
 type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
 
-/** Subscription upsell vs Premium routes — see plan: subscription hidden when subscribed; billing + downloads when subscribed. */
+/** Subscription upsell vs Premium routes — billing + downloads only when subscribed (downloads page is subscriber-only). */
 function buildNavItems(isSubscribed: boolean): NavItem[] {
   const items: NavItem[] = [
     { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
@@ -73,14 +73,11 @@ function buildNavItems(isSubscribed: boolean): NavItem[] {
       { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
     );
   } else {
-    items.push(
-      {
-        href: "/dashboard/subscription",
-        label: "Subscription",
-        icon: Sparkles,
-      },
-      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
-    );
+    items.push({
+      href: "/dashboard/subscription",
+      label: "Subscription",
+      icon: Sparkles,
+    });
   }
   items.push(
     { href: "/dashboard/notifications", label: "Notifications", icon: Bell },

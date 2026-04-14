@@ -22,8 +22,11 @@ function formatDownloadedAt(iso: string): string {
   if (Number.isNaN(d.getTime())) return iso;
   const now = Date.now();
   const diffMs = now - d.getTime();
+  if (diffMs < 0) {
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(d);
+  }
   const diffDays = Math.floor(diffMs / 86_400_000);
-  if (diffDays <= 0) return "Today";
+  if (diffDays === 0) return "Today";
   if (diffDays === 1) return "Yesterday";
   if (diffDays < 7) return `${diffDays} days ago`;
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(d);

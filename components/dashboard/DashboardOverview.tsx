@@ -44,20 +44,15 @@ function countDownloadsRolling30Days(
 }
 
 function lastDownloadSummary(downloads: DownloadedAsset[]): string | null {
-  if (downloads.length === 0) return null;
-  let latest = downloads[0]!;
-  let latestMs = new Date(latest.downloadedAt).getTime();
-  for (let i = 1; i < downloads.length; i++) {
-    const t = new Date(downloads[i]!.downloadedAt).getTime();
-    if (!Number.isNaN(t) && t > latestMs) {
-      latestMs = t;
-      latest = downloads[i]!;
-    }
+  let bestMs = NaN;
+  for (const d of downloads) {
+    const t = new Date(d.downloadedAt).getTime();
+    if (Number.isNaN(t)) continue;
+    if (Number.isNaN(bestMs) || t > bestMs) bestMs = t;
   }
-  if (Number.isNaN(latestMs)) return null;
-  const d = new Date(latestMs);
+  if (Number.isNaN(bestMs)) return null;
   return new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", year: "numeric" }).format(
-    d,
+    new Date(bestMs),
   );
 }
 

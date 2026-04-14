@@ -37,14 +37,11 @@ function buildDashboardMenuItems(isSubscribed: boolean): MenuNavItem[] {
       { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
     );
   } else {
-    items.push(
-      {
-        href: "/dashboard/subscription",
-        label: "Subscription",
-        icon: Sparkles,
-      },
-      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
-    );
+    items.push({
+      href: "/dashboard/subscription",
+      label: "Subscription",
+      icon: Sparkles,
+    });
   }
   items.push(
     { href: "/dashboard/notifications", label: "Notifications", icon: Bell },

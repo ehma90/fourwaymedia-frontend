@@ -24,20 +24,30 @@ const kindIconWell: Record<NotificationKind, string> = {
     "border-violet-200/80 bg-gradient-to-br from-violet-50 to-violet-100/70 text-violet-800 dark:border-violet-800/60 dark:from-violet-950/50 dark:to-violet-900/30 dark:text-violet-200",
 };
 
+function localCalendarDaysBetween(from: Date, to: Date): number {
+  const start = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+  const end = new Date(to.getFullYear(), to.getMonth(), to.getDate());
+  return Math.round((end.getTime() - start.getTime()) / 86_400_000);
+}
+
 function formatRelativeTime(iso: string): string {
   const d = new Date(iso);
   if (Number.isNaN(d.getTime())) return iso;
-  const now = Date.now();
-  const diffMs = now - d.getTime();
+  const now = new Date();
+  const diffMs = now.getTime() - d.getTime();
+  if (diffMs < 0) {
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(d);
+  }
   const diffMins = Math.floor(diffMs / 60_000);
   const diffHours = Math.floor(diffMs / 3_600_000);
-  const diffDays = Math.floor(diffMs / 86_400_000);
   if (diffMins < 1) return "Just now";
   if (diffMins < 60) return `${diffMins} min ago`;
   if (diffHours < 24) return `${diffHours} hr ago`;
-  if (diffDays === 0) return "Today";
-  if (diffDays === 1) return "Yesterday";
-  if (diffDays < 7) return `${diffDays} days ago`;
+
+  const calendarDays = localCalendarDaysBetween(d, now);
+  if (calendarDays === 0) return "Today";
+  if (calendarDays === 1) return "Yesterday";
+  if (calendarDays < 7) return `${calendarDays} days ago`;
   return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(d);
 }
 
