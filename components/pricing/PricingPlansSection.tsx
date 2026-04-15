@@ -43,7 +43,7 @@ export function PricingPlansSection({
 
       <div
         className={cn(
-          "mt-10 grid gap-6 sm:gap-5",
+          "mt-10 grid gap-6 pt-2 sm:gap-5",
           visiblePlans.length === 1
             ? "sm:mx-auto sm:max-w-md sm:grid-cols-1"
             : "sm:grid-cols-2",
@@ -62,7 +62,18 @@ export function PricingPlansSection({
                   : "border-black/10 dark:border-white/10",
               )}
             >
-             
+              {plan.badge ? (
+                <span
+                  className={cn(
+                    "absolute -top-3 left-1/2 z-10 -translate-x-1/2 whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold tracking-wide shadow-sm",
+                    isPremium
+                      ? "bg-emerald-600 text-white dark:bg-emerald-500"
+                      : "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900",
+                  )}
+                >
+                  {plan.badge}
+                </span>
+              ) : null}
 
               <div className="text-center sm:text-left">
                 <h3 className="text-lg font-semibold text-copy-primary">{plan.name}</h3>
