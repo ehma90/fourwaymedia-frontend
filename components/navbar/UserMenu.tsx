@@ -5,16 +5,12 @@ import { useRouter } from "next/navigation";
 import {
   Bell,
   ChevronDown,
-  CreditCard,
   Download,
   LayoutDashboard,
   LogOut,
   Settings,
-  Sparkles,
 } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-
-import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
 import {
   MOCK_USER_DISPLAY_NAME,
   useMockAuth,
@@ -27,28 +23,12 @@ type MenuNavItem = {
   icon: typeof LayoutDashboard;
 };
 
-function buildDashboardMenuItems(isSubscribed: boolean): MenuNavItem[] {
-  const items: MenuNavItem[] = [
-    { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  ];
-  if (isSubscribed) {
-    items.push(
-      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
-      { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
-    );
-  } else {
-    items.push({
-      href: "/dashboard/subscription",
-      label: "Subscription",
-      icon: Sparkles,
-    });
-  }
-  items.push(
-    { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
-    { href: "/dashboard/account", label: "Account", icon: Settings },
-  );
-  return items;
-}
+const dashboardMenuItems: MenuNavItem[] = [
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard/purchases", label: "Purchases", icon: Download },
+  { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
+  { href: "/dashboard/account", label: "Account", icon: Settings },
+];
 
 function getInitials(displayName: string): string {
   const parts = displayName.trim().split(/\s+/).filter(Boolean);
@@ -59,10 +39,8 @@ function getInitials(displayName: string): string {
 
 export function UserMenu() {
   const { signOut } = useMockAuth();
-  const { isSubscribed } = useDashboardSubscription();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const dashboardMenuItems = buildDashboardMenuItems(isSubscribed);
   const containerRef = useRef<HTMLDivElement>(null);
   const menuId = useId();
 

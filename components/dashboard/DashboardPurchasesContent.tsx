@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Download, FolderOpen, Search } from "lucide-react";
+import { Download, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
-import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 import {
@@ -55,25 +54,25 @@ function DownloadAgainButton({
       }}
     >
       <Download className="h-4 w-4" strokeWidth={2} aria-hidden />
-      <span className="ml-2">Download again</span>
+      <span className="ml-2">Download</span>
     </Button>
   );
 }
 
-function SubscribedPageHeader() {
+function PurchasesPageHeader() {
   return (
     <header>
       <h1 className="font-[family-name:var(--font-bitter)] text-2xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-        My downloads
+        My purchases
       </h1>
       <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-        Your template library and quick re-downloads when you need a file again.
+        Your purchased templates and quick downloads when you need a file again.
       </p>
     </header>
   );
 }
 
-function SubscribedEmptyState() {
+function PurchasesEmptyState() {
   return (
     <div className="mx-auto w-full max-w-lg">
       <div
@@ -90,10 +89,10 @@ function SubscribedEmptyState() {
           />
         </span>
         <h2 className="mt-6 font-[family-name:var(--font-bitter)] text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
-          No downloads yet
+          No purchases yet
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Your library is empty. Browse the shop to grab templates—everything you download will
+          Your library is empty. Browse the shop to purchase templates—everything you buy will
           show up here for easy access later.
         </p>
         <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
@@ -121,7 +120,7 @@ function SubscribedEmptyState() {
   );
 }
 
-function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
+function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
 
@@ -139,22 +138,22 @@ function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
   const hasActiveFilters = Boolean(query.trim()) || category !== "all";
 
   return (
-    <section aria-labelledby="downloads-library-heading" className={cardClass}>
-      <div className="flex flex-col gap-4 border-b border-zinc-200 pb-5 dark:border-zinc-800 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+    <section aria-labelledby="purchases-library-heading" className={cardClass}>
+      <div className="flex w-full flex-col gap-4 border-b border-zinc-200 pb-5 dark:border-zinc-800 sm:flex-row sm:items-end sm:justify-between">
+        <div className="flex flex-col lg:flex-row">
           <h2
-            id="downloads-library-heading"
+            id="purchases-library-heading"
             className="text-lg font-semibold text-zinc-900 dark:text-zinc-50"
           >
             Library
           </h2>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-            Search or filter by category. Hover a row on desktop to download again.
+            Search or filter by category. Hover a row on desktop to download.
           </p>
         </div>
-        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
           <label className="relative w-full sm:w-56">
-            <span className="sr-only">Search downloads</span>
+            <span className="sr-only">Search purchases</span>
             <Search
               className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400"
               strokeWidth={2}
@@ -191,7 +190,7 @@ function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
         <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400" role="status">
           {hasActiveFilters
             ? "No results match your search. Try clearing filters or a different term."
-            : "No downloads to show."}
+            : "No purchases to show."}
         </p>
       ) : (
         <>
@@ -203,7 +202,7 @@ function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
                     Template
                   </th>
                   <th className="px-4 py-3 font-medium text-zinc-700 dark:text-zinc-300">
-                    Downloaded
+                    Purchased
                   </th>
                   <th className="px-4 py-3 text-right font-medium text-zinc-700 dark:text-zinc-300">
                     <span className="sr-only">Actions</span>
@@ -267,7 +266,7 @@ function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
             </table>
           </div>
 
-          <ul className="mt-6 flex list-none flex-col gap-3 md:hidden" aria-label="Your downloads">
+          <ul className="mt-6 flex list-none flex-col gap-3 md:hidden" aria-label="Your purchases">
             {filtered.map((item) => (
               <li
                 key={item.id}
@@ -295,7 +294,7 @@ function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
                     </span>
                     <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-400">
                       <time dateTime={item.downloadedAt}>
-                        Downloaded {formatDownloadedAt(item.downloadedAt)}
+                        Purchased {formatDownloadedAt(item.downloadedAt)}
                       </time>
                     </p>
                     <Link
@@ -321,41 +320,13 @@ function DownloadsLibrary({ items }: { items: DownloadedAsset[] }) {
   );
 }
 
-export function DashboardDownloadsContent() {
-  const { isSubscribed } = useDashboardSubscription();
-  const downloads = MOCK_DOWNLOADS;
-
-  if (!isSubscribed) {
-    return (
-      <div className="mx-auto max-w-lg rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/80 p-8 text-center dark:border-zinc-600 dark:bg-zinc-900/40">
-        <FolderOpen
-          className="mx-auto h-12 w-12 text-zinc-400 dark:text-zinc-500"
-          aria-hidden
-        />
-        <h2 className="mt-4 font-[family-name:var(--font-bitter)] text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-          My downloads
-        </h2>
-        <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Premium unlocks your personal download library and unlimited assets. Subscribe to access
-          everything you&apos;ve saved in one place.
-        </p>
-        <Link
-          href="/dashboard/subscription"
-          className={cn(
-            buttonVariants({ variant: "primary" }),
-            "mt-6 inline-flex w-full justify-center sm:w-auto",
-          )}
-        >
-          View plans
-        </Link>
-      </div>
-    );
-  }
+export function DashboardPurchasesContent() {
+  const purchases = MOCK_DOWNLOADS;
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-8">
-      <SubscribedPageHeader />
-      {downloads.length === 0 ? <SubscribedEmptyState /> : <DownloadsLibrary items={downloads} />}
+      <PurchasesPageHeader />
+      {purchases.length === 0 ? <PurchasesEmptyState /> : <PurchasesLibrary items={purchases} />}
     </div>
   );
 }

@@ -120,20 +120,11 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
             <button
               type="button"
               className={cn(
-                buttonVariants({ variant: "outline" }),
-                "h-10 min-w-[120px] justify-center px-6 text-base font-medium",
-              )}
-            >
-              Download
-            </button>
-            <button
-              type="button"
-              className={cn(
                 buttonVariants({ variant: "primary" }),
                 "h-10 min-w-[120px] justify-center px-8 text-base font-medium",
               )}
             >
-              Buy now
+              Buy for {template.priceLabel}
             </button>
           </div>
         </footer>

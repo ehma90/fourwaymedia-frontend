@@ -1,9 +1,6 @@
 "use client";
 import { useTheme } from "next-themes";
 import Link from "next/link";
-import { useState } from "react";
-
-import { PricingModal } from "@/components/pricing/PricingModal";
 
 const LIGHT_LOGO =
   "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
@@ -33,7 +30,7 @@ const topRow = [
 
 ];
 
-function getBottomRow(onOpenPricing: () => void) {
+function getBottomRow() {
   return [
     {
       title: "Company",
@@ -49,7 +46,6 @@ function getBottomRow(onOpenPricing: () => void) {
     {
       title: "Get help",
       links: [
-        { label: "Pricing", onClick: onOpenPricing },
         { label: "Support", href: "#" },
         { label: "Contact", href: "/contact" },
       ],
@@ -115,10 +111,9 @@ function FooterColumn({ title, links }: { title: string; links: readonly FooterL
 
 export function Footer() {
   const { resolvedTheme } = useTheme();
-  const [pricingOpen, setPricingOpen] = useState(false);
   const isDark = resolvedTheme === "dark";
   const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
-  const navColumns = [...topRow, ...getBottomRow(() => setPricingOpen(true))];
+  const navColumns = [...topRow, ...getBottomRow()];
 
   return (
     <footer className="text-copy-primary border-t border-copy-body/15">
@@ -170,10 +165,8 @@ export function Footer() {
               <FooterColumn key={col.title} {...col} />
             ))}
           </div>
-        </div>
+        </div>  
       </div>
-
-      <PricingModal open={pricingOpen} onClose={() => setPricingOpen(false)} />
     </footer>
   );
 }

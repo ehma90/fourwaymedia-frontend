@@ -4,19 +4,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
-  CreditCard,
   Download,
   LayoutDashboard,
   LogOut,
   Menu,
   Settings,
-  Sparkles,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
 import {
   MOCK_USER_DISPLAY_NAME,
   useMockAuth,
@@ -39,12 +36,9 @@ function getInitials(displayName: string): string {
 
 const DASHBOARD_ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Overview",
-  "/dashboard/downloads": "My downloads",
-  "/dashboard/subscription": "Subscription",
-  "/dashboard/billing": "Billing",
+  "/dashboard/purchases": "Purchases",
   "/dashboard/notifications": "Notifications",
   "/dashboard/account": "Account",
-  "/dashboard/purchases": "Purchases",
 };
 
 function getDashboardPageTitle(pathname: string): string {
@@ -62,29 +56,12 @@ function getDashboardPageTitle(pathname: string): string {
 
 type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
 
-/** Subscription upsell vs Premium routes — billing + downloads only when subscribed (downloads page is subscriber-only). */
-function buildNavItems(isSubscribed: boolean): NavItem[] {
-  const items: NavItem[] = [
-    { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
-  ];
-  if (isSubscribed) {
-    items.push(
-      { href: "/dashboard/downloads", label: "My downloads", icon: Download },
-      { href: "/dashboard/billing", label: "Billing", icon: CreditCard },
-    );
-  } else {
-    items.push({
-      href: "/dashboard/subscription",
-      label: "Subscription",
-      icon: Sparkles,
-    });
-  }
-  items.push(
-    { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
-    { href: "/dashboard/account", label: "Account", icon: Settings },
-  );
-  return items;
-}
+const navItems: NavItem[] = [
+  { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
+  { href: "/dashboard/purchases", label: "Purchases", icon: Download },
+  { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
+  { href: "/dashboard/account", label: "Account", icon: Settings },
+];
 
 type DashboardShellProps = {
   children: React.ReactNode;
@@ -127,8 +104,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const router = useRouter();
   const { signOut } = useMockAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { isSubscribed } = useDashboardSubscription();
-  const navItems = buildNavItems(isSubscribed);
 
   const handleLogout = () => {
     signOut();

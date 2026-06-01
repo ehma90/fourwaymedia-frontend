@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   Bell,
   CalendarClock,
-  CreditCard,
   Download,
   HelpCircle,
   Inbox,
@@ -15,7 +14,6 @@ import type { LucideIcon } from "lucide-react";
 import { useMemo } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { useDashboardSubscription } from "@/hooks/use-dashboard-subscription";
 import { MOCK_USER_DISPLAY_NAME } from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
 import type { DownloadedAsset } from "@/mock-data/downloads";
@@ -57,7 +55,6 @@ function lastDownloadSummary(downloads: DownloadedAsset[]): string | null {
 }
 
 export function DashboardOverview() {
-  const { isSubscribed, planName, renewalDateLabel } = useDashboardSubscription();
   const name = firstName(MOCK_USER_DISPLAY_NAME);
 
   const unreadNotificationCount = useMemo(
@@ -67,13 +64,13 @@ export function DashboardOverview() {
   const totalNotificationCount = MOCK_NOTIFICATIONS.length;
 
   const downloadsRolling30 = useMemo(
-    () => (isSubscribed ? countDownloadsRolling30Days(MOCK_DOWNLOADS) : 0),
-    [isSubscribed],
+    () => countDownloadsRolling30Days(MOCK_DOWNLOADS),
+    [],
   );
-  const totalLibraryCount = isSubscribed ? MOCK_DOWNLOADS.length : 0;
+  const totalLibraryCount = MOCK_DOWNLOADS.length;
   const lastDownloadLine = useMemo(
-    () => (isSubscribed ? lastDownloadSummary(MOCK_DOWNLOADS) : null),
-    [isSubscribed],
+    () => lastDownloadSummary(MOCK_DOWNLOADS),
+    [],
   );
 
   return (
@@ -86,77 +83,8 @@ export function DashboardOverview() {
           Hi, {name}
         </h2>
         <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Manage your subscription and downloads in one place.
+          Manage your purchases and notifications in one place.
         </p>
-      </section>
-
-      <section aria-labelledby="overview-plan-heading">
-        <h2 id="overview-plan-heading" className="sr-only">
-          Subscription
-        </h2>
-        {!isSubscribed ? (
-          <div className={cn(cardClass, "border-dashed border-zinc-300 dark:border-zinc-600")}>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex gap-3">
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800">
-                  <Sparkles className="h-5 w-5 text-zinc-700 dark:text-zinc-200" aria-hidden />
-                </span>
-                <div>
-                  <p className="font-medium text-zinc-900 dark:text-zinc-100">
-                    Subscribe to Premium
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-                    Unlock the full template library and downloads with a Premium subscription.
-                  </p>
-                </div>
-              </div>
-              <Link
-                href="/dashboard/subscription"
-                className={cn(
-                  buttonVariants({ variant: "primary" }),
-                  "shrink-0 self-start sm:self-center",
-                )}
-              >
-                View plans
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div className={cardClass}>
-            <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-              <div>
-                <p className="text-sm font-medium text-zinc-500 dark:text-zinc-400">Current plan</p>
-                <p className="mt-1 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                  {planName ?? "Premium"}
-                </p>
-                {renewalDateLabel ? (
-                  <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                    Renews on <span className="font-medium">{renewalDateLabel}</span>
-                  </p>
-                ) : null}
-              </div>
-              <div className="flex flex-wrap gap-2">
-                <Link
-                  href="/dashboard/billing"
-                  className={cn(
-                    buttonVariants({ variant: "outline" }),
-                    "inline-flex h-10 items-center gap-2 border-2 px-4 text-sm text-zinc-800 dark:border-zinc-600 dark:text-zinc-100",
-                  )}
-                >
-                  <CreditCard className="h-4 w-4" aria-hidden />
-                  Manage billing
-                </Link>
-                <Link
-                  href="/dashboard/downloads"
-                  className={cn(buttonVariants({ variant: "primary" }), "inline-flex h-10 items-center gap-2 px-4 text-sm")}
-                >
-                  <Download className="h-4 w-4" aria-hidden />
-                  My downloads
-                </Link>
-              </div>
-            </div>
-          </div>
-        )}
       </section>
 
       <section aria-labelledby="overview-metrics-heading">
@@ -166,61 +94,31 @@ export function DashboardOverview() {
         >
           Metrics
         </h2>
-        <div
-          className={cn(
-            "mt-3 grid gap-3",
-            isSubscribed ? "sm:grid-cols-2 lg:grid-cols-4" : "sm:grid-cols-2",
-          )}
-        >
+        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <MetricStat
             label="Unread"
             value={unreadNotificationCount}
             sublabel="Notifications"
             icon={Inbox}
           />
-          {isSubscribed ? (
-            <>
-              <MetricStat
-                label="Last 30 days"
-                value={downloadsRolling30}
-                sublabel="Downloads"
-                icon={Download}
-              />
-              <MetricStat
-                label="Library"
-                value={totalLibraryCount}
-                sublabel="Total templates"
-                icon={Sparkles}
-              />
-              <MetricStat
-                label="Last download"
-                value={lastDownloadLine ?? "—"}
-                sublabel={lastDownloadLine ? "Most recent" : "No activity yet"}
-                icon={CalendarClock}
-              />
-            </>
-          ) : (
-            <div
-              className={cn(
-                cardClass,
-                "flex flex-col justify-center border-dashed border-zinc-300 dark:border-zinc-600 sm:col-span-1",
-              )}
-            >
-              <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Download activity</p>
-              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                Subscribe to Premium to track rolling 30-day downloads and your library.
-              </p>
-              <Link
-                href="/dashboard/subscription"
-                className={cn(
-                  buttonVariants({ variant: "outline" }),
-                  "mt-3 inline-flex h-9 w-fit items-center border-2 px-4 text-sm",
-                )}
-              >
-                View plans
-              </Link>
-            </div>
-          )}
+          <MetricStat
+            label="Last 30 days"
+            value={downloadsRolling30}
+            sublabel="Purchases"
+            icon={Download}
+          />
+          <MetricStat
+            label="Library"
+            value={totalLibraryCount}
+            sublabel="Total templates"
+            icon={Sparkles}
+          />
+          <MetricStat
+            label="Last purchase"
+            value={lastDownloadLine ?? "—"}
+            sublabel={lastDownloadLine ? "Most recent" : "No activity yet"}
+            icon={CalendarClock}
+          />
         </div>
       </section>
 
@@ -231,24 +129,8 @@ export function DashboardOverview() {
         >
           Quick actions
         </h2>
-        <ul
-          className={cn(
-            "mt-3 grid gap-3",
-            isSubscribed ? "grid-cols-2 sm:grid-cols-4" : "grid-cols-2 sm:grid-cols-3",
-          )}
-        >
-          {!isSubscribed ? (
-            <QuickLink
-              href="/dashboard/subscription"
-              label="Subscription"
-              icon={Sparkles}
-            />
-          ) : (
-            <>
-              <QuickLink href="/dashboard/downloads" label="My downloads" icon={Download} />
-              <QuickLink href="/dashboard/billing" label="Billing" icon={CreditCard} />
-            </>
-          )}
+        <ul className="mt-3 grid gap-3 grid-cols-2 sm:grid-cols-4">
+          <QuickLink href="/dashboard/purchases" label="Purchases" icon={Download} />
           <QuickLink href="/dashboard/notifications" label="Notifications" icon={Bell} />
           <QuickLink href="/dashboard/account" label="Account" icon={Settings} />
         </ul>
@@ -256,7 +138,7 @@ export function DashboardOverview() {
 
       <section
         aria-labelledby="overview-glance-heading"
-        className={cn("grid gap-4", isSubscribed && "sm:grid-cols-2")}
+        className="grid gap-4 sm:grid-cols-2"
       >
         <h2 id="overview-glance-heading" className="sr-only">
           At a glance
@@ -286,31 +168,29 @@ export function DashboardOverview() {
             </div>
           </div>
         </div>
-        {isSubscribed ? (
-          <div className={cardClass}>
-            <div className="flex items-start gap-2">
-              <Download className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" aria-hidden />
-              <div className="min-w-0">
-                <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">My downloads</p>
-                <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-                  {totalLibraryCount === 0
-                    ? "No templates in your library yet."
-                    : `${totalLibraryCount} template${totalLibraryCount === 1 ? "" : "s"} in your library${
-                        downloadsRolling30 > 0
-                          ? ` · ${downloadsRolling30} downloaded in the last 30 days`
-                          : ""
-                      }.`}
-                </p>
-                <Link
-                  href="/dashboard/downloads"
-                  className="mt-2 inline-block text-sm font-medium text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
-                >
-                  Go to my downloads
-                </Link>
-              </div>
+        <div className={cardClass}>
+          <div className="flex items-start gap-2">
+            <Download className="mt-0.5 h-4 w-4 shrink-0 text-zinc-500" aria-hidden />
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-zinc-900 dark:text-zinc-100">Purchases</p>
+              <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+                {totalLibraryCount === 0
+                  ? "No templates in your library yet."
+                  : `${totalLibraryCount} template${totalLibraryCount === 1 ? "" : "s"} in your library${
+                      downloadsRolling30 > 0
+                        ? ` · ${downloadsRolling30} purchased in the last 30 days`
+                        : ""
+                    }.`}
+              </p>
+              <Link
+                href="/dashboard/purchases"
+                className="mt-2 inline-block text-sm font-medium text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
+              >
+                Go to my purchases
+              </Link>
             </div>
           </div>
-        ) : null}
+        </div>
       </section>
 
       <p className="flex flex-wrap items-center gap-1.5 text-sm text-zinc-600 dark:text-zinc-400">
