@@ -91,7 +91,7 @@ function PurchasesEmptyState() {
           No purchases yet
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Your library is empty. Browse the shop to purchase templates—everything you buy will
+          Your library is empty. Browse the shop to purchase templates, everything you buy will
           show up here for easy access later.
         </p>
         <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
