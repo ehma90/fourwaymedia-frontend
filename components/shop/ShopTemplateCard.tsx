@@ -1,6 +1,6 @@
 "use client";
 
-import type { ShopTemplate } from "@/mock-data/shop-templates";
+import type { ShopTemplate } from "@/lib/types/shop";
 
 type ShopTemplateCardProps = {
   template: ShopTemplate;

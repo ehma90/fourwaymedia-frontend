@@ -9,7 +9,7 @@ import { useEffect, useId, useState } from "react";
 import { UserMenu } from "@/components/navbar/UserMenu";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { useMockAuth } from "@/lib/mock-auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
 const navLinks = [
@@ -22,14 +22,13 @@ const navLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { isAuthenticated, signOut } = useMockAuth();
+  const { isAuthenticated, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
   const titleId = useId();
 
   const handleSignOutFromDrawer = () => {
     setMobileOpen(false);
-    signOut();
-    router.push("/");
+    void signOut().then(() => router.push("/"));
   };
 
   const isActiveLink = (href: string) =>

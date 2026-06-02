@@ -14,10 +14,11 @@ import type { LucideIcon } from "lucide-react";
 import { useMemo } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
-import { MOCK_USER_DISPLAY_NAME } from "@/lib/mock-auth-context";
+import { usePurchases } from "@/hooks/use-purchases";
+import { useAuth } from "@/lib/auth-context";
+import type { DownloadedAsset } from "@/lib/api";
 import { cn } from "@/lib/utils";
-import type { DownloadedAsset } from "@/mock-data/downloads";
-import { MOCK_DOWNLOADS } from "@/mock-data/downloads";
+import { Skeleton } from "@/components/ui/skeleton";
 import { MOCK_NOTIFICATIONS } from "@/mock-data/notifications";
 
 function firstName(displayName: string): string {
@@ -55,7 +56,9 @@ function lastDownloadSummary(downloads: DownloadedAsset[]): string | null {
 }
 
 export function DashboardOverview() {
-  const name = firstName(MOCK_USER_DISPLAY_NAME);
+  const { user, isLoading: authLoading } = useAuth();
+  const { downloads, isLoading: purchasesLoading } = usePurchases();
+  const name = firstName(user?.displayName ?? "there");
 
   const unreadNotificationCount = useMemo(
     () => MOCK_NOTIFICATIONS.filter((n) => !n.read).length,
@@ -64,14 +67,16 @@ export function DashboardOverview() {
   const totalNotificationCount = MOCK_NOTIFICATIONS.length;
 
   const downloadsRolling30 = useMemo(
-    () => countDownloadsRolling30Days(MOCK_DOWNLOADS),
-    [],
+    () => countDownloadsRolling30Days(downloads),
+    [downloads],
   );
-  const totalLibraryCount = MOCK_DOWNLOADS.length;
+  const totalLibraryCount = downloads.length;
   const lastDownloadLine = useMemo(
-    () => lastDownloadSummary(MOCK_DOWNLOADS),
-    [],
+    () => lastDownloadSummary(downloads),
+    [downloads],
   );
+
+  const metricsLoading = authLoading || purchasesLoading;
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-8">
@@ -106,18 +111,21 @@ export function DashboardOverview() {
             value={downloadsRolling30}
             sublabel="Purchases"
             icon={Download}
+            isLoading={metricsLoading}
           />
           <MetricStat
             label="Library"
             value={totalLibraryCount}
             sublabel="Total templates"
             icon={Sparkles}
+            isLoading={metricsLoading}
           />
           <MetricStat
             label="Last purchase"
             value={lastDownloadLine ?? "—"}
             sublabel={lastDownloadLine ? "Most recent" : "No activity yet"}
             icon={CalendarClock}
+            isLoading={metricsLoading}
           />
         </div>
       </section>
@@ -212,11 +220,13 @@ function MetricStat({
   value,
   sublabel,
   icon: Icon,
+  isLoading = false,
 }: {
   label: string;
   value: string | number;
   sublabel: string;
   icon: LucideIcon;
+  isLoading?: boolean;
 }) {
   return (
     <div className={cn(cardClass, "flex flex-col gap-2 p-4 sm:p-5")}>
@@ -226,9 +236,13 @@ function MetricStat({
         </span>
         <Icon className="h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" aria-hidden />
       </div>
-      <p className="text-2xl font-semibold tabular-nums tracking-tight text-zinc-900 dark:text-zinc-50">
-        {value}
-      </p>
+      {isLoading ? (
+        <Skeleton className="h-8 w-16" />
+      ) : (
+        <p className="text-2xl font-semibold tabular-nums tracking-tight text-zinc-900 dark:text-zinc-50">
+          {value}
+        </p>
+      )}
       <p className="text-xs text-zinc-600 dark:text-zinc-400">{sublabel}</p>
     </div>
   );

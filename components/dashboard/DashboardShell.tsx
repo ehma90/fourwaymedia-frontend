@@ -14,10 +14,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
-import {
-  MOCK_USER_DISPLAY_NAME,
-  useMockAuth,
-} from "@/lib/mock-auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
 /** Light chrome (no `html.dark`) — dark mark on light sidebar */
@@ -102,11 +99,12 @@ function SidebarMenuFooter({
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
-  const { signOut } = useMockAuth();
+  const { user, signOut } = useAuth();
+  const displayName = user?.displayName ?? "Account";
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => {
-    signOut();
+    void signOut().then(() => router.push("/"));
     router.push("/sign-in");
   };
 
@@ -141,7 +139,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   };
 
   const pageTitle = getDashboardPageTitle(pathname);
-  const userInitials = getInitials(MOCK_USER_DISPLAY_NAME);
+  const userInitials = getInitials(displayName);
 
   return (
     <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
@@ -167,8 +165,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   <Link
                     href="/dashboard/account"
                     className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
-                    aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
-                    title={MOCK_USER_DISPLAY_NAME}
+                    aria-label={`Account settings (${displayName})`}
+                    title={displayName}
                   >
                     {userInitials}
                   </Link>
@@ -242,8 +240,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <Link
                 href="/dashboard/account"
                 className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
-                aria-label={`Account settings (${MOCK_USER_DISPLAY_NAME})`}
-                title={MOCK_USER_DISPLAY_NAME}
+                aria-label={`Account settings (${displayName})`}
+                title={displayName}
               >
                 {userInitials}
               </Link>

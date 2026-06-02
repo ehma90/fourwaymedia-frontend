@@ -1,21 +1,35 @@
 "use client";
 
 import { X } from "lucide-react";
-import { useCallback, useEffect, useId, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import { buttonVariants } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ApiError, apiPost } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
+import type { ShopTemplate } from "@/lib/types/shop";
 import { cn } from "@/lib/utils";
-import type { ShopTemplate } from "@/mock-data/shop-templates";
 
 type ShopTemplateModalProps = {
   template: ShopTemplate | null;
   onClose: () => void;
 };
 
+type CheckoutResponse = {
+  free?: boolean;
+  checkoutUrl?: string;
+  message?: string;
+};
+
 export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
+  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -26,6 +40,7 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
 
   useEffect(() => {
     if (!template) return;
+    setCheckoutError(null);
     document.addEventListener("keydown", handleKeyDown);
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -35,6 +50,39 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
       document.body.style.overflow = prev;
     };
   }, [template, handleKeyDown]);
+
+  const handleBuy = async () => {
+    if (!template) return;
+    if (!isAuthenticated) {
+      router.push(`/sign-in?next=${encodeURIComponent("/shop")}`);
+      return;
+    }
+
+    setCheckoutLoading(true);
+    setCheckoutError(null);
+    try {
+      const result = await apiPost<CheckoutResponse>("/api/me/checkout", {
+        catalogItemId: template.id,
+      });
+      if (result.free) {
+        onClose();
+        router.push("/dashboard/purchases");
+        router.refresh();
+        return;
+      }
+      if (result.checkoutUrl) {
+        window.location.href = result.checkoutUrl;
+        return;
+      }
+      setCheckoutError("Checkout could not be started. Try again.");
+    } catch (err) {
+      setCheckoutError(
+        err instanceof ApiError ? err.message : "Checkout failed. Try again.",
+      );
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
 
   if (typeof document === "undefined" || !template) return null;
 
@@ -117,14 +165,27 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
             {template.title}
           </p>
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+            {checkoutError ? (
+              <p className="text-sm text-red-700 dark:text-red-300" role="alert">
+                {checkoutError}
+              </p>
+            ) : null}
             <button
               type="button"
+              disabled={checkoutLoading || authLoading}
+              onClick={() => void handleBuy()}
               className={cn(
                 buttonVariants({ variant: "primary" }),
-                "h-10 min-w-[120px] justify-center px-8 text-base font-medium",
+                "relative h-10 min-w-[120px] justify-center px-8 text-base font-medium disabled:opacity-70",
               )}
             >
-              Buy for {template.priceLabel}
+              {checkoutLoading ? (
+                <LoadingSpinner className="h-5 w-5" label="Starting checkout" />
+              ) : isAuthenticated ? (
+                `Buy for ${template.priceLabel}`
+              ) : (
+                "Sign in to buy"
+              )}
             </button>
           </div>
         </footer>

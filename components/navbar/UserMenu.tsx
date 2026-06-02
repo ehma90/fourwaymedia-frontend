@@ -11,10 +11,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
-import {
-  MOCK_USER_DISPLAY_NAME,
-  useMockAuth,
-} from "@/lib/mock-auth-context";
+import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
 type MenuNavItem = {
@@ -38,7 +35,8 @@ function getInitials(displayName: string): string {
 }
 
 export function UserMenu() {
-  const { signOut } = useMockAuth();
+  const { user, signOut } = useAuth();
+  const displayName = user?.displayName ?? "Account";
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -63,11 +61,10 @@ export function UserMenu() {
 
   const handleSignOut = () => {
     setOpen(false);
-    signOut();
-    router.push("/");
+    void signOut().then(() => router.push("/"));
   };
 
-  const initials = getInitials(MOCK_USER_DISPLAY_NAME);
+  const initials = getInitials(displayName);
 
   return (
     <div ref={containerRef} className="relative">
@@ -106,7 +103,7 @@ export function UserMenu() {
           className="absolute -left-20 z-80 mt-2 min-w-48 rounded-xl border border-black/10 bg-background/95 py-1.5 text-foreground shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-zinc-950/95"
         >
           <p className="border-b border-black/10 px-3 py-2 text-xs text-foreground/70 dark:border-white/10">
-            {MOCK_USER_DISPLAY_NAME}
+            {displayName}
           </p>
           {dashboardMenuItems.map((item) => {
             const Icon = item.icon;

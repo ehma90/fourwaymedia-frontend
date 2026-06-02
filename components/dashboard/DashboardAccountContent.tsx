@@ -2,15 +2,13 @@
 
 import Link from "next/link";
 import { Camera, Eye, EyeOff, HelpCircle, Loader2 } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { Skeleton } from "@/components/ui/skeleton";
 import { inputFieldClassName } from "@/lib/input-classes";
-import {
-  MOCK_USER_AVATAR_URL,
-  MOCK_USER_DISPLAY_NAME,
-  MOCK_USER_EMAIL,
-} from "@/lib/mock-auth-context";
+import { useAuth } from "@/lib/auth-context";
 import {
   persistProfilePhotoUrl,
   uploadProfilePhotoToCloudinary,
@@ -31,10 +29,17 @@ const labelClass =
   "mb-1.5 block text-sm font-medium text-zinc-600 dark:text-zinc-400";
 
 export function DashboardAccountContent() {
+  const { user, isLoading } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [displayName, setDisplayName] = useState(MOCK_USER_DISPLAY_NAME);
-  const [email, setEmail] = useState(MOCK_USER_EMAIL);
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(MOCK_USER_AVATAR_URL);
+  const [displayName, setDisplayName] = useState("");
+  const [email, setEmail] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!user) return;
+    setDisplayName(user.displayName);
+    setEmail(user.email);
+  }, [user]);
   const [photoUploading, setPhotoUploading] = useState(false);
   const [photoError, setPhotoError] = useState<string | null>(null);
   const [profileMessage, setProfileMessage] = useState<string | null>(null);
@@ -81,6 +86,25 @@ export function DashboardAccountContent() {
     setConfirmPassword("");
     window.setTimeout(() => setPasswordMessage(null), 5000);
   };
+
+  if (isLoading) {
+    return (
+      <div className="mx-auto flex max-w-2xl flex-col gap-8" aria-busy="true">
+        <header>
+          <Skeleton className="h-8 w-32" />
+          <Skeleton className="mt-2 h-4 w-64" />
+        </header>
+        <div className={cn(cardClass, "flex flex-col items-center gap-4 py-12")}>
+          <LoadingSpinner label="Loading account" />
+        </div>
+        <div className={cn(cardClass, "space-y-4 p-6")}>
+          <Skeleton className="h-5 w-24" />
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8">

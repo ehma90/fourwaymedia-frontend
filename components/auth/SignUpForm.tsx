@@ -6,8 +6,10 @@ import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 import { SocialAuthSection } from "@/components/auth/SocialAuthSection";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 import { inputFieldClassName } from "@/lib/input-classes";
-import { useMockAuth } from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
 
@@ -16,13 +18,44 @@ const logoFontClass =
 
 export function SignUpForm() {
   const router = useRouter();
-  const { signIn } = useMockAuth();
+  const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [termsAccepted, setTermsAccepted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn();
-    router.push("/dashboard");
+    setError(null);
+    const form = new FormData(e.currentTarget);
+    const displayName = String(form.get("name") ?? "").trim();
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+    const agreedToTerms = form.get("terms") === "on";
+
+    if (!termsAccepted && !agreedToTerms) {
+      setError(
+        "You must agree to the Terms and Conditions and Privacy Policy before creating an account.",
+      );
+      return;
+    }
+    if (!displayName || !email || !password) {
+      setError("Fill in your name, email, and password.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await signUp(email, password, displayName, true);
+      router.push("/dashboard");
+      router.refresh();
+    } catch (err) {
+      setError(
+        err instanceof ApiError ? err.message : "Could not create account. Try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -36,6 +69,15 @@ export function SignUpForm() {
           Join thousands of teams building better products
         </p>
       </div>
+
+      {error ? (
+        <p
+          className="mt-6 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200"
+          role="alert"
+        >
+          {error}
+        </p>
+      ) : null}
 
       <form className="mt-8 space-y-5" noValidate onSubmit={handleSubmit}>
         <div>
@@ -105,23 +147,34 @@ export function SignUpForm() {
 
         <label className="flex cursor-pointer gap-3 pt-1">
           <input
+            id="signup-terms"
             name="terms"
             type="checkbox"
-            required
+            checked={termsAccepted}
+            onChange={(e) => {
+              setTermsAccepted(e.target.checked);
+              if (e.target.checked) setError(null);
+            }}
             className="mt-0.5 h-4 w-4 shrink-0 rounded border-neutral-300 text-[#f27121] focus:ring-[#e94057]/30 dark:border-neutral-600"
+            aria-describedby="signup-terms-description"
           />
-          <span className="text-sm leading-snug text-neutral-600 dark:text-neutral-400">
+          <span
+            id="signup-terms-description"
+            className="text-sm leading-snug text-neutral-600 dark:text-neutral-400"
+          >
             I agree to the{" "}
             <Link
               href="/terms"
               className="font-medium text-blue-600 underline-offset-2 hover:underline dark:text-blue-400"
+              onClick={(e) => e.stopPropagation()}
             >
-              Terms of Service
+              Terms and Conditions
             </Link>{" "}
             and{" "}
             <Link
               href="/privacy"
               className="font-medium text-blue-600 underline-offset-2 hover:underline dark:text-blue-400"
+              onClick={(e) => e.stopPropagation()}
             >
               Privacy Policy
             </Link>
@@ -129,11 +182,19 @@ export function SignUpForm() {
         </label>
 
         <Button
-            type="submit"
-            variant="primary"
-            className="h-12 w-full rounded-xl text-base font-semibold shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
+          type="submit"
+          variant="primary"
+          disabled={isSubmitting || !termsAccepted}
+          className="relative h-12 w-full rounded-xl text-base font-semibold shadow-[0_10px_22px_rgba(220,68,55,0.35)] disabled:opacity-70"
         >
-          Create account
+          {isSubmitting ? (
+            <span className="inline-flex items-center justify-center gap-2">
+              <LoadingSpinner className="h-5 w-5" label="Creating account" />
+              Creating account…
+            </span>
+          ) : (
+            "Create account"
+          )}
         </Button>
       </form>
 

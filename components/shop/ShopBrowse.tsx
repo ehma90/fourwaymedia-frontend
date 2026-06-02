@@ -2,44 +2,64 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Maximize2, Minimize2, Search, SlidersHorizontal, X } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ShopCategoryTabs } from "@/components/shop/ShopCategoryTabs";
 import { ShopFilterPanel } from "@/components/shop/ShopFilterPanel";
 import { ShopTemplateCard } from "@/components/shop/ShopTemplateCard";
 import { ShopTemplateModal } from "@/components/shop/ShopTemplateModal";
 import { buttonVariants } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import {
+  ShopCategoryTabsSkeleton,
+  ShopFilterSkeleton,
+  ShopGridSkeleton,
+} from "@/components/ui/skeleton";
+import { useShopCatalog } from "@/hooks/use-shop-catalog";
+import { inputFieldClassName } from "@/lib/input-classes";
 import {
   cloneAppliedFilters,
   emptyAppliedFilters,
   filterShopTemplates,
-  shopTemplates,
-  type AppliedFilters,
-  type ShopTemplate,
-  type ShopTopCategoryId,
-} from "@/mock-data/shop-templates";
-import { inputFieldClassName } from "@/lib/input-classes";
+} from "@/lib/shop-filters";
+import type { AppliedFilters, ShopTemplate, ShopTopCategoryId } from "@/lib/types/shop";
 import { cn } from "@/lib/utils";
 
 export function ShopBrowse() {
+  const { data, isLoading, error } = useShopCatalog();
+  const filtersInitialized = useRef(false);
+
+  const categories = data?.topCategories ?? [];
+  const templates = data?.templates ?? [];
+  const filterGroups = data?.filterGroups ?? [];
+
   const [activeCategory, setActiveCategory] =
     useState<ShopTopCategoryId>("all");
-  const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>(() =>
-    emptyAppliedFilters(),
-  );
-  const [draftFilters, setDraftFilters] = useState<AppliedFilters>(() =>
-    emptyAppliedFilters(),
-  );
+  const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>({});
+  const [draftFilters, setDraftFilters] = useState<AppliedFilters>({});
   const [selectedTemplate, setSelectedTemplate] =
     useState<ShopTemplate | null>(null);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [browseExpanded, setBrowseExpanded] = useState(false);
 
+  useEffect(() => {
+    if (!data?.filterGroups.length || filtersInitialized.current) return;
+    filtersInitialized.current = true;
+    const empty = emptyAppliedFilters(data.filterGroups);
+    setAppliedFilters(empty);
+    setDraftFilters(empty);
+  }, [data]);
+
   const baseFiltered = useMemo(
     () =>
-      filterShopTemplates(shopTemplates, activeCategory, appliedFilters),
-    [activeCategory, appliedFilters],
+      filterShopTemplates(
+        templates,
+        activeCategory,
+        appliedFilters,
+        filterGroups,
+      ),
+    [templates, activeCategory, appliedFilters, filterGroups],
   );
 
   const displayTemplates = useMemo(() => {
@@ -59,8 +79,10 @@ export function ShopBrowse() {
   }, [draftFilters]);
 
   const clearDraft = useCallback(() => {
-    setDraftFilters(emptyAppliedFilters());
-  }, []);
+    if (filterGroups.length) {
+      setDraftFilters(emptyAppliedFilters(filterGroups));
+    }
+  }, [filterGroups]);
 
   const openMobileFilters = useCallback(() => {
     setDraftFilters(cloneAppliedFilters(appliedFilters));
@@ -86,10 +108,17 @@ export function ShopBrowse() {
     };
   }, [mobileFiltersOpen, closeMobileFilters]);
 
+  const gridSkeleton = (
+    <ShopGridSkeleton
+      count={browseExpanded ? 8 : 6}
+    />
+  );
+
   return (
     <section
       className="pt-5 pb-14 sm:py-16 dark:border-white/10"
       aria-labelledby="shop-browse-heading"
+      aria-busy={isLoading}
     >
       <div
         className={cn(
@@ -131,20 +160,23 @@ export function ShopBrowse() {
           </button>
         </div>
 
-        {/* Toolbar: sticky below navbar; template grid scrolls underneath */}
         <div
           className={cn(
             "sticky z-40 -mx-6 mt-8 border-b border-neutral-200/90 bg-background/95 px-6 py-3 backdrop-blur-md supports-backdrop-filter:bg-background/80 lg:mt-10 lg:mx-0 lg:px-0 dark:border-white/10",
-            // top-20 (5rem) clears the marketing navbar (~sticky top-0 z-50)
             "top-20",
           )}
         >
           <div className="flex min-w-0 flex-wrap items-center gap-3">
-            <ShopCategoryTabs
-              activeId={activeCategory}
-              onChange={setActiveCategory}
-              className="min-w-0 flex-1 basis-full sm:basis-auto lg:max-w-none"
-            />
+            {isLoading ? (
+              <ShopCategoryTabsSkeleton />
+            ) : (
+              <ShopCategoryTabs
+                categories={categories}
+                activeId={activeCategory}
+                onChange={setActiveCategory}
+                className="min-w-0 flex-1 basis-full sm:basis-auto lg:max-w-none"
+              />
+            )}
             <div className="flex w-full min-w-0 basis-full items-center gap-3 sm:ml-auto sm:w-auto sm:flex-initial sm:basis-auto sm:justify-end">
               <div className="relative min-w-0 flex-1 sm:max-w-sm sm:min-w-[220px] sm:shrink-0">
                 <label htmlFor="shop-search" className="sr-only">
@@ -161,16 +193,19 @@ export function ShopBrowse() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search templates…"
                   autoComplete="off"
+                  disabled={isLoading}
                   className={cn(
                     inputFieldClassName,
                     "h-10 w-full pl-9 pr-3 text-sm",
+                    isLoading && "opacity-60",
                   )}
                 />
               </div>
               <button
                 type="button"
                 onClick={openMobileFilters}
-                className="flex shrink-0 items-center gap-2 rounded-full border border-neutral-200/90 bg-white px-4 py-2 text-sm font-medium text-neutral-800 shadow-sm lg:hidden dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-100"
+                disabled={isLoading}
+                className="flex shrink-0 items-center gap-2 rounded-full border border-neutral-200/90 bg-white px-4 py-2 text-sm font-medium text-neutral-800 shadow-sm lg:hidden disabled:opacity-50 dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-100"
               >
                 <SlidersHorizontal className="h-4 w-4" aria-hidden />
                 Filters
@@ -179,32 +214,53 @@ export function ShopBrowse() {
           </div>
         </div>
 
-        {/* Default align-items: stretch so aside is as tall as the template column — required for inner position:sticky */}
         <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:gap-10">
-          {/* Desktop sidebar — sticky under navbar + toolbar row */}
           <aside className="hidden min-h-0 w-[272px] shrink-0 lg:block">
             <div
               className={cn(
                 "sticky rounded-2xl border border-neutral-200/90 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-neutral-900/50",
-                // ~5rem navbar + ~4.5rem toolbar so the card sits below the stuck toolbar
                 "top-38",
               )}
             >
               <h3 className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
                 Filters
               </h3>
-              <ShopFilterPanel
-                className="mt-4"
-                draft={draftFilters}
-                onDraftChange={setDraftFilters}
-                onClear={clearDraft}
-                onApply={applyDraft}
-              />
+              {isLoading ? (
+                <div className="mt-4">
+                  <ShopFilterSkeleton />
+                </div>
+              ) : (
+                <ShopFilterPanel
+                  className="mt-4"
+                  filterGroups={filterGroups}
+                  draft={draftFilters}
+                  onDraftChange={setDraftFilters}
+                  onClear={clearDraft}
+                  onApply={applyDraft}
+                />
+              )}
             </div>
           </aside>
 
           <div className="min-w-0 flex-1">
-            {baseFiltered.length === 0 ? (
+            {error ? (
+              <div
+                className="rounded-2xl border border-red-200/90 bg-red-50/80 px-6 py-12 text-center dark:border-red-900/50 dark:bg-red-950/30"
+                role="alert"
+              >
+                <p className="text-sm font-medium text-red-800 dark:text-red-200">
+                  Could not load templates
+                </p>
+                <p className="mt-2 text-sm text-red-700/90 dark:text-red-300/90">
+                  {error}
+                </p>
+              </div>
+            ) : isLoading ? (
+              <div className="flex flex-col items-center gap-6">
+                <LoadingSpinner label="Loading templates" />
+                <div className="w-full">{gridSkeleton}</div>
+              </div>
+            ) : baseFiltered.length === 0 ? (
               <p className="rounded-2xl border border-dashed border-neutral-300/90 bg-neutral-50/80 px-6 py-12 text-center text-sm text-neutral-600 dark:border-white/15 dark:bg-neutral-900/30 dark:text-neutral-400">
                 No templates match these filters. Try clearing filters or
                 choosing another category.
@@ -235,7 +291,6 @@ export function ShopBrowse() {
         </div>
       </div>
 
-      {/* Mobile filter drawer */}
       <AnimatePresence>
         {mobileFiltersOpen ? (
           <>
@@ -284,6 +339,7 @@ export function ShopBrowse() {
               </div>
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                 <ShopFilterPanel
+                  filterGroups={filterGroups}
                   draft={draftFilters}
                   onDraftChange={setDraftFilters}
                   onClear={clearDraft}

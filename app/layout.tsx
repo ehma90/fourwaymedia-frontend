@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Bitter, Lexend } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/context/theme-provider";
-import { MockAuthProvider } from "@/lib/mock-auth-context";
+import { AuthProvider } from "@/lib/auth-context";
 import { themeInitScript, THEME_STORAGE_KEY } from "@/lib/theme-init";
 
 const bitter = Bitter({
@@ -40,7 +40,7 @@ export default function RootLayout({
           enableSystem
           storageKey={THEME_STORAGE_KEY}
         >
-          <MockAuthProvider>{children}</MockAuthProvider>
+          <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>
     </html>

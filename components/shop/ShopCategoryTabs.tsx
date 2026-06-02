@@ -1,18 +1,17 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  shopTopCategories,
-  type ShopTopCategoryId,
-} from "@/mock-data/shop-templates";
+import type { ShopTopCategory, ShopTopCategoryId } from "@/lib/types/shop";
 
 type ShopCategoryTabsProps = {
+  categories: readonly ShopTopCategory[];
   activeId: ShopTopCategoryId;
   onChange: (id: ShopTopCategoryId) => void;
   className?: string;
 };
 
 export function ShopCategoryTabs({
+  categories,
   activeId,
   onChange,
   className,
@@ -26,7 +25,7 @@ export function ShopCategoryTabs({
         className,
       )}
     >
-      {shopTopCategories.map((cat) => {
+      {categories.map((cat) => {
         const selected = activeId === cat.id;
         return (
           <button

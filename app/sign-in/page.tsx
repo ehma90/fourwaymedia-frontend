@@ -1,8 +1,10 @@
 import { Dancing_Script } from "next/font/google";
+import { Suspense } from "react";
 
 import { BackButton } from "@/components/auth/BackButton";
 import { SignInForm } from "@/components/auth/SignInForm";
 import { SignInShowcase } from "@/components/auth/SignInShowcase";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 
 const logoFont = Dancing_Script({
   subsets: ["latin"],
@@ -19,7 +21,15 @@ export default function SignInPage() {
       <div className="flex min-h-screen flex-col lg:flex-row">
         {/* Left: form */}
         <div className="flex flex-1 items-center justify-center px-4 pb-10 pt-16 sm:px-6 lg:min-h-screen lg:pb-12 lg:pt-12">
-          <SignInForm />
+          <Suspense
+            fallback={
+              <div className="flex justify-center py-16">
+                <LoadingSpinner label="Loading sign in" />
+              </div>
+            }
+          >
+            <SignInForm />
+          </Suspense>
         </div>
 
         {/* Right: gradient + showcase */}

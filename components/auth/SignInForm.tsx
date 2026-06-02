@@ -1,34 +1,55 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
 import { SocialAuthSection } from "@/components/auth/SocialAuthSection";
 import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { ApiError } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 import { inputFieldClassName } from "@/lib/input-classes";
-import { useMockAuth } from "@/lib/mock-auth-context";
 import { cn } from "@/lib/utils";
-
-const logoFontClass =
-  "font-[family-name:var(--font-sign-in-logo),cursive] text-3xl sm:text-[2rem]";
 
 export function SignInForm() {
   const router = useRouter();
-  const { signIn } = useMockAuth();
+  const searchParams = useSearchParams();
+  const { signIn } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signIn();
-    router.push("/dashboard");
+    setError(null);
+    const form = new FormData(e.currentTarget);
+    const email = String(form.get("email") ?? "").trim();
+    const password = String(form.get("password") ?? "");
+    if (!email || !password) {
+      setError("Enter your email and password.");
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      await signIn(email, password);
+      const next = searchParams.get("next") ?? "/dashboard";
+      router.push(next.startsWith("/") ? next : "/dashboard");
+      router.refresh();
+    } catch (err) {
+      setError(
+        err instanceof ApiError ? err.message : "Sign in failed. Try again.",
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="w-full max-w-[440px] rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.06)] sm:p-10 dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
       <div className="text-center">
-
         <h1 className="mt-6 text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
           Welcome back
         </h1>
@@ -38,6 +59,15 @@ export function SignInForm() {
       </div>
 
       <form className="mt-8 space-y-5" noValidate onSubmit={handleSubmit}>
+        {error ? (
+          <p
+            className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200"
+            role="alert"
+          >
+            {error}
+          </p>
+        ) : null}
+
         <div>
           <label
             htmlFor="sign-in-email"
@@ -50,6 +80,7 @@ export function SignInForm() {
             name="email"
             type="email"
             autoComplete="email"
+            required
             placeholder="Enter your email"
             className={inputFieldClassName}
           />
@@ -68,6 +99,7 @@ export function SignInForm() {
               name="password"
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
+              required
               placeholder="Enter your password"
               className={cn(inputFieldClassName, "pr-12")}
             />
@@ -90,11 +122,18 @@ export function SignInForm() {
           <Button
             type="submit"
             variant="primary"
+            disabled={isSubmitting}
             className="h-12 w-full rounded-xl text-base font-semibold shadow-[0_10px_22px_rgba(220,68,55,0.35)]"
           >
-            Sign in
+            {isSubmitting ? (
+              <span className="inline-flex items-center gap-2">
+                <LoadingSpinner className="h-5 w-5" label="Signing in" />
+                Signing in…
+              </span>
+            ) : (
+              "Sign in"
+            )}
           </Button>
-
         </div>
       </form>
 

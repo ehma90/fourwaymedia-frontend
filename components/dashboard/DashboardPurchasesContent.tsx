@@ -5,13 +5,12 @@ import { Download, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
+import { PurchasesTableSkeleton } from "@/components/ui/skeleton";
+import { usePurchases } from "@/hooks/use-purchases";
+import type { DownloadedAsset } from "@/lib/api";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
-import {
-  DOWNLOAD_CATEGORIES,
-  type DownloadedAsset,
-  MOCK_DOWNLOADS,
-} from "@/mock-data/downloads";
 
 const cardClass =
   "rounded-2xl border border-zinc-200/90 bg-white p-5 shadow-sm dark:border-zinc-800 dark:bg-zinc-900/40 sm:p-6";
@@ -124,6 +123,11 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<string>("all");
 
+  const downloadCategories = useMemo(() => {
+    const set = new Set(items.map((i) => i.category));
+    return Array.from(set).sort();
+  }, [items]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return items.filter((item) => {
@@ -176,7 +180,7 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
               className={inputFieldClassName}
             >
               <option value="all">All categories</option>
-              {DOWNLOAD_CATEGORIES.map((c) => (
+              {downloadCategories.map((c) => (
                 <option key={c} value={c}>
                   {c}
                 </option>
@@ -321,12 +325,38 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
 }
 
 export function DashboardPurchasesContent() {
-  const purchases = MOCK_DOWNLOADS;
+  const { downloads, isLoading, error } = usePurchases();
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-8">
       <PurchasesPageHeader />
-      {purchases.length === 0 ? <PurchasesEmptyState /> : <PurchasesLibrary items={purchases} />}
+      {isLoading ? (
+        <div className={cardClass} aria-busy="true">
+          <div className="flex flex-col items-center gap-4 py-8">
+            <LoadingSpinner label="Loading purchases" />
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              Loading your library…
+            </p>
+          </div>
+          <div className="mt-2 border-t border-zinc-200 pt-6 dark:border-zinc-800">
+            <PurchasesTableSkeleton />
+          </div>
+        </div>
+      ) : error ? (
+        <div
+          className={cn(cardClass, "text-center")}
+          role="alert"
+        >
+          <p className="text-sm font-medium text-red-800 dark:text-red-200">
+            Could not load purchases
+          </p>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{error}</p>
+        </div>
+      ) : downloads.length === 0 ? (
+        <PurchasesEmptyState />
+      ) : (
+        <PurchasesLibrary items={downloads} />
+      )}
     </div>
   );
 }

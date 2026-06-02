@@ -2,12 +2,10 @@
 
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  shopFilterGroups,
-  type AppliedFilters,
-} from "@/mock-data/shop-templates";
+import type { AppliedFilters, FilterGroup } from "@/lib/types/shop";
 
 type ShopFilterPanelProps = {
+  filterGroups: readonly FilterGroup[];
   draft: AppliedFilters;
   onDraftChange: (next: AppliedFilters) => void;
   onClear: () => void;
@@ -18,6 +16,7 @@ type ShopFilterPanelProps = {
 };
 
 export function ShopFilterPanel({
+  filterGroups,
   draft,
   onDraftChange,
   onClear,
@@ -36,7 +35,7 @@ export function ShopFilterPanel({
 
   return (
     <div className={cn("flex flex-col gap-6", className)}>
-      {shopFilterGroups.map((group) => (
+      {filterGroups.map((group) => (
         <fieldset key={group.id} className="min-w-0 space-y-3">
           <legend className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
             {group.label}
