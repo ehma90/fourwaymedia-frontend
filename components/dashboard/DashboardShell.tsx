@@ -104,8 +104,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const handleLogout = () => {
-    void signOut().then(() => router.push("/"));
-    router.push("/sign-in");
+    void signOut().then(() => router.push("/sign-in"));
   };
 
   useEffect(() => {

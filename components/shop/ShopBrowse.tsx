@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Maximize2, Minimize2, Search, SlidersHorizontal, X } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { ShopCategoryTabs } from "@/components/shop/ShopCategoryTabs";
 import { ShopFilterPanel } from "@/components/shop/ShopFilterPanel";
@@ -27,7 +27,6 @@ import { cn } from "@/lib/utils";
 
 export function ShopBrowse() {
   const { data, isLoading, error } = useShopCatalog();
-  const filtersInitialized = useRef(false);
 
   const categories = data?.topCategories ?? [];
   const templates = data?.templates ?? [];
@@ -43,23 +42,31 @@ export function ShopBrowse() {
   const [searchQuery, setSearchQuery] = useState("");
   const [browseExpanded, setBrowseExpanded] = useState(false);
 
-  useEffect(() => {
-    if (!data?.filterGroups.length || filtersInitialized.current) return;
-    filtersInitialized.current = true;
-    const empty = emptyAppliedFilters(data.filterGroups);
-    setAppliedFilters(empty);
-    setDraftFilters(empty);
-  }, [data]);
+  const emptyFilters = useMemo(
+    () =>
+      filterGroups.length ? emptyAppliedFilters(filterGroups) : ({} as AppliedFilters),
+    [filterGroups],
+  );
+
+  const catalogAppliedFilters = useMemo(
+    () => ({ ...emptyFilters, ...appliedFilters }),
+    [emptyFilters, appliedFilters],
+  );
+
+  const catalogDraftFilters = useMemo(
+    () => ({ ...emptyFilters, ...draftFilters }),
+    [emptyFilters, draftFilters],
+  );
 
   const baseFiltered = useMemo(
     () =>
       filterShopTemplates(
         templates,
         activeCategory,
-        appliedFilters,
+        catalogAppliedFilters,
         filterGroups,
       ),
-    [templates, activeCategory, appliedFilters, filterGroups],
+    [templates, activeCategory, catalogAppliedFilters, filterGroups],
   );
 
   const displayTemplates = useMemo(() => {
@@ -72,27 +79,25 @@ export function ShopBrowse() {
   }, [baseFiltered, searchQuery]);
 
   const applyDraft = useCallback(() => {
-    const next = cloneAppliedFilters(draftFilters);
+    const next = cloneAppliedFilters(catalogDraftFilters);
     setAppliedFilters(next);
     setDraftFilters(next);
     setMobileFiltersOpen(false);
-  }, [draftFilters]);
+  }, [catalogDraftFilters]);
 
   const clearDraft = useCallback(() => {
-    if (filterGroups.length) {
-      setDraftFilters(emptyAppliedFilters(filterGroups));
-    }
-  }, [filterGroups]);
+    setDraftFilters(emptyFilters);
+  }, [emptyFilters]);
 
   const openMobileFilters = useCallback(() => {
-    setDraftFilters(cloneAppliedFilters(appliedFilters));
+    setDraftFilters(cloneAppliedFilters(catalogAppliedFilters));
     setMobileFiltersOpen(true);
-  }, [appliedFilters]);
+  }, [catalogAppliedFilters]);
 
   const closeMobileFilters = useCallback(() => {
-    setDraftFilters(cloneAppliedFilters(appliedFilters));
+    setDraftFilters(cloneAppliedFilters(catalogAppliedFilters));
     setMobileFiltersOpen(false);
-  }, [appliedFilters]);
+  }, [catalogAppliedFilters]);
 
   useEffect(() => {
     if (!mobileFiltersOpen) return;
@@ -233,7 +238,7 @@ export function ShopBrowse() {
                 <ShopFilterPanel
                   className="mt-4"
                   filterGroups={filterGroups}
-                  draft={draftFilters}
+                  draft={catalogDraftFilters}
                   onDraftChange={setDraftFilters}
                   onClear={clearDraft}
                   onApply={applyDraft}
@@ -340,7 +345,7 @@ export function ShopBrowse() {
               <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4">
                 <ShopFilterPanel
                   filterGroups={filterGroups}
-                  draft={draftFilters}
+                  draft={catalogDraftFilters}
                   onDraftChange={setDraftFilters}
                   onClear={clearDraft}
                   onApply={applyDraft}
