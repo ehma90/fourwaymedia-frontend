@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import { getBackendUrl } from "@/lib/server-backend";
+import { backendUnavailableBody, fetchBackend } from "@/lib/server-backend";
 
 export const runtime = "nodejs";
 
@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     .map((c) => `${c.name}=${c.value}`)
     .join("; ");
 
-  const res = await fetch(`${getBackendUrl()}/api/v1/me/checkout`, {
+  const res = await fetchBackend("/api/v1/me/checkout", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,6 +21,10 @@ export async function POST(request: Request) {
     },
     body: JSON.stringify(body),
   });
+  if (!res) {
+    return NextResponse.json(backendUnavailableBody(), { status: 503 });
+  }
+
   const data = await res.json().catch(() => ({}));
   return NextResponse.json(data, { status: res.status });
 }
