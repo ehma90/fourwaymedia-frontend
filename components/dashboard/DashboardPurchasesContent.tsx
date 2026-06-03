@@ -1,14 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Download, Search } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { PurchasesTableSkeleton } from "@/components/ui/skeleton";
 import { usePurchases } from "@/hooks/use-purchases";
-import type { DownloadedAsset } from "@/lib/api";
+import { apiPost, type DownloadedAsset } from "@/lib/api";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 
@@ -325,11 +326,52 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
 }
 
 export function DashboardPurchasesContent() {
-  const { downloads, isLoading, error } = usePurchases();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const { downloads, isLoading, error, reload } = usePurchases();
+  const [confirmingCheckout, setConfirmingCheckout] = useState(false);
+  const [confirmError, setConfirmError] = useState<string | null>(null);
+  const confirmStarted = useRef(false);
+
+  useEffect(() => {
+    if (searchParams.get("checkout") !== "success") return;
+    const sessionId = searchParams.get("session_id");
+    if (!sessionId || confirmStarted.current) return;
+    confirmStarted.current = true;
+
+    void (async () => {
+      setConfirmingCheckout(true);
+      setConfirmError(null);
+      try {
+        await apiPost("/api/me/checkout/confirm", { sessionId });
+        await reload();
+        router.replace("/dashboard/purchases");
+      } catch (e) {
+        setConfirmError(
+          e instanceof Error
+            ? e.message
+            : "Payment succeeded but we could not unlock your template. Refresh in a moment.",
+        );
+      } finally {
+        setConfirmingCheckout(false);
+      }
+    })();
+  }, [searchParams, reload, router]);
 
   return (
     <div className="mx-auto flex max-w-4xl flex-col gap-8">
       <PurchasesPageHeader />
+      {confirmingCheckout ? (
+        <div className={cn(cardClass, "flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400")}>
+          <LoadingSpinner label="Confirming purchase" />
+          <span>Confirming your purchase…</span>
+        </div>
+      ) : null}
+      {confirmError ? (
+        <p className={cn(cardClass, "text-sm text-red-800 dark:text-red-200")} role="alert">
+          {confirmError}
+        </p>
+      ) : null}
       {isLoading ? (
         <div className={cardClass} aria-busy="true">
           <div className="flex flex-col items-center gap-4 py-8">
