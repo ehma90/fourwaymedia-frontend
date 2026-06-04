@@ -8,6 +8,8 @@ import {
   LayoutDashboard,
   LogOut,
   Menu,
+  PanelLeftClose,
+  PanelLeftOpen,
   Settings,
   X,
 } from "lucide-react";
@@ -60,6 +62,8 @@ const navItems: NavItem[] = [
   { href: "/dashboard/account", label: "Account", icon: Settings },
 ];
 
+const SIDEBAR_COLLAPSED_KEY = "fourwaymedia-dashboard-sidebar-collapsed";
+
 type DashboardShellProps = {
   children: React.ReactNode;
 };
@@ -68,11 +72,13 @@ function SidebarMenuFooter({
   onLogout,
   onAfterNavigate,
   pinToBottom,
+  collapsed = false,
 }: {
   onLogout: () => void;
   onAfterNavigate?: () => void;
   /** When true, push this block to the bottom of a flex sidebar (desktop). */
   pinToBottom?: boolean;
+  collapsed?: boolean;
 }) {
   return (
     <div
@@ -87,10 +93,15 @@ function SidebarMenuFooter({
           onLogout();
           onAfterNavigate?.();
         }}
-        className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-zinc-600 transition-colors hover:bg-red-500/10 hover:text-red-700 dark:text-zinc-400 dark:hover:bg-red-500/15 dark:hover:text-red-300 cursor-pointer"
+        title={collapsed ? "Log out" : undefined}
+        aria-label={collapsed ? "Log out" : undefined}
+        className={cn(
+          "flex w-full items-center rounded-lg text-left text-sm font-medium text-zinc-600 transition-colors hover:bg-red-500/10 hover:text-red-700 dark:text-zinc-400 dark:hover:bg-red-500/15 dark:hover:text-red-300 cursor-pointer",
+          collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2",
+        )}
       >
         <LogOut size={18} className="shrink-0 opacity-90" aria-hidden />
-        Log out
+        {!collapsed ? "Log out" : null}
       </button>
     </div>
   );
@@ -102,10 +113,27 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const { user, signOut } = useAuth();
   const displayName = user?.displayName ?? "Account";
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(SIDEBAR_COLLAPSED_KEY);
+    if (stored === "1") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- restore persisted sidebar preference
+      setSidebarCollapsed(true);
+    }
+  }, []);
 
   const handleLogout = () => {
     void signOut().then(() => router.push("/sign-in"));
   };
+
+  function toggleSidebarCollapsed() {
+    setSidebarCollapsed((prev) => {
+      const next = !prev;
+      localStorage.setItem(SIDEBAR_COLLAPSED_KEY, next ? "1" : "0");
+      return next;
+    });
+  }
 
   useEffect(() => {
     setMobileOpen(false);
@@ -125,12 +153,13 @@ export function DashboardShell({ children }: DashboardShellProps) {
     };
   }, [mobileOpen]);
 
-  const linkClass = (href: string) => {
+  const linkClass = (href: string, collapsed = false) => {
     const active =
       pathname === href ||
       (href !== "/dashboard" && pathname.startsWith(`${href}/`));
     return cn(
-      "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
+      "flex items-center rounded-lg text-sm font-medium transition-colors",
+      collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2",
       active
         ? "bg-zinc-200/90 text-zinc-900 dark:bg-white/[0.08] dark:text-white dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"
         : "text-zinc-600 hover:bg-zinc-200/60 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.05] dark:hover:text-zinc-100",
@@ -143,23 +172,40 @@ export function DashboardShell({ children }: DashboardShellProps) {
   return (
     <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
       <div className="flex min-h-screen flex-col md:flex-row">
-        <aside className="flex min-h-0 shrink-0 flex-col border-b border-zinc-200 bg-white md:min-h-screen md:w-68 md:border-b-0 md:border-r dark:border-zinc-800 dark:bg-zinc-950">
-          <div className="flex min-h-0 flex-1 flex-col gap-4 px-4 md:py-5">
-            <div className="flex items-center justify-between gap-2">
-              <Link href="/" aria-label="Fourwaymedia home" className="min-w-0 shrink">
-                <img
-                  src={LOGO_FOR_LIGHT_UI}
-                  alt="Fourwaymedia logo"
-                  className="h-16 w-16 object-cover md:h-11 md:w-11 dark:hidden"
-                />
-                <img
-                  src={LOGO_FOR_DARK_UI}
-                  alt="Fourwaymedia logo"
-                  className="hidden h-16 w-16 object-cover md:h-11 md:w-11 dark:block"
-                />
-              </Link>
+        <aside
+          className={cn(
+            "flex min-h-0 shrink-0 flex-col border-b border-zinc-200 bg-white transition-[width] duration-200 md:min-h-screen md:border-b-0 md:border-r dark:border-zinc-800 dark:bg-zinc-950",
+            sidebarCollapsed ? "md:w-18" : "md:w-68",
+          )}
+        >
+          <div
+            className={cn(
+              "flex min-h-0 flex-1 flex-col gap-4 px-4 md:py-5",
+              sidebarCollapsed && "md:px-2",
+            )}
+          >
+            <div
+              className={cn(
+                "flex items-center gap-2",
+                sidebarCollapsed ? "md:justify-center" : "justify-between",
+              )}
+            >
+              {!sidebarCollapsed ? (
+                <Link href="/" aria-label="Fourwaymedia home" className="min-w-0 shrink">
+                  <img
+                    src={LOGO_FOR_LIGHT_UI}
+                    alt="Fourwaymedia logo"
+                    className="h-16 w-16 object-cover md:h-11 md:w-11 dark:hidden"
+                  />
+                  <img
+                    src={LOGO_FOR_DARK_UI}
+                    alt="Fourwaymedia logo"
+                    className="hidden h-16 w-16 object-cover md:h-11 md:w-11 dark:block"
+                  />
+                </Link>
+              ) : null}
               <div className="flex shrink-0 items-center gap-2 md:gap-3">
-                <div className="md:hidden flex items-center gap-2">
+                <div className="flex items-center gap-2 md:hidden">
                   <ThemeToggle />
                   <Link
                     href="/dashboard/account"
@@ -170,6 +216,20 @@ export function DashboardShell({ children }: DashboardShellProps) {
                     {userInitials}
                   </Link>
                 </div>
+                <button
+                  type="button"
+                  className="hidden h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-800 transition-colors hover:bg-zinc-100 md:inline-flex dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
+                  aria-expanded={!sidebarCollapsed}
+                  aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                  title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                  onClick={toggleSidebarCollapsed}
+                >
+                  {sidebarCollapsed ? (
+                    <PanelLeftOpen size={18} aria-hidden />
+                  ) : (
+                    <PanelLeftClose size={18} aria-hidden />
+                  )}
+                </button>
                 <button
                   type="button"
                   className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-800 transition-colors hover:bg-zinc-100 md:hidden dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
@@ -189,14 +249,24 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 {navItems.map((item) => {
                   const Icon = item.icon;
                   return (
-                    <Link key={item.href} href={item.href} className={linkClass(item.href)}>
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className={linkClass(item.href, sidebarCollapsed)}
+                      title={sidebarCollapsed ? item.label : undefined}
+                      aria-label={sidebarCollapsed ? item.label : undefined}
+                    >
                       <Icon size={18} className="shrink-0 opacity-90" aria-hidden />
-                      {item.label}
+                      {!sidebarCollapsed ? item.label : null}
                     </Link>
                   );
                 })}
               </div>
-              <SidebarMenuFooter onLogout={handleLogout} pinToBottom />
+              <SidebarMenuFooter
+                onLogout={handleLogout}
+                pinToBottom
+                collapsed={sidebarCollapsed}
+              />
             </nav>
           </div>
         </aside>
@@ -215,7 +285,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   {navItems.map((item) => {
                     const Icon = item.icon;
                     return (
-                      <Link key={item.href} href={item.href} className={linkClass(item.href)}>
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className={linkClass(item.href, false)}
+                      >
                         <Icon size={18} className="shrink-0 opacity-90" aria-hidden />
                         {item.label}
                       </Link>
