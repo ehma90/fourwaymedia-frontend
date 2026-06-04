@@ -186,24 +186,26 @@ export function DashboardShell({ children }: DashboardShellProps) {
           >
             <div
               className={cn(
-                "flex items-center gap-2",
-                sidebarCollapsed ? "md:justify-center" : "justify-between",
+                "flex items-center justify-between gap-2",
+                sidebarCollapsed && "md:justify-center",
               )}
             >
-              {!sidebarCollapsed ? (
-                <Link href="/" aria-label="Fourwaymedia home" className="min-w-0 shrink">
-                  <img
-                    src={LOGO_FOR_LIGHT_UI}
-                    alt="Fourwaymedia logo"
-                    className="h-16 w-16 object-cover md:h-11 md:w-11 dark:hidden"
-                  />
-                  <img
-                    src={LOGO_FOR_DARK_UI}
-                    alt="Fourwaymedia logo"
-                    className="hidden h-16 w-16 object-cover md:h-11 md:w-11 dark:block"
-                  />
-                </Link>
-              ) : null}
+              <Link
+                href="/"
+                aria-label="Fourwaymedia home"
+                className={cn("min-w-0 shrink", sidebarCollapsed && "md:hidden")}
+              >
+                <img
+                  src={LOGO_FOR_LIGHT_UI}
+                  alt="Fourwaymedia logo"
+                  className="h-20 w-20 object-cover md:h-11 md:w-11 dark:hidden"
+                />
+                <img
+                  src={LOGO_FOR_DARK_UI}
+                  alt="Fourwaymedia logo"
+                  className="hidden h-20 w-20 object-cover md:h-11 md:w-11 dark:block"
+                />
+              </Link>
               <div className="flex shrink-0 items-center gap-2 md:gap-3">
                 <div className="flex items-center gap-2 md:hidden">
                   <ThemeToggle />
