@@ -75,13 +75,13 @@ export function DashboardAccountContent() {
 
   useEffect(() => {
     if (!user) return;
-    setDisplayName(user.displayName);
+    setDisplayName(user.displayName.trim());
     setAvatarUrl(user.avatarUrl ?? null);
   }, [user]);
 
   const profileDirty = useMemo(() => {
     if (!user) return false;
-    return displayName.trim() !== user.displayName;
+    return displayName.trim() !== user.displayName.trim();
   }, [displayName, user]);
 
   const handleProfilePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {

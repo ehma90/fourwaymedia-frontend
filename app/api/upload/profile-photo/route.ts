@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 
 const MAX_BYTES = 2 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp"]);
+/** Used only when CLOUDINARY_PROFILE_UPLOAD_PRESET is set (dedicated profile preset). */
 const PROFILE_PHOTO_FOLDER = "fourwaymedia/profile-photos";
 
 type CloudinaryUploadResponse = {
@@ -12,15 +13,50 @@ type CloudinaryUploadResponse = {
   error?: { message?: string };
 };
 
-export async function POST(request: Request) {
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
-  const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET;
+function getProfileUploadConfig(): { cloudName: string; uploadPreset: string; folder?: string } | null {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim();
+  const profilePreset = process.env.CLOUDINARY_PROFILE_UPLOAD_PRESET?.trim();
+  const catalogPreset = process.env.CLOUDINARY_UPLOAD_PRESET?.trim();
 
-  if (!cloudName || !uploadPreset) {
+  if (!cloudName) return null;
+
+  if (profilePreset) {
+    return { cloudName, uploadPreset: profilePreset, folder: PROFILE_PHOTO_FOLDER };
+  }
+
+  if (catalogPreset) {
+    // Shared catalog preset (often locked to fourwaymedia/templates/previews) — do not override folder.
+    return { cloudName, uploadPreset: catalogPreset };
+  }
+
+  return null;
+}
+
+function formatCloudinaryError(message: string, preset: string): string {
+  const lower = message.toLowerCase();
+  if (lower.includes("whitelisted") && lower.includes("unsigned")) {
+    return (
+      `Cloudinary preset "${preset}" must allow unsigned uploads. ` +
+      `In Console → Upload presets → Edit → set Signing mode to Unsigned.`
+    );
+  }
+  if (lower.includes("folder") || lower.includes("not allowed")) {
+    return (
+      `${message} Create a dedicated profile preset (asset folder: ${PROFILE_PHOTO_FOLDER}, unsigned) ` +
+      `and set CLOUDINARY_PROFILE_UPLOAD_PRESET in .env, or enable "Allow folder parameter" on your catalog preset.`
+    );
+  }
+  return message;
+}
+
+export async function POST(request: Request) {
+  const config = getProfileUploadConfig();
+
+  if (!config) {
     return NextResponse.json(
       {
         error:
-          "Upload is not configured. Set CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET (unsigned preset).",
+          "Upload is not configured. Set CLOUDINARY_CLOUD_NAME and CLOUDINARY_UPLOAD_PRESET (or CLOUDINARY_PROFILE_UPLOAD_PRESET).",
       },
       { status: 503 },
     );
@@ -55,10 +91,12 @@ export async function POST(request: Request) {
 
   const upstream = new FormData();
   upstream.set("file", file);
-  upstream.set("upload_preset", uploadPreset);
-  upstream.set("folder", PROFILE_PHOTO_FOLDER);
+  upstream.set("upload_preset", config.uploadPreset);
+  if (config.folder) {
+    upstream.set("folder", config.folder);
+  }
 
-  const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
+  const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${config.cloudName}/image/upload`;
 
   let raw: CloudinaryUploadResponse;
   try {
@@ -68,7 +106,10 @@ export async function POST(request: Request) {
     });
     raw = (await res.json()) as CloudinaryUploadResponse;
     if (!res.ok) {
-      const msg = raw.error?.message ?? "Cloudinary rejected the upload.";
+      const msg = formatCloudinaryError(
+        raw.error?.message ?? "Cloudinary rejected the upload.",
+        config.uploadPreset,
+      );
       return NextResponse.json({ error: msg }, { status: 502 });
     }
   } catch {
