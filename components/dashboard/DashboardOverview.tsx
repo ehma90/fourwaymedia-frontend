@@ -14,12 +14,12 @@ import type { LucideIcon } from "lucide-react";
 import { useMemo } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
+import { useNotifications } from "@/hooks/use-notifications";
 import { usePurchases } from "@/hooks/use-purchases";
 import { useAuth } from "@/lib/auth-context";
 import type { DownloadedAsset } from "@/lib/api";
 import { cn } from "@/lib/utils";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MOCK_NOTIFICATIONS } from "@/mock-data/notifications";
 
 function firstName(displayName: string): string {
   const part = displayName.trim().split(/\s+/)[0];
@@ -58,13 +58,14 @@ function lastDownloadSummary(downloads: DownloadedAsset[]): string | null {
 export function DashboardOverview() {
   const { user, isLoading: authLoading } = useAuth();
   const { downloads, isLoading: purchasesLoading } = usePurchases();
+  const {
+    unreadCount: unreadNotificationCount,
+    notifications,
+    isLoading: notificationsLoading,
+  } = useNotifications();
   const name = firstName(user?.displayName ?? "there");
 
-  const unreadNotificationCount = useMemo(
-    () => MOCK_NOTIFICATIONS.filter((n) => !n.read).length,
-    [],
-  );
-  const totalNotificationCount = MOCK_NOTIFICATIONS.length;
+  const totalNotificationCount = notifications.length;
 
   const downloadsRolling30 = useMemo(
     () => countDownloadsRolling30Days(downloads),
@@ -76,7 +77,7 @@ export function DashboardOverview() {
     [downloads],
   );
 
-  const metricsLoading = authLoading || purchasesLoading;
+  const metricsLoading = authLoading || purchasesLoading || notificationsLoading;
 
   return (
     <div className="mx-auto flex max-w-3xl flex-col gap-8">

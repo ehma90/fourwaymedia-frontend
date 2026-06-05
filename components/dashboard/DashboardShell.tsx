@@ -16,6 +16,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { useNotifications } from "@/hooks/use-notifications";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -63,6 +64,7 @@ const navItems: NavItem[] = [
 ];
 
 const SIDEBAR_COLLAPSED_KEY = "fourwaymedia-dashboard-sidebar-collapsed";
+const NOTIFICATIONS_HREF = "/dashboard/notifications";
 
 type DashboardShellProps = {
   children: React.ReactNode;
@@ -107,10 +109,69 @@ function SidebarMenuFooter({
   );
 }
 
+function SidebarNavLink({
+  item,
+  collapsed,
+  unreadNotificationCount,
+  className,
+}: {
+  item: NavItem;
+  collapsed: boolean;
+  unreadNotificationCount: number;
+  className: string;
+}) {
+  const Icon = item.icon;
+  const showBadge = item.href === NOTIFICATIONS_HREF && unreadNotificationCount > 0;
+  const badgeLabel =
+    unreadNotificationCount > 99 ? "99+" : String(unreadNotificationCount);
+
+  return (
+    <Link
+      href={item.href}
+      className={className}
+      title={
+        collapsed
+          ? showBadge
+            ? `${item.label} (${badgeLabel} unread)`
+            : item.label
+          : undefined
+      }
+      aria-label={
+        collapsed
+          ? showBadge
+            ? `${item.label}, ${badgeLabel} unread`
+            : item.label
+          : undefined
+      }
+    >
+      <span className="relative shrink-0">
+        <Icon size={18} className="opacity-90" aria-hidden />
+        {collapsed && showBadge ? (
+          <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] px-1 text-[10px] font-bold leading-none text-white">
+            {badgeLabel}
+          </span>
+        ) : null}
+      </span>
+      {!collapsed ? (
+        <>
+          <span className="min-w-0 flex-1">{item.label}</span>
+          {showBadge ? (
+            <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] px-1.5 text-[11px] font-semibold tabular-nums text-white">
+              {badgeLabel}
+            </span>
+          ) : null}
+        </>
+      ) : null}
+    </Link>
+  );
+}
+
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
   const router = useRouter();
   const { user, signOut } = useAuth();
+  const { unreadCount: unreadNotificationCount, reload: reloadNotifications } =
+    useNotifications();
   const displayName = user?.displayName ?? "Account";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -138,6 +199,20 @@ export function DashboardShell({ children }: DashboardShellProps) {
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    void reloadNotifications();
+  }, [pathname, reloadNotifications]);
+
+  useEffect(() => {
+    const onNotificationsUpdated = () => {
+      void reloadNotifications();
+    };
+    window.addEventListener("notifications-updated", onNotificationsUpdated);
+    return () => {
+      window.removeEventListener("notifications-updated", onNotificationsUpdated);
+    };
+  }, [reloadNotifications]);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -248,21 +323,15 @@ export function DashboardShell({ children }: DashboardShellProps) {
               aria-label="Dashboard"
             >
               <div className="flex flex-col gap-2.5">
-                {navItems.map((item) => {
-                  const Icon = item.icon;
-                  return (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      className={linkClass(item.href, sidebarCollapsed)}
-                      title={sidebarCollapsed ? item.label : undefined}
-                      aria-label={sidebarCollapsed ? item.label : undefined}
-                    >
-                      <Icon size={18} className="shrink-0 opacity-90" aria-hidden />
-                      {!sidebarCollapsed ? item.label : null}
-                    </Link>
-                  );
-                })}
+                {navItems.map((item) => (
+                  <SidebarNavLink
+                    key={item.href}
+                    item={item}
+                    collapsed={sidebarCollapsed}
+                    unreadNotificationCount={unreadNotificationCount}
+                    className={cn(linkClass(item.href, sidebarCollapsed), !sidebarCollapsed && "w-full")}
+                  />
+                ))}
               </div>
               <SidebarMenuFooter
                 onLogout={handleLogout}
@@ -284,19 +353,15 @@ export function DashboardShell({ children }: DashboardShellProps) {
             <div className="fixed top-[65px] right-1 z-50 w-60 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto rounded-xl border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden">
               <nav className="flex flex-col" aria-label="Dashboard">
                 <div className="flex flex-col gap-0.5 my-3">
-                  {navItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        className={linkClass(item.href, false)}
-                      >
-                        <Icon size={18} className="shrink-0 opacity-90" aria-hidden />
-                        {item.label}
-                      </Link>
-                    );
-                  })}
+                  {navItems.map((item) => (
+                    <SidebarNavLink
+                      key={item.href}
+                      item={item}
+                      collapsed={false}
+                      unreadNotificationCount={unreadNotificationCount}
+                      className={cn(linkClass(item.href, false), "w-full")}
+                    />
+                  ))}
                 </div>
                 <SidebarMenuFooter
                   onLogout={handleLogout}
