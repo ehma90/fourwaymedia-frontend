@@ -142,7 +142,7 @@ export function DashboardNotificationsContent() {
       </header>
 
       <section aria-labelledby="notifications-feed-heading" className={cardClass}>
-        <div className="flex flex-col gap-4 border-b border-zinc-200/90 pb-5 dark:border-zinc-800 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-4 border-b border-zinc-200/90 pb-3 dark:border-zinc-800 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-3">
             <h2
               id="notifications-feed-heading"
@@ -209,7 +209,7 @@ export function DashboardNotificationsContent() {
             </p>
           </div>
         ) : (
-          <ul className="mt-1 space-y-3" role="list">
+          <ul className="mt-3 space-y-3" role="list">
             {notifications.map((n) => (
               <NotificationRow key={n.id} item={n} />
             ))}
