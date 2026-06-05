@@ -63,10 +63,35 @@ export async function apiGet<T>(path: string): Promise<T> {
   return data;
 }
 
+export async function apiPatch<T>(
+  path: string,
+  body: Record<string, unknown>,
+): Promise<T> {
+  const res = await fetch(path, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(body),
+  });
+  const data = (await res.json().catch(() => ({}))) as T & {
+    error?: string;
+    code?: string;
+  };
+  if (!res.ok) {
+    throw new ApiError(
+      (data as { error?: string }).error ?? "Request failed",
+      res.status,
+      (data as { code?: string }).code,
+    );
+  }
+  return data;
+}
+
 export type AuthUser = {
   id: string;
   email: string;
   displayName: string;
+  avatarUrl?: string;
   createdAt: string;
 };
 

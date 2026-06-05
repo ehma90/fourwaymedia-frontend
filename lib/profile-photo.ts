@@ -70,7 +70,10 @@ export async function uploadProfilePhotoToCloudinary(
 /**
  * Send the Cloudinary URL to your backend when the profile API is ready.
  */
+/**
+ * Send the Cloudinary URL to your backend when the profile API is ready.
+ */
 export async function persistProfilePhotoUrl(url: string): Promise<void> {
-  void url;
-  // TODO: PATCH /api/me — body: { avatarUrl: url } (or your schema)
+  const { apiPatch } = await import("@/lib/api");
+  await apiPatch<{ user: { avatarUrl?: string } }>("/api/me", { avatarUrl: url });
 }

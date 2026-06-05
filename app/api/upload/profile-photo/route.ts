@@ -4,6 +4,7 @@ export const runtime = "nodejs";
 
 const MAX_BYTES = 2 * 1024 * 1024;
 const ALLOWED = new Set(["image/jpeg", "image/png", "image/webp"]);
+const PROFILE_PHOTO_FOLDER = "fourwaymedia/profile-photos";
 
 type CloudinaryUploadResponse = {
   secure_url?: string;
@@ -55,6 +56,7 @@ export async function POST(request: Request) {
   const upstream = new FormData();
   upstream.set("file", file);
   upstream.set("upload_preset", uploadPreset);
+  upstream.set("folder", PROFILE_PHOTO_FOLDER);
 
   const cloudinaryUrl = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
