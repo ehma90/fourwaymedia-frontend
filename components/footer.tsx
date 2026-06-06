@@ -38,15 +38,13 @@ function getBottomRow() {
         { label: "About", href: "/about" },
         { label: "Career", href: "#" },
         { label: "FAQ", href: "#" },
-        { label: "Term & Service", href: "#" },
+        { label: "Term & Service", href: "/terms" },
         { label: "Privacy Policy", href: "#" },
-        { label: "Cookies Policy", href: "#" },
       ],
     },
     {
       title: "Get help",
       links: [
-        { label: "Support", href: "#" },
         { label: "Contact", href: "/contact" },
       ],
     },
