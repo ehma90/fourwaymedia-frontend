@@ -11,12 +11,15 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Settings,
+  Sparkles,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
+import { buttonVariants } from "@/components/ui/button";
 import { useNotifications } from "@/hooks/use-notifications";
+import { usePurchases } from "@/hooks/use-purchases";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -69,6 +72,57 @@ const NOTIFICATIONS_HREF = "/dashboard/notifications";
 type DashboardShellProps = {
   children: React.ReactNode;
 };
+
+function SidebarShopPromo({ collapsed }: { collapsed: boolean }) {
+  if (collapsed) {
+    return (
+      <Link
+        href="/shop"
+        title="Shop for more"
+        aria-label="Shop for more templates"
+        className="flex h-10 w-full items-center justify-center rounded-lg bg-[linear-gradient(160deg,rgba(220,68,55,0.1),rgba(254,193,7,0.12))] text-[#DC4437] transition-colors hover:bg-[linear-gradient(160deg,rgba(220,68,55,0.18),rgba(254,193,7,0.2))] dark:text-[#FEC107]"
+      >
+        <Sparkles size={18} aria-hidden />
+      </Link>
+    );
+  }
+
+  return (
+    <div
+      className={cn(
+        "relative overflow-hidden mt-10 rounded-xl border border-[#DC4437]/15 bg-[linear-gradient(145deg,rgba(220,68,55,0.06)_0%,rgba(254,193,7,0.1)_100%)] p-3.5",
+        "dark:border-[#FEC107]/20 dark:bg-[linear-gradient(145deg,rgba(220,68,55,0.14)_0%,rgba(254,193,7,0.07)_55%,transparent_100%)]",
+      )}
+    >
+      <div
+        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] opacity-[0.2] blur-2xl dark:opacity-30"
+        aria-hidden
+      />
+      <div className="relative">
+        <div className="flex items-center gap-2">
+          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[linear-gradient(160deg,#DC4437,#FEC107)] text-white shadow-sm">
+            <Sparkles size={14} aria-hidden />
+          </span>
+          <p className="text-sm font-semibold leading-tight text-zinc-900 dark:text-zinc-50">
+            Grow your library
+          </p>
+        </div>
+        <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
+          Fresh templates added regularly. Find your next project.
+        </p>
+        <Link
+          href="/shop"
+          className={cn(
+            buttonVariants({ variant: "primary", size: "sm" }),
+            "mt-3 h-9 w-full rounded-lg text-xs font-semibold",
+          )}
+        >
+          Shop for more
+        </Link>
+      </div>
+    </div>
+  );
+}
 
 function SidebarMenuFooter({
   onLogout,
@@ -172,6 +226,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const { user, signOut } = useAuth();
   const { unreadCount: unreadNotificationCount, reload: reloadNotifications } =
     useNotifications();
+  const { downloads, isLoading: purchasesLoading } = usePurchases();
+  const hasPurchases = !purchasesLoading && downloads.length > 0;
   const displayName = user?.displayName ?? "Account";
   const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -245,17 +301,17 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const userInitials = getInitials(displayName);
 
   return (
-    <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50">
-      <div className="flex min-h-screen flex-col md:flex-row">
+    <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50 md:h-screen md:overflow-hidden">
+      <div className="flex min-h-screen flex-col md:h-full md:min-h-0 md:flex-row">
         <aside
           className={cn(
-            "flex min-h-0 shrink-0 flex-col border-b border-zinc-200 bg-white transition-[width] duration-200 md:min-h-screen md:border-b-0 md:border-r dark:border-zinc-800 dark:bg-zinc-950",
+            "flex min-h-0 shrink-0 flex-col border-b border-zinc-200 bg-white transition-[width] duration-200 md:h-full md:overflow-hidden md:border-b-0 md:border-r dark:border-zinc-800 dark:bg-zinc-950",
             sidebarCollapsed ? "md:w-18" : "md:w-68",
           )}
         >
           <div
             className={cn(
-              "flex min-h-0 flex-1 flex-col gap-4 px-4 md:py-5",
+              "flex min-h-0 flex-1 flex-col gap-4 px-4 md:h-full md:overflow-y-auto md:py-5",
               sidebarCollapsed && "md:px-2",
             )}
           >
@@ -333,6 +389,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   />
                 ))}
               </div>
+              {hasPurchases ? (
+                <div className={cn("mt-3", sidebarCollapsed && "px-0")}>
+                  <SidebarShopPromo collapsed={sidebarCollapsed} />
+                </div>
+              ) : null}
               <SidebarMenuFooter
                 onLogout={handleLogout}
                 pinToBottom
@@ -363,6 +424,11 @@ export function DashboardShell({ children }: DashboardShellProps) {
                     />
                   ))}
                 </div>
+                {hasPurchases ? (
+                  <div className="mb-3">
+                    <SidebarShopPromo collapsed={false} />
+                  </div>
+                ) : null}
                 <SidebarMenuFooter
                   onLogout={handleLogout}
                   onAfterNavigate={() => setMobileOpen(false)}
@@ -372,7 +438,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
           </>
         )}
 
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50">
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50 md:overflow-y-auto">
           <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
 
             <div className="flex items-center gap-2">

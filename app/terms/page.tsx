@@ -71,7 +71,7 @@ const SECTIONS = [
 
 const EFFECTIVE_DATE = "June 6, 2026";
 const CONTACT_EMAIL = "Contact@fourwaymedia.com";
-const CONTACT_PHONE = "+6 62783849302";
+const CONTACT_PHONE = "+234 816 021 5890";
 
 export default function TermsPage() {
   return (
