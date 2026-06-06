@@ -131,20 +131,6 @@ export function DashboardOverview() {
         </div>
       </section>
 
-      <section aria-labelledby="overview-quick-heading">
-        <h2
-          id="overview-quick-heading"
-          className="text-sm font-semibold uppercase tracking-[0.12em] text-zinc-500 dark:text-zinc-400"
-        >
-          Quick actions
-        </h2>
-        <ul className="mt-3 grid gap-3 grid-cols-2 sm:grid-cols-4">
-          <QuickLink href="/dashboard/purchases" label="Purchases" icon={Download} />
-          <QuickLink href="/dashboard/notifications" label="Notifications" icon={Bell} />
-          <QuickLink href="/dashboard/account" label="Account" icon={Settings} />
-        </ul>
-      </section>
-
       <section
         aria-labelledby="overview-glance-heading"
         className="grid gap-4 sm:grid-cols-2"
@@ -249,24 +235,4 @@ function MetricStat({
   );
 }
 
-function QuickLink({
-  href,
-  label,
-  icon: Icon,
-}: {
-  href: string;
-  label: string;
-  icon: LucideIcon;
-}) {
-  return (
-    <li>
-      <Link
-        href={href}
-        className="flex flex-col items-center gap-2 rounded-xl border border-zinc-200 bg-zinc-50/80 px-3 py-4 text-center text-xs font-medium text-zinc-800 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/50 dark:text-zinc-200 dark:hover:bg-zinc-800/80"
-      >
-        <Icon className="h-5 w-5 opacity-90" aria-hidden />
-        {label}
-      </Link>
-    </li>
-  );
-}
+
