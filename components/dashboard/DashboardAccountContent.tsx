@@ -56,7 +56,6 @@ export function DashboardAccountContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [displayName, setDisplayName] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
 
   const [photoUploading, setPhotoUploading] = useState(false);
   const [photoFeedback, setPhotoFeedback] = useState<Feedback>(null);
@@ -76,7 +75,6 @@ export function DashboardAccountContent() {
   useEffect(() => {
     if (!user) return;
     setDisplayName(user.displayName.trim());
-    setAvatarUrl(user.avatarUrl ?? null);
   }, [user]);
 
   const profileDirty = useMemo(() => {
@@ -95,7 +93,6 @@ export function DashboardAccountContent() {
       const { url } = await uploadProfilePhotoToCloudinary(file);
       const updatedUser = await persistProfilePhotoUrl(url);
       applyUser(updatedUser);
-      setAvatarUrl(updatedUser.avatarUrl ?? url);
       setPhotoFeedback({ type: "success", message: "Profile photo updated." });
     } catch (err) {
       setPhotoFeedback({
@@ -194,6 +191,8 @@ export function DashboardAccountContent() {
       </div>
     );
   }
+
+  const avatarUrl = user.avatarUrl ?? null;
 
   return (
     <div className="mx-auto flex max-w-2xl flex-col gap-8">

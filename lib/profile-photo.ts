@@ -74,5 +74,5 @@ export async function uploadProfilePhotoToCloudinary(
  */
 export async function persistProfilePhotoUrl(url: string): Promise<AuthUser> {
   const data = await apiPatch<{ user: AuthUser }>("/api/me", { avatarUrl: url });
-  return data.user;
+  return { ...data.user, avatarUrl: data.user.avatarUrl ?? url };
 }
