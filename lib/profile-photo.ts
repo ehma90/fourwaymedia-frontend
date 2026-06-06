@@ -4,6 +4,8 @@
  * Server env (see route): `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_UPLOAD_PRESET` (unsigned preset).
  */
 
+import { apiPatch, type AuthUser } from "@/lib/api";
+
 export type UploadProfilePhotoResult = {
   url: string;
   publicId?: string;
@@ -68,12 +70,9 @@ export async function uploadProfilePhotoToCloudinary(
 }
 
 /**
- * Send the Cloudinary URL to your backend when the profile API is ready.
+ * Persist the Cloudinary URL on the customer profile.
  */
-/**
- * Send the Cloudinary URL to your backend when the profile API is ready.
- */
-export async function persistProfilePhotoUrl(url: string): Promise<void> {
-  const { apiPatch } = await import("@/lib/api");
-  await apiPatch<{ user: { avatarUrl?: string } }>("/api/me", { avatarUrl: url });
+export async function persistProfilePhotoUrl(url: string): Promise<AuthUser> {
+  const data = await apiPatch<{ user: AuthUser }>("/api/me", { avatarUrl: url });
+  return data.user;
 }

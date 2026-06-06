@@ -10,7 +10,7 @@ import {
   type ReactNode,
 } from "react";
 
-import { apiGet, apiPost, type AuthUser } from "@/lib/api";
+import { apiGet, apiPost, ApiError, type AuthUser } from "@/lib/api";
 
 type AuthContextValue = {
   user: AuthUser | null;
@@ -24,7 +24,10 @@ type AuthContextValue = {
     acceptedTerms: boolean,
   ) => Promise<void>;
   signOut: () => Promise<void>;
-  refreshSession: () => Promise<void>;
+  /** Re-fetch session from the server. Returns false on transient errors without clearing the user. */
+  refreshSession: () => Promise<boolean>;
+  /** Apply a user payload from a successful profile mutation without a full session refetch. */
+  applyUser: (user: AuthUser) => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -33,13 +36,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const refreshSession = useCallback(async () => {
+  const refreshSession = useCallback(async (): Promise<boolean> => {
     try {
       const data = await apiGet<{ user: AuthUser }>("/api/me");
       setUser(data.user);
-    } catch {
-      setUser(null);
+      return true;
+    } catch (err) {
+      if (err instanceof ApiError && err.status === 401) {
+        setUser(null);
+      }
+      return false;
     }
+  }, []);
+
+  const applyUser = useCallback((next: AuthUser) => {
+    setUser(next);
   }, []);
 
   useEffect(() => {
@@ -93,8 +104,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       signUp,
       signOut,
       refreshSession,
+      applyUser,
     }),
-    [user, isLoading, signIn, signUp, signOut, refreshSession],
+    [user, isLoading, signIn, signUp, signOut, refreshSession, applyUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

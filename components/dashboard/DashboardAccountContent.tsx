@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { Skeleton } from "@/components/ui/skeleton";
 import { inputFieldClassName } from "@/lib/input-classes";
-import { ApiError, apiPatch, apiPost } from "@/lib/api";
+import { ApiError, apiPatch, apiPost, type AuthUser } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
 import {
   persistProfilePhotoUrl,
@@ -52,7 +52,7 @@ const labelClass =
 type Feedback = { type: "success" | "error"; message: string } | null;
 
 export function DashboardAccountContent() {
-  const { user, isLoading, refreshSession } = useAuth();
+  const { user, isLoading, applyUser } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [displayName, setDisplayName] = useState("");
@@ -93,9 +93,9 @@ export function DashboardAccountContent() {
     setPhotoUploading(true);
     try {
       const { url } = await uploadProfilePhotoToCloudinary(file);
-      await persistProfilePhotoUrl(url);
-      setAvatarUrl(url);
-      await refreshSession();
+      const updatedUser = await persistProfilePhotoUrl(url);
+      applyUser(updatedUser);
+      setAvatarUrl(updatedUser.avatarUrl ?? url);
       setPhotoFeedback({ type: "success", message: "Profile photo updated." });
     } catch (err) {
       setPhotoFeedback({
@@ -114,10 +114,10 @@ export function DashboardAccountContent() {
     setProfileFeedback(null);
     setProfileSaving(true);
     try {
-      await apiPatch<{ user: { displayName: string } }>("/api/me", {
+      const { user: updatedUser } = await apiPatch<{ user: AuthUser }>("/api/me", {
         displayName: displayName.trim(),
       });
-      await refreshSession();
+      applyUser(updatedUser);
       setProfileFeedback({ type: "success", message: "Profile saved." });
     } catch (err) {
       setProfileFeedback({
