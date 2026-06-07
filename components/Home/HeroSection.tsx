@@ -37,7 +37,7 @@ export function HeroSection() {
               "inline-flex h-11 min-w-0 flex-1 items-center justify-center px-4 py-2 whitespace-nowrap sm:min-w-[135px] sm:flex-none sm:px-8 sm:py-3 sm:text-base md:h-14",
             )}
           >
-            Shop Template
+            Shop Templates
           </Link>
           <Link
             href="/contact"
