@@ -33,7 +33,10 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
       </head>
-      <body className={`${bitter.variable} ${lexend.variable} antialiased`}>
+      <body
+        className={`${bitter.variable} ${lexend.variable} antialiased`}
+        suppressHydrationWarning
+      >
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

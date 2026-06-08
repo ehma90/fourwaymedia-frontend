@@ -1,5 +1,3 @@
-"use client";
-import { useTheme } from "next-themes";
 import Link from "next/link";
 
 const LIGHT_LOGO =
@@ -108,9 +106,6 @@ function FooterColumn({ title, links }: { title: string; links: readonly FooterL
 }
 
 export function Footer() {
-  const { resolvedTheme } = useTheme();
-  const isDark = resolvedTheme === "dark";
-  const logo = isDark ? LIGHT_LOGO : DARK_LOGO;
   const navColumns = [...topRow, ...getBottomRow()];
 
   return (
@@ -120,12 +115,12 @@ export function Footer() {
           <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
             <Link href="/" aria-label="Fourwaymedia home">
               <img
-                src={logo}
+                src={DARK_LOGO}
                 alt="Fourwaymedia logo"
                 className="block h-16 w-16 object-cover dark:hidden"
               />
               <img
-                src={logo}
+                src={LIGHT_LOGO}
                 alt="Fourwaymedia logo"
                 className="hidden h-16 w-16 object-cover dark:block"
               />

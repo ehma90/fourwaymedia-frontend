@@ -503,7 +503,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
         </aside>
 
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50 md:overflow-y-auto">
-          <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
+          <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 md:py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
 
             <div className="flex items-center gap-2">
               <ThemeToggle />

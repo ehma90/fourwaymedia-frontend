@@ -19,6 +19,9 @@ const navLinks = [
   { label: "About", href: "/about" },
 ];
 
+const navbarContainerClassName =
+  "mx-auto flex w-full max-w-7xl items-center gap-3 rounded-br-2xl rounded-bl-2xl border border-white/10 bg-black/45 px-3 py-2.5 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] dark:border-white/10 dark:bg-black/45 md:gap-6 md:px-5 md:py-3";
+
 export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -67,16 +70,16 @@ export function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 px-3 sm:px-4">
-      <div className="mx-auto flex w-full max-w-7xl items-center gap-3 rounded-br-2xl rounded-bl-2xl border border-black/10 bg-black/45 px-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/45 md:gap-6 md:px-5 md:py-3">
+      <div className={navbarContainerClassName}>
         <Link
           href="/"
-          className="shrink-0"
+          className="flex shrink-0 items-center"
           aria-label="Fourwaymedia home"
         >
           <img
             src="https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png"
             alt="Fourwaymedia logo"
-            className="h-20 w-20 object-cover mix-blend-difference dark:block md:h-16 md:w-16"
+            className="h-12 w-12 object-cover mix-blend-difference dark:block md:h-16 md:w-16"
           />
         </Link>
 
