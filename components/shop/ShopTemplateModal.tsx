@@ -113,7 +113,7 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
           <X className="h-5 w-5" strokeWidth={1.75} aria-hidden />
         </button>
 
-        <div className="grid max-h-[inherit] flex-1 gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-8">
+        <div className="grid max-h-[inherit] items-center flex-1 gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-8">
           <div className="flex min-h-0 flex-col gap-4 rounded-2xl bg-[#e8e4dc] p-4 sm:p-5 dark:bg-neutral-800/70">
             <div className="overflow-hidden rounded-xl border border-[#d6d1c7] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-neutral-600 dark:bg-neutral-950 dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
               <img
@@ -133,6 +133,12 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
           </div>
 
           <div className="flex min-h-0 flex-col gap-5 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+          <p
+            id={titleId}
+            className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
+          >
+            {template.title}
+          </p>
             <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
               {template.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
@@ -158,13 +164,8 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
         </div>
 
         <footer className="flex flex-col gap-4 border-t border-[#e0dcd4] bg-[#f2ede4] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:border-neutral-700 dark:bg-[#1f1f1f]">
-          <p
-            id={titleId}
-            className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
-          >
-            {template.title}
-          </p>
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          
+          <div className="flex justify-end w-full flex-col gap-2 sm:flex-row sm:items-center">
             {checkoutError ? (
               <p className="text-sm text-red-700 dark:text-red-300" role="alert">
                 {checkoutError}

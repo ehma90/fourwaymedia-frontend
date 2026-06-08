@@ -4,17 +4,16 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
+  ChevronDown,
   Download,
   LayoutDashboard,
   LogOut,
-  Menu,
   PanelLeftClose,
   PanelLeftOpen,
   Settings,
   Sparkles,
-  X,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import { ThemeToggle } from "@/components/theme-toggle";
 import { buttonVariants } from "@/components/ui/button";
@@ -73,13 +72,22 @@ type DashboardShellProps = {
   children: React.ReactNode;
 };
 
-function SidebarShopPromo({ collapsed }: { collapsed: boolean }) {
+function SidebarShopPromo({
+  collapsed,
+  className,
+  onNavigate,
+}: {
+  collapsed: boolean;
+  className?: string;
+  onNavigate?: () => void;
+}) {
   if (collapsed) {
     return (
       <Link
         href="/shop"
         title="Shop for more"
         aria-label="Shop for more templates"
+        onClick={onNavigate}
         className="flex h-10 w-full items-center justify-center rounded-lg bg-[linear-gradient(160deg,rgba(220,68,55,0.1),rgba(254,193,7,0.12))] text-[#DC4437] transition-colors hover:bg-[linear-gradient(160deg,rgba(220,68,55,0.18),rgba(254,193,7,0.2))] dark:text-[#FEC107]"
       >
         <Sparkles size={18} aria-hidden />
@@ -92,6 +100,7 @@ function SidebarShopPromo({ collapsed }: { collapsed: boolean }) {
       className={cn(
         "relative overflow-hidden mt-10 rounded-xl border border-[#DC4437]/15 bg-[linear-gradient(145deg,rgba(220,68,55,0.06)_0%,rgba(254,193,7,0.1)_100%)] p-3.5",
         "dark:border-[#FEC107]/20 dark:bg-[linear-gradient(145deg,rgba(220,68,55,0.14)_0%,rgba(254,193,7,0.07)_55%,transparent_100%)]",
+        className,
       )}
     >
       <div
@@ -112,6 +121,7 @@ function SidebarShopPromo({ collapsed }: { collapsed: boolean }) {
         </p>
         <Link
           href="/shop"
+          onClick={onNavigate}
           className={cn(
             buttonVariants({ variant: "primary", size: "sm" }),
             "mt-3 h-9 w-full rounded-lg text-xs font-semibold",
@@ -163,16 +173,132 @@ function SidebarMenuFooter({
   );
 }
 
+function MobileProfileMenu({
+  displayName,
+  userInitials,
+  unreadNotificationCount,
+  hasPurchases,
+  onLogout,
+  linkClass,
+}: {
+  displayName: string;
+  userInitials: string;
+  unreadNotificationCount: number;
+  hasPurchases: boolean;
+  onLogout: () => void;
+  linkClass: (href: string) => string;
+}) {
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const menuId = useId();
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (e: PointerEvent) => {
+      const el = containerRef.current;
+      if (el && !el.contains(e.target as Node)) setOpen(false);
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  return (
+    <div ref={containerRef} className="relative">
+      <button
+        type="button"
+        id={`dashboard-mobile-menu-trigger-${menuId}`}
+        aria-label={`Account menu (${displayName})`}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-controls={open ? `dashboard-mobile-menu-${menuId}` : undefined}
+        onClick={() => setOpen((o) => !o)}
+        className="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-2 text-zinc-800 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800"
+      >
+        <span
+          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white"
+          aria-hidden
+        >
+          {userInitials}
+        </span>
+        <ChevronDown
+          className={cn(
+            "h-4 w-4 shrink-0 opacity-80 transition-transform",
+            open && "rotate-180",
+          )}
+          aria-hidden
+        />
+      </button>
+
+      {open ? (
+        <div
+          id={`dashboard-mobile-menu-${menuId}`}
+          role="menu"
+          aria-labelledby={`dashboard-mobile-menu-trigger-${menuId}`}
+          className="absolute right-0 z-50 mt-2 w-64 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto rounded-xl border border-zinc-200 bg-white py-1.5 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40"
+        >
+          <p className="border-b border-zinc-200 px-3 py-2 text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
+            {displayName}
+          </p>
+          <nav className="flex flex-col px-1 py-1" aria-label="Dashboard">
+            {navItems.map((item) => (
+              <SidebarNavLink
+                key={item.href}
+                item={item}
+                collapsed={false}
+                unreadNotificationCount={unreadNotificationCount}
+                className={cn(linkClass(item.href), "w-full")}
+                onNavigate={() => setOpen(false)}
+              />
+            ))}
+          </nav>
+          {hasPurchases ? (
+            <div className="border-t border-zinc-200 px-2 py-2 dark:border-zinc-800">
+              <SidebarShopPromo
+                collapsed={false}
+                className="mt-0"
+                onNavigate={() => setOpen(false)}
+              />
+            </div>
+          ) : null}
+          <div className="border-t border-zinc-200 px-1 py-1 dark:border-zinc-800">
+            <button
+              type="button"
+              role="menuitem"
+              className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-red-700 transition-colors hover:bg-red-500/10 dark:text-red-300 dark:hover:bg-red-500/15"
+              onClick={() => {
+                setOpen(false);
+                onLogout();
+              }}
+            >
+              <LogOut size={18} className="shrink-0 opacity-90" aria-hidden />
+              Log out
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function SidebarNavLink({
   item,
   collapsed,
   unreadNotificationCount,
   className,
+  onNavigate,
 }: {
   item: NavItem;
   collapsed: boolean;
   unreadNotificationCount: number;
   className: string;
+  onNavigate?: () => void;
 }) {
   const Icon = item.icon;
   const showBadge = item.href === NOTIFICATIONS_HREF && unreadNotificationCount > 0;
@@ -183,6 +309,7 @@ function SidebarNavLink({
     <Link
       href={item.href}
       className={className}
+      onClick={onNavigate}
       title={
         collapsed
           ? showBadge
@@ -229,7 +356,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const { downloads, isLoading: purchasesLoading } = usePurchases();
   const hasPurchases = !purchasesLoading && downloads.length > 0;
   const displayName = user?.displayName ?? "Account";
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
@@ -253,10 +379,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
   }
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     void reloadNotifications();
   }, [pathname, reloadNotifications]);
 
@@ -269,20 +391,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
       window.removeEventListener("notifications-updated", onNotificationsUpdated);
     };
   }, [reloadNotifications]);
-
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setMobileOpen(false);
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.body.style.overflow = prev;
-    };
-  }, [mobileOpen]);
 
   const linkClass = (href: string, collapsed = false) => {
     const active =
@@ -297,7 +405,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
     );
   };
 
-  const pageTitle = getDashboardPageTitle(pathname);
+  // const pageTitle = getDashboardPageTitle(pathname);
   const userInitials = getInitials(displayName);
 
   return (
@@ -340,14 +448,14 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <div className="flex shrink-0 items-center gap-2 md:gap-3">
                 <div className="flex items-center gap-2 md:hidden">
                   <ThemeToggle />
-                  <Link
-                    href="/dashboard/account"
-                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
-                    aria-label={`Account settings (${displayName})`}
-                    title={displayName}
-                  >
-                    {userInitials}
-                  </Link>
+                  <MobileProfileMenu
+                    displayName={displayName}
+                    userInitials={userInitials}
+                    unreadNotificationCount={unreadNotificationCount}
+                    hasPurchases={hasPurchases}
+                    onLogout={handleLogout}
+                    linkClass={(href) => linkClass(href, false)}
+                  />
                 </div>
                 <button
                   type="button"
@@ -362,15 +470,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   ) : (
                     <PanelLeftClose size={18} aria-hidden />
                   )}
-                </button>
-                <button
-                  type="button"
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-800 transition-colors hover:bg-zinc-100 md:hidden dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
-                  aria-expanded={mobileOpen}
-                  aria-label={mobileOpen ? "Close menu" : "Open menu"}
-                  onClick={() => setMobileOpen((o) => !o)}
-                >
-                  {mobileOpen ? <X size={18} /> : <Menu size={18} />}
                 </button>
               </div>
             </div>
@@ -403,43 +502,8 @@ export function DashboardShell({ children }: DashboardShellProps) {
           </div>
         </aside>
 
-        {mobileOpen && (
-          <>
-            <button
-              type="button"
-              className="fixed inset-0 z-40 bg-black/40 dark:bg-black/60 md:hidden "
-              aria-label="Close menu"
-              onClick={() => setMobileOpen(false)}
-            />
-            <div className="fixed top-[65px] right-1 z-50 w-60 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto rounded-xl border-b border-zinc-200 bg-white px-4 py-3 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40 md:hidden">
-              <nav className="flex flex-col" aria-label="Dashboard">
-                <div className="flex flex-col gap-0.5 my-3">
-                  {navItems.map((item) => (
-                    <SidebarNavLink
-                      key={item.href}
-                      item={item}
-                      collapsed={false}
-                      unreadNotificationCount={unreadNotificationCount}
-                      className={cn(linkClass(item.href, false), "w-full")}
-                    />
-                  ))}
-                </div>
-                {hasPurchases ? (
-                  <div className="mb-3">
-                    <SidebarShopPromo collapsed={false} />
-                  </div>
-                ) : null}
-                <SidebarMenuFooter
-                  onLogout={handleLogout}
-                  onAfterNavigate={() => setMobileOpen(false)}
-                />
-              </nav>
-            </div>
-          </>
-        )}
-
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50 md:overflow-y-auto">
-          <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
+          <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 py-2 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
 
             <div className="flex items-center gap-2">
               <ThemeToggle />
