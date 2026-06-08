@@ -2,7 +2,7 @@ import type { ShopCatalogResponse } from "@/lib/types/shop";
 
 export function getPublicApiBaseUrl(): string {
   const url = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "");
-  return url ?? "http://localhost:4000";
+  return url ?? "https://fourwaymedia-backend.onrender.com";
 }
 
 export class ApiError extends Error {
