@@ -10,8 +10,8 @@ export const metadata: Metadata = {
     "How Fourwaymedia collects, uses, stores, protects, and shares your personal information when you use our platform.",
 };
 
-const EFFECTIVE_DATE = "June 10, 2025";
-const LAST_UPDATED = "June 10, 2025";
+const EFFECTIVE_DATE = "June 10, 2026";
+const LAST_UPDATED = "June 11, 2026";
 const PRIVACY_EMAIL = "privacy@fourwaymedia.com";
 const CONTACT_ADDRESS = "12 Platform Street, Lagos, Nigeria";
 const CONTACT_PHONE = "+234 816 021 5890";
