@@ -64,9 +64,7 @@ export function HowWeWorkSection() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, ease: easeOut }}
           >
-            <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#DC4437] dark:text-[#FEC107]">
-              Our process
-            </p>
+            
             <h2
               id="how-we-work-heading"
               className="mt-3 font-[family-name:var(--font-lexend),system-ui,sans-serif] text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-white"

@@ -1,20 +1,52 @@
-import Link from "next/link";
 
 const ROW_TOP = [
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/88507498df3c2047a804f53ff310c763d35a7228%20(1).jpg",
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/27ae5e736f11788f4269a4d49b4b35037b35441a.png",
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/3e22c1daba940ce0dcd18bea89bc06414b6d0072.jpg",
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/55c163a7824139ccafa2d8d87ef974e84228a91c.jpg",
+ "https://ik.imagekit.io/szglholrw/Product%20Design/SPREADIT-MOCKUP-2.jpg?updatedAt=1769029906614",
+  "https://ik.imagekit.io/szglholrw/Social%20Media/Mirron%204.jpg?updatedAt=1769031707414",
+  "https://ik.imagekit.io/szglholrw/Social%20Media/USPs%205.jpg?updatedAt=1769031690346",
+  "https://ik.imagekit.io/szglholrw/Social%20Media/April%20Lotion%203.jpg?updatedAt=1769031694501",
+  "https://ik.imagekit.io/szglholrw/Social%20Media/SA4.jpg?updatedAt=1769031668996",
+  "https://ik.imagekit.io/szglholrw/Social%20Media/Noir%203.png?updatedAt=1769031704765",
+  "https://ik.imagekit.io/szglholrw/Product%20Design/Custard-Mockup-2.jpg?updatedAt=1769029896696",
+  "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%201.jpg?updatedAt=1773525280507",
+  "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%2001.jpg?updatedAt=1773525278145",
+  "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%204.jpg?updatedAt=1773525278089"
+
 ] as const;
 
 const ROW_BOTTOM = [
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/c70ed8c45b92416b95dd8ce61eaf9b87e60378f2.jpg",
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/f3c144330654faa0c8034e190c5ac3bb28c29cbe.jpg",
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/c4dda155e17aed488b73e0b40f1492aa4ba9f95e.jpg",
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/3be48836a304b604ddb3bd818b1d8094110c1d82.png",
+  "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551456/Video_1_Memorial_Day_Sale_May2024_4x5_rz1vzp.mp4",
+  "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551420/Tombo_tub1ye.mp4",
+  "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551513/Video_2_Split_Screen_October2024_bgmphz.mp4",
+  "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551485/Novex_Sache_Ad_wwvpzq.mp4",
 ] as const;
 
 type MarqueeDirection = "ltr" | "rtl";
+
+function isVideoSrc(src: string): boolean {
+  return /\.(mp4|webm|mov|m4v)(\?|$)/i.test(src) || /\/video\//i.test(src);
+}
+
+function FeaturedMarqueeMedia({ src }: { src: string }) {
+  const mediaClassName =
+    "h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]";
+
+  if (isVideoSrc(src)) {
+    return (
+      <video
+        src={src}
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        className={mediaClassName}
+        aria-hidden
+      />
+    );
+  }
+
+  return <img src={src} alt="" className={mediaClassName} />;
+}
 
 function FeaturedMarqueeRow({
   images,
@@ -35,8 +67,8 @@ function FeaturedMarqueeRow({
 
   const cardSurface =
     variant === "tall"
-      ? "featured-work-card group relative h-[200px] w-[min(88vw,440px)] shrink-0 overflow-hidden rounded-2xl border border-white/12 bg-zinc-900/40 sm:h-[248px] sm:w-[min(78vw,520px)]"
-      : "featured-work-card group relative h-[148px] w-[min(46vw,280px)] shrink-0 overflow-hidden rounded-xl border border-white/12 bg-zinc-900/40 sm:h-[178px] sm:w-[300px]";
+      ? "featured-work-card group relative h-[200px] w-[min(88vw,440px)] shrink-0 overflow-hidden rounded-2xl border border-white/12 bg-zinc-900/40 sm:h-[348px] sm:w-[min(78vw,520px)]"
+      : "featured-work-card group relative h-[148px] w-[min(46vw,280px)] shrink-0 overflow-hidden rounded-xl border border-white/12 bg-zinc-900/40 sm:h-[258px] sm:w-[300px]";
 
   return (
     <div
@@ -47,11 +79,7 @@ function FeaturedMarqueeRow({
       <div className={trackClass}>
         {loop.map((src, index) => (
           <div key={`${src}-${index}`} className={cardSurface}>
-            <img
-              src={src}
-              alt=""
-              className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-            />
+            <FeaturedMarqueeMedia src={src} />
             <div
               className="pointer-events-none absolute inset-0 rounded-[inherit] ring-1 ring-inset ring-white/5"
               aria-hidden
