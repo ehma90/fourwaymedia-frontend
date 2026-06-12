@@ -88,7 +88,7 @@ export function HowWeWorkSection() {
             viewport={{ once: true, margin: "-40px" }}
           >
             <div
-              className="pointer-events-none absolute bottom-3 left-[1.35rem] top-3 hidden w-px bg-linear-to-b from-[#DC4437]/35 via-[#FEC107]/25 to-transparent sm:block"
+              className="pointer-events-none absolute bottom-3 left-[1.35rem] top-3 hidden w-px bg-linear-to-b from-[#DC4437]/35 via-[#DC4437]/25 to-transparent sm:block"
               aria-hidden
             />
 
