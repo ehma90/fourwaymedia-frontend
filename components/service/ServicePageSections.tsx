@@ -1,16 +1,155 @@
 "use client";
 
+import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "framer-motion";
 import { useCallback, useState } from "react";
 
 import { ServiceCategoryModal } from "@/components/Home/ServiceCategoryModal";
 import { categories, type CategoryItem } from "@/mock-data/service-categories-data";
-import { servicePageSections } from "@/mock-data/service-page-sections";
+import {
+  servicePageSections,
+  type ServicePageSection,
+} from "@/mock-data/service-page-sections";
+import { cn } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 function categoryByTitle(title: string): CategoryItem | undefined {
   return categories.find((c) => c.title === title);
+}
+
+function isVideoSrc(src: string): boolean {
+  return /\.(mp4|webm|mov|m4v)(\?|$)/i.test(src) || /\/video\//i.test(src);
+}
+
+function getAspectClass(count: number): string {
+  if (count === 3) return "aspect-square w-full overflow-hidden";
+  if (count === 2) return "aspect-video w-full overflow-hidden md:aspect-4/3";
+  return "aspect-video w-full overflow-hidden md:aspect-21/9";
+}
+
+function ServiceMediaButton({
+  src,
+  sectionTitle,
+  aspectClass,
+  onOpen,
+  className,
+}: {
+  src: string;
+  sectionTitle: string;
+  aspectClass: string;
+  onOpen: () => void;
+  className?: string;
+}) {
+  const mediaClassName =
+    "h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]";
+
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={cn(
+        "group relative overflow-hidden rounded-xl border border-black/10 bg-white text-left shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-neutral-900/50 dark:shadow-none dark:hover:shadow-[0_16px_48px_rgba(0,0,0,0.45)] sm:rounded-2xl",
+        className,
+      )}
+      aria-label={`${sectionTitle}. View details.`}
+    >
+      <div className={aspectClass}>
+        {isVideoSrc(src) ? (
+          <video
+            src={src}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className={mediaClassName}
+            aria-hidden
+          />
+        ) : (
+          <img src={src} alt="" className={mediaClassName} />
+        )}
+      </div>
+    </button>
+  );
+}
+
+function ServiceSectionGallery({
+  section,
+  onOpenSection,
+}: {
+  section: ServicePageSection;
+  onOpenSection: (title: string) => void;
+}) {
+  const imageCount = section.images.length;
+  const aspectClass = getAspectClass(imageCount);
+  const openSection = () => onOpenSection(section.title);
+
+  const [emblaRef] = useEmblaCarousel({
+    align: "start",
+    containScroll: "trimSnaps",
+    dragFree: false,
+  });
+
+  if (imageCount === 1) {
+    return (
+      <div className="mt-8">
+        <ServiceMediaButton
+          src={section.images[0]}
+          sectionTitle={section.title}
+          aspectClass={aspectClass}
+          onOpen={openSection}
+          className="w-full"
+        />
+      </div>
+    );
+  }
+
+  return (
+    <>
+      <div className="relative mt-8 md:hidden">
+        <div
+          className="overflow-hidden [mask-image:linear-gradient(to_right,black_92%,transparent)] [-webkit-mask-image:linear-gradient(to_right,black_92%,transparent)]"
+          ref={emblaRef}
+        >
+          <div className="flex gap-4">
+            {section.images.map((src, index) => (
+              <div
+                key={`${section.title}-mobile-${index}`}
+                className="min-w-0 shrink-0 basis-[85vw] max-w-[320px]"
+              >
+                <ServiceMediaButton
+                  src={src}
+                  sectionTitle={section.title}
+                  aspectClass="aspect-video w-full overflow-hidden"
+                  onOpen={openSection}
+                  className="w-full"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div
+        className={cn(
+          "mt-8 hidden gap-4 md:grid md:gap-5",
+          imageCount === 2 ? "md:grid-cols-2" : "md:grid-cols-3",
+        )}
+      >
+        {section.images.map((src, index) => (
+          <ServiceMediaButton
+            key={`${section.title}-desktop-${index}`}
+            src={src}
+            sectionTitle={section.title}
+            aspectClass={aspectClass}
+            onOpen={openSection}
+            className="w-full"
+          />
+        ))}
+      </div>
+    </>
+  );
 }
 
 export function ServicePageSections() {
@@ -28,10 +167,7 @@ export function ServicePageSections() {
       aria-labelledby="service-offerings-heading"
     >
       <div className="mx-auto max-w-6xl px-6">
-        <h2
-          id="service-offerings-heading"
-          className="sr-only"
-        >
+        <h2 id="service-offerings-heading" className="sr-only">
           Services
         </h2>
 
@@ -43,51 +179,26 @@ export function ServicePageSections() {
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.5, delay: 0.05 * sectionIndex, ease: easeOut }}
+              transition={{
+                duration: 0.5,
+                delay: 0.05 * sectionIndex,
+                ease: easeOut,
+              }}
             >
-              <h3 className="text-2xl font-bold tracking-tight text-copy-primary sm:text-3xl md:text-[2rem]">
+              <h3
+                onClick={() => openModalForTitle(section.title)}
+                className="cursor-pointer text-2xl font-bold tracking-tight text-copy-primary underline sm:text-3xl md:text-[2rem]"
+              >
                 {section.title}
               </h3>
               <p className="mt-4 max-w-3xl text-sm leading-relaxed text-copy-body sm:text-base">
                 {section.bullets}
               </p>
 
-              <div
-                className={
-                  section.images.length === 1
-                    ? "mt-8"
-                    : section.images.length === 2
-                      ? "mt-8 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5"
-                      : "mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-4"
-                }
-              >
-                {section.images.map((src, i) => {
-                  const n = section.images.length;
-                  const imgWrapClass =
-                    n === 3
-                      ? "aspect-square w-full overflow-hidden"
-                      : n === 2
-                        ? "aspect-video w-full overflow-hidden md:aspect-4/3"
-                        : "aspect-video w-full overflow-hidden md:aspect-21/9";
-                  return (
-                  <button
-                    key={`${section.title}-${i}`}
-                    type="button"
-                    onClick={() => openModalForTitle(section.title)}
-                    className="group relative w-full overflow-hidden rounded-xl border border-black/10 bg-white text-left shadow-sm outline-none transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-neutral-900/50 dark:shadow-none dark:hover:shadow-[0_16px_48px_rgba(0,0,0,0.45)] sm:rounded-2xl"
-                    aria-label={`${section.title}. View details.`}
-                  >
-                    <div className={imgWrapClass}>
-                      <img
-                        src={src}
-                        alt=""
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                      />
-                    </div>
-                  </button>
-                  );
-                })}
-              </div>
+              <ServiceSectionGallery
+                section={section}
+                onOpenSection={openModalForTitle}
+              />
             </motion.article>
           ))}
         </div>

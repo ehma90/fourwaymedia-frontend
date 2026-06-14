@@ -78,13 +78,16 @@ export function ServiceCategoryModal({ item, onClose }: ServiceCategoryModalProp
                 className="aspect-4/3 w-full object-cover"
               />
             </div>
-            <div className="hidden flex-1 gap-3 sm:flex">
-              <div className="flex-1 rounded-lg border border-[#d6d1c7] bg-linear-to-b from-[#6366f1]/25 via-white to-[#a855f7]/20 shadow-inner dark:border-neutral-600 dark:from-[#6366f1]/15 dark:via-neutral-900/40 dark:to-[#a855f7]/15" />
-              <div className="flex-1 rounded-lg border border-[#d6d1c7] bg-linear-to-b from-[#3b82f6]/20 via-white to-[#8b5cf6]/15 shadow-inner dark:border-neutral-600 dark:from-[#3b82f6]/12 dark:via-neutral-900/40 dark:to-[#8b5cf6]/12" />
-            </div>
+            
           </div>
 
           <div className="flex min-h-0 flex-col gap-5 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+            <p
+              id={titleId}
+              className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
+            >
+              {item.title}
+            </p>
             <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
               {detail.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
@@ -106,13 +109,8 @@ export function ServiceCategoryModal({ item, onClose }: ServiceCategoryModalProp
           </div>
         </div>
 
-        <footer className="flex flex-col gap-4 border-t border-[#e0dcd4] bg-[#f2ede4] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:border-neutral-700 dark:bg-[#1f1f1f]">
-          <p
-            id={titleId}
-            className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
-          >
-            {item.title}
-          </p>
+        <footer className="flex flex-col gap-4 border-t border-[#e0dcd4] bg-[#f2ede4] px-6 py-5 sm:flex-row sm:items-center justify-end sm:px-8 dark:border-neutral-700 dark:bg-[#1f1f1f]">
+
           <Link
             href="/contact"
             onClick={onClose}
