@@ -2,7 +2,9 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useState } from "react";
 
+import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { formFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -68,6 +70,48 @@ function YoutubeIcon({ className }: { className?: string }) {
 }
 
 export function ContactFormSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setError(null);
+    setSuccess(false);
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const payload = {
+      name: String(formData.get("name") ?? "").trim(),
+      company: String(formData.get("company") ?? "").trim(),
+      phone: String(formData.get("phone") ?? "").trim(),
+      email: String(formData.get("email") ?? "").trim(),
+      subject: String(formData.get("subject") ?? "").trim(),
+      message: String(formData.get("message") ?? "").trim(),
+    };
+
+    setIsSubmitting(true);
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = (await res.json().catch(() => ({}))) as { error?: string };
+      if (!res.ok) {
+        setError(data.error ?? "Could not send your message. Try again.");
+        return;
+      }
+
+      setSuccess(true);
+      form.reset();
+    } catch {
+      setError("Network error. Check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section
       className="border-t border-neutral-200/80 bg-neutral-100 py-16 sm:py-24 dark:border-white/10 dark:bg-[#0a0a0a]"
@@ -102,7 +146,7 @@ export function ContactFormSection() {
             transition={{ duration: 0.5, delay: 0.05, ease: easeOut }}
           >
             <div className="rounded-2xl bg-neutral-100 p-6 sm:p-8 dark:bg-neutral-900/95">
-              <form className="space-y-6" noValidate>
+              <form className="space-y-6" noValidate onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                   <div>
                     <label htmlFor="contact-name" className={labelClass}>
@@ -115,6 +159,8 @@ export function ContactFormSection() {
                       autoComplete="name"
                       placeholder="Your name"
                       className={formFieldClassName}
+                      required
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -128,6 +174,7 @@ export function ContactFormSection() {
                       autoComplete="organization"
                       placeholder="Company name"
                       className={formFieldClassName}
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -143,6 +190,7 @@ export function ContactFormSection() {
                       autoComplete="tel"
                       placeholder="Phone number"
                       className={formFieldClassName}
+                      disabled={isSubmitting}
                     />
                   </div>
                   <div>
@@ -156,6 +204,8 @@ export function ContactFormSection() {
                       autoComplete="email"
                       placeholder="you@example.com"
                       className={formFieldClassName}
+                      required
+                      disabled={isSubmitting}
                     />
                   </div>
                 </div>
@@ -169,6 +219,8 @@ export function ContactFormSection() {
                     type="text"
                     placeholder="What is this about?"
                     className={formFieldClassName}
+                    required
+                    disabled={isSubmitting}
                   />
                 </div>
                 <div>
@@ -181,14 +233,42 @@ export function ContactFormSection() {
                     rows={5}
                     placeholder="Your message"
                     className={cn(formFieldClassName, "min-h-[140px] resize-y")}
+                    required
+                    minLength={10}
+                    disabled={isSubmitting}
                   />
                 </div>
+                {error ? (
+                  <p
+                    role="alert"
+                    className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-700 dark:text-red-300"
+                  >
+                    {error}
+                  </p>
+                ) : null}
+                {success ? (
+                  <p
+                    role="status"
+                    className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-200"
+                  >
+                    Thanks — your message was sent. We&apos;ll get back to you soon.
+                  </p>
+                ) : null}
                 <div className="flex justify-center pt-1">
                   <Button
+                    type="submit"
                     variant="primary"
+                    disabled={isSubmitting}
                     className="inline-flex h-10 min-w-[120px] px-8 text-[16px] font-medium"
                   >
-                    Send Message
+                    {isSubmitting ? (
+                      <>
+                        <LoadingSpinner label="Sending message" />
+                        <span className="ml-2">Sending…</span>
+                      </>
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </div>
               </form>
