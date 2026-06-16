@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 
@@ -9,6 +9,7 @@ import { SocialAuthSection } from "@/components/auth/SocialAuthSection";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { safeInternalPath } from "@/lib/shop-purchase-flow";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -18,6 +19,7 @@ const logoFontClass =
 
 export function SignUpForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { signUp } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [termsAccepted, setTermsAccepted] = useState(false);
@@ -47,7 +49,7 @@ export function SignUpForm() {
     setIsSubmitting(true);
     try {
       await signUp(email, password, displayName, true);
-      router.push("/dashboard");
+      router.push(safeInternalPath(searchParams.get("next")));
       router.refresh();
     } catch (err) {
       setError(
@@ -57,6 +59,11 @@ export function SignUpForm() {
       setIsSubmitting(false);
     }
   };
+
+  const next = searchParams.get("next");
+  const signInHref = next
+    ? `/sign-in?next=${encodeURIComponent(next)}`
+    : "/sign-in";
 
   return (
     <div className="w-full max-w-[520px] rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.06)] sm:p-10 dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
@@ -203,7 +210,7 @@ export function SignUpForm() {
       <p className="mt-8 text-center text-sm text-neutral-600 dark:text-neutral-400">
         Already have an account?{" "}
         <Link
-          href="/sign-in"
+          href={signInHref}
           className="font-semibold text-neutral-950 underline-offset-4 hover:underline dark:text-white"
         >
           Sign in

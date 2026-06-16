@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Maximize2, Minimize2, Search, SlidersHorizontal, X } from "lucide-react";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ShopCategoryTabs } from "@/components/shop/ShopCategoryTabs";
 import { ShopFilterPanel } from "@/components/shop/ShopFilterPanel";
@@ -17,6 +18,7 @@ import {
 } from "@/components/ui/skeleton";
 import { useShopCatalog } from "@/hooks/use-shop-catalog";
 import { inputFieldClassName } from "@/lib/input-classes";
+import { SHOP_BUY_QUERY_KEY } from "@/lib/shop-purchase-flow";
 import {
   cloneAppliedFilters,
   emptyAppliedFilters,
@@ -26,6 +28,11 @@ import type { AppliedFilters, ShopTemplate, ShopTopCategoryId } from "@/lib/type
 import { cn } from "@/lib/utils";
 
 export function ShopBrowse() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const buyTemplateId = searchParams.get(SHOP_BUY_QUERY_KEY);
+  const resumedPurchaseRef = useRef<string | null>(null);
+
   const { data, isLoading, error } = useShopCatalog();
 
   const categories = data?.topCategories ?? [];
@@ -98,6 +105,20 @@ export function ShopBrowse() {
     setDraftFilters(cloneAppliedFilters(catalogAppliedFilters));
     setMobileFiltersOpen(false);
   }, [catalogAppliedFilters]);
+
+  useEffect(() => {
+    if (!buyTemplateId || isLoading) return;
+    if (resumedPurchaseRef.current === buyTemplateId) return;
+
+    const match = templates.find((t) => t.id === buyTemplateId);
+    if (!match) {
+      router.replace("/shop", { scroll: false });
+      return;
+    }
+
+    resumedPurchaseRef.current = buyTemplateId;
+    setSelectedTemplate(match);
+  }, [buyTemplateId, isLoading, templates, router]);
 
   useEffect(() => {
     if (!mobileFiltersOpen) return;
@@ -378,7 +399,19 @@ export function ShopBrowse() {
 
       <ShopTemplateModal
         template={selectedTemplate}
-        onClose={() => setSelectedTemplate(null)}
+        resumeCheckout={
+          Boolean(
+            buyTemplateId &&
+              selectedTemplate &&
+              buyTemplateId === selectedTemplate.id,
+          )
+        }
+        onClose={() => {
+          setSelectedTemplate(null);
+          if (buyTemplateId) {
+            router.replace("/shop", { scroll: false });
+          }
+        }}
       />
     </section>
   );

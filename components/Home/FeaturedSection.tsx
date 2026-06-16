@@ -170,7 +170,7 @@ function FeaturedMarqueeRow({
 
   return (
     <div
-      className="featured-marquee-viewport overflow-hidden py-0.5 [mask-image:linear-gradient(to_right,transparent,black_3%,black_95%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_3%,black_98%,transparent)]"
+      className="featured-marquee-viewport overflow-hidden py-0.5 [mask-image:linear-gradient(to_right,transparent,black_3%,black_95%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_3%,black_95%,transparent)]"
       role="region"
       aria-label={ariaLabel}
     >

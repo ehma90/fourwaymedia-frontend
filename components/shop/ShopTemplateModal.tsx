@@ -9,12 +9,14 @@ import { buttonVariants } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ApiError, apiPost } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { signInForPurchasePath } from "@/lib/shop-purchase-flow";
 import type { ShopTemplate } from "@/lib/types/shop";
 import { cn } from "@/lib/utils";
 
 type ShopTemplateModalProps = {
   template: ShopTemplate | null;
   onClose: () => void;
+  resumeCheckout?: boolean;
 };
 
 type CheckoutResponse = {
@@ -23,38 +25,23 @@ type CheckoutResponse = {
   message?: string;
 };
 
-export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps) {
+export function ShopTemplateModal({
+  template,
+  onClose,
+  resumeCheckout = false,
+}: ShopTemplateModalProps) {
   const titleId = useId();
   const closeRef = useRef<HTMLButtonElement>(null);
+  const resumeCheckoutStartedRef = useRef(false);
   const router = useRouter();
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    },
-    [onClose],
-  );
-
-  useEffect(() => {
-    if (!template) return;
-    setCheckoutError(null);
-    document.addEventListener("keydown", handleKeyDown);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    queueMicrotask(() => closeRef.current?.focus());
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = prev;
-    };
-  }, [template, handleKeyDown]);
-
-  const handleBuy = async () => {
+  const handleBuy = useCallback(async () => {
     if (!template) return;
     if (!isAuthenticated) {
-      router.push(`/sign-in?next=${encodeURIComponent("/shop")}`);
+      router.push(signInForPurchasePath(template.id));
       return;
     }
 
@@ -82,7 +69,37 @@ export function ShopTemplateModal({ template, onClose }: ShopTemplateModalProps)
     } finally {
       setCheckoutLoading(false);
     }
-  };
+  }, [template, isAuthenticated, router, onClose]);
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    },
+    [onClose],
+  );
+
+  useEffect(() => {
+    if (!template) return;
+    setCheckoutError(null);
+    resumeCheckoutStartedRef.current = false;
+    document.addEventListener("keydown", handleKeyDown);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    queueMicrotask(() => closeRef.current?.focus());
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prev;
+    };
+  }, [template, handleKeyDown]);
+
+  useEffect(() => {
+    if (!resumeCheckout || !template || authLoading || !isAuthenticated) return;
+    if (resumeCheckoutStartedRef.current) return;
+
+    resumeCheckoutStartedRef.current = true;
+    router.replace("/shop", { scroll: false });
+    void handleBuy();
+  }, [resumeCheckout, template, authLoading, isAuthenticated, handleBuy, router]);
 
   if (typeof document === "undefined" || !template) return null;
 

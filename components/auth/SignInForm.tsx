@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ApiError } from "@/lib/api";
 import { useAuth } from "@/lib/auth-context";
+import { safeInternalPath } from "@/lib/shop-purchase-flow";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 
@@ -35,8 +36,8 @@ export function SignInForm() {
     setIsSubmitting(true);
     try {
       await signIn(email, password);
-      const next = searchParams.get("next") ?? "/dashboard";
-      router.push(next.startsWith("/") ? next : "/dashboard");
+      const next = safeInternalPath(searchParams.get("next"));
+      router.push(next);
       router.refresh();
     } catch (err) {
       setError(
@@ -46,6 +47,11 @@ export function SignInForm() {
       setIsSubmitting(false);
     }
   };
+
+  const next = searchParams.get("next");
+  const signUpHref = next
+    ? `/sign-up?next=${encodeURIComponent(next)}`
+    : "/sign-up";
 
   return (
     <div className="w-full max-w-[440px] rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.06)] sm:p-10 dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
@@ -141,7 +147,7 @@ export function SignInForm() {
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
         <Link
-          href="/sign-up"
+          href={signUpHref}
           className="font-semibold text-neutral-950 underline-offset-4 hover:underline dark:text-white"
         >
           Create account

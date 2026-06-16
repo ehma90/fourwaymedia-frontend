@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+import { safeInternalPath } from "@/lib/shop-purchase-flow";
+
 const SESSION_COOKIE = "fw_customer_session";
 
 export function middleware(request: NextRequest) {
@@ -17,7 +19,10 @@ export function middleware(request: NextRequest) {
 
   if (pathname === "/sign-in" || pathname === "/sign-up") {
     if (token) {
-      return NextResponse.redirect(new URL("/dashboard", request.url));
+      const next = request.nextUrl.searchParams.get("next");
+      return NextResponse.redirect(
+        new URL(safeInternalPath(next), request.url),
+      );
     }
   }
 

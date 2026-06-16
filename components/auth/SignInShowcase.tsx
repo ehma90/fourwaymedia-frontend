@@ -16,7 +16,7 @@ const SLIDES = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1781633005/KNK_Expo_Video_cbrzra.mp4",
     title: "Built for brands & creators",
     body: "Professional layouts and assets tuned for campaigns, social, and product launches consistent quality you can rely on.",
   },
@@ -27,6 +27,10 @@ const SLIDES = [
     body: "Get structured project files you can copy and paste, and export—without rebuilding everything from scratch.",
   },
 ] as const;
+
+function isVideoSrc(src: string): boolean {
+  return /\.(mp4|webm|mov|m4v)(\?|$)/i.test(src) || /\/video\//i.test(src);
+}
 
 export function SignInShowcase() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -80,11 +84,24 @@ export function SignInShowcase() {
                 className="min-w-0 shrink-0 grow-0 basis-full"
               >
                 <div className="aspect-video w-full overflow-hidden">
-                  <img
-                    src={slide.image}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
+                  {isVideoSrc(slide.image) ? (
+                    <video
+                      src={slide.image}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      preload="metadata"
+                      className="h-full w-full object-cover"
+                      aria-hidden
+                    />
+                  ) : (
+                    <img
+                      src={slide.image}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                  )}
                 </div>
                 <div className="space-y-3 px-6 py-8 text-center sm:px-8">
                   <h2 className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl dark:text-white">
