@@ -44,7 +44,7 @@ export function ServiceCategoryModal({ item, onClose }: ServiceCategoryModalProp
 
   return createPortal(
     <div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6"
+      className="fixed inset-0 z-200 flex items-center justify-center p-4 sm:p-6"
       role="presentation"
     >
       <button
