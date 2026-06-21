@@ -1,49 +1,56 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Linkedin } from "lucide-react";
+import { Globe, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 
-const TEAM = [
+type TeamMember = {
+  name: string;
+  role: string;
+  image: string;
+  linkedin: string;
+  url?: string;
+  iconClass?: string;
+}
+
+const TEAM: readonly TeamMember[] = [
   {
-    name: "Christian Williams",
-    role: "Chief Executive Officer",
+    name: "Emmanuel Etim",
+    role: "Co-founder & Creative Lead",
     image:
-      "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&h=400&q=80",
+      "https://ik.imagekit.io/szglholrw/My%20Pics.png?updatedAt=1769029019252",
     linkedin: "https://linkedin.com",
-    x: "https://x.com",
+    url: "https://timnuel.live/",
     iconClass:
-      "text-amber-400 hover:text-amber-300 dark:text-amber-400 dark:hover:text-amber-300",
+      "text-grey-400 hover:text-grey-300 dark:text-grey-400 dark:hover:text-grey-300",
   },
   {
-    name: "Isabella Rossi",
-    role: "Chief Executive Officer",
+    name: "Emem Essang",
+    role: "Co-founder & Creative Lead",
     image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&h=400&q=80",
-    linkedin: "https://linkedin.com",
-    x: "https://x.com",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782030837/DP-new_zslpcw.jpg",
+    linkedin: "https://www.linkedin.com/in/peace-in-motion-134729195/",
     iconClass:
       "text-emerald-500 hover:text-emerald-400 dark:text-emerald-400 dark:hover:text-emerald-300",
   },
   {
-    name: "Daniel Whitmore",
-    role: "Chief Executive Officer",
+    name: "Emmanuel Essien",
+    role: "Chief Technical Officer",
     image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&h=400&q=80",
-    linkedin: "https://linkedin.com",
-    x: "https://x.com",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782033321/StKh9_ad9d9s.jpg",
+    linkedin: "https://www.linkedin.com/in/ehmaessien/",
+    url: "https://emmanuelessien-porfolio.vercel.app/",
     iconClass:
       "text-violet-500 hover:text-violet-400 dark:text-violet-400 dark:hover:text-violet-300",
   },
   {
-    name: "Sophia Laurent",
-    role: "Chief Executive Officer",
+    name: "Rosemary Effiong",
+    role: "Marketing/Operations Lead",
     image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&h=400&q=80",
-    linkedin: "https://linkedin.com",
-    x: "https://x.com",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782030849/_MG_2523_yvpot2.png",
+    linkedin: "https://www.linkedin.com/in/rosemaryeffiong",
     iconClass:
       "text-red-500 hover:text-red-400 dark:text-red-400 dark:hover:text-red-300",
   },
@@ -65,19 +72,6 @@ const cardVariants = {
     transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
   },
 };
-
-function XIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      className={cn("h-4 w-4", className)}
-      fill="currentColor"
-      aria-hidden
-    >
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
 
 export function MeetOurTeam() {
   return (
@@ -153,18 +147,20 @@ export function MeetOurTeam() {
                 >
                   <Linkedin className="h-5 w-5" strokeWidth={1.75} />
                 </Link>
-                <Link
-                  href={member.x}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={cn(
-                    "rounded-md p-1.5 transition-transform hover:scale-110",
-                    member.iconClass,
-                  )}
-                  aria-label={`${member.name} on X`}
-                >
-                  <XIcon />
-                </Link>
+                {member.url && (
+                  <Link
+                    href={member.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "rounded-md p-1.5 transition-transform hover:scale-110",
+                      member.iconClass,
+                    )}
+                    aria-label={`${member.name}'s website`}
+                  >
+                    <Globe className="h-5 w-5" strokeWidth={1.75} />
+                  </Link>
+                )}
               </motion.div>
             </motion.li>
           ))}
