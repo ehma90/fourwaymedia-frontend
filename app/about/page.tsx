@@ -1,6 +1,11 @@
 import { AboutHero } from "@/components/about/AboutHero";
+import { IndustriesWeServe } from "@/components/about/IndustriesWeServe";
 import { MeetOurTeam } from "@/components/about/MeetOurTeam";
+import { OurProcess } from "@/components/about/OurProcess";
+import { OurStory } from "@/components/about/OurStory";
 import { WereHiring } from "@/components/about/WereHiring";
+import { WhyFourway } from "@/components/about/WhyFourway";
+import { WhyTrustUs } from "@/components/about/WhyTrustUs";
 import { WhyWorkWithUs } from "@/components/about/WhyWorkWithUs";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
@@ -10,6 +15,11 @@ export default function About() {
     <div className="min-h-screen bg-background text-foreground">
       <Navbar />
       <AboutHero />
+      <OurStory />
+      <IndustriesWeServe />
+      <WhyTrustUs />
+      <OurProcess />
+      <WhyFourway />
       <WhyWorkWithUs />
       <MeetOurTeam />
       <WereHiring />
