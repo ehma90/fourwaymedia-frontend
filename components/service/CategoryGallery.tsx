@@ -143,6 +143,7 @@ function GalleryLightbox({
             controls
             autoPlay
             loop
+            muted
             playsInline
             className="max-h-[88vh] w-auto max-w-full rounded-xl shadow-[0_24px_80px_rgba(0,0,0,0.55)]"
           />
