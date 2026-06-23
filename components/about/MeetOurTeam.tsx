@@ -11,18 +11,16 @@ type TeamMember = {
   role: string;
   image: string;
   linkedin: string;
-  url?: string;
   iconClass?: string;
 }
 
 const TEAM: readonly TeamMember[] = [
   {
     name: "Emmanuel Etim",
-    role: "Co-founder & Creative Lead",
+    role: "Co-founder & Head of Operations",
     image:
       "https://ik.imagekit.io/szglholrw/My%20Pics.png?updatedAt=1769029019252",
     linkedin: "https://linkedin.com",
-    url: "https://timnuel.live/",
     iconClass:
       "text-grey-400 hover:text-grey-300 dark:text-grey-400 dark:hover:text-grey-300",
   },
@@ -41,13 +39,12 @@ const TEAM: readonly TeamMember[] = [
     image:
       "https://res.cloudinary.com/drrluhcad/image/upload/v1782033321/StKh9_ad9d9s.jpg",
     linkedin: "https://www.linkedin.com/in/ehmaessien/",
-    url: "https://emmanuelessien-porfolio.vercel.app/",
     iconClass:
       "text-violet-500 hover:text-violet-400 dark:text-violet-400 dark:hover:text-violet-300",
   },
   {
     name: "Rosemary Effiong",
-    role: "Marketing/Operations Lead",
+    role: "Marketing Lead",
     image:
       "https://res.cloudinary.com/drrluhcad/image/upload/v1782030849/_MG_2523_yvpot2.png",
     linkedin: "https://www.linkedin.com/in/rosemaryeffiong",
@@ -147,20 +144,7 @@ export function MeetOurTeam() {
                 >
                   <Linkedin className="h-5 w-5" strokeWidth={1.75} />
                 </Link>
-                {member.url && (
-                  <Link
-                    href={member.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "rounded-md p-1.5 transition-transform hover:scale-110",
-                      member.iconClass,
-                    )}
-                    aria-label={`${member.name}'s website`}
-                  >
-                    <Globe className="h-5 w-5" strokeWidth={1.75} />
-                  </Link>
-                )}
+                
               </motion.div>
             </motion.li>
           ))}
