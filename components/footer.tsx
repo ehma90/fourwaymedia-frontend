@@ -7,16 +7,6 @@ const DARK_LOGO =
 
 const topRow = [
   {
-    title: "Product",
-    links: [
-      { label: "Marketplace", href: "#" },
-      { label: "Video Templates", href: "#" },
-      { label: "Design Templates", href: "#" },
-      { label: "Audio Assets", href: "#" },
-      { label: "3D Templates", href: "#" },
-    ],
-  },
-  {
     title: "Service",
     links: [
       { label: "Branding", href: "#" },
@@ -34,10 +24,9 @@ function getBottomRow() {
       title: "Company",
       links: [
         { label: "About", href: "/about" },
-        { label: "Career", href: "#" },
         { label: "FAQ", href: "#" },
         { label: "Term & Service", href: "/terms" },
-        { label: "Privacy Policy", href: "#" },
+        { label: "Privacy Policy", href: "/privacy" },
       ],
     },
     {

@@ -1,9 +1,8 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import Link from "next/link";
 
 import { categories, type CategoryItem } from "@/mock-data/service-categories-data";
-import { ServiceCategoryModal } from "@/components/Home/ServiceCategoryModal";
 
 function CategoryCard({
   item,
@@ -18,16 +17,14 @@ function CategoryCard({
   decorative?: boolean;
 }) {
   return (
-    <button
-      type="button"
+    <Link
+      href={`/service/${item.slug}`}
       id={decorative ? undefined : instanceId}
       tabIndex={decorative ? -1 : undefined}
       aria-hidden={decorative ? true : undefined}
       onClick={() => onSelect?.(item)}
       className="service-category-card group relative flex h-full w-[min(85vw,300px)] shrink-0 flex-col overflow-hidden rounded-2xl text-left shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] outline-none transition-[transform,box-shadow] duration-200 hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background sm:w-[420px] cursor-pointer"
-      aria-label={
-        decorative ? undefined : `${item.title}. Open details.`
-      }
+      aria-label={decorative ? undefined : `${item.title}. View details.`}
     >
       <div className="relative aspect-4/3 min-h-72 lg:min-h-96 overflow-hidden">
         <img
@@ -44,30 +41,17 @@ function CategoryCard({
         <span className="text-lg font-semibold leading-snug text-copy-primary sm:text-xl">
           {item.title}
         </span>
-
       </div>
-    </button>
+    </Link>
   );
 }
 
 type ServiceCategoriesProps = {
-  /** Optional hook e.g. analytics; modal still opens on card click */
+  /** Optional hook e.g. analytics; fires before navigation to the category page */
   onCategoryClick?: (item: CategoryItem) => void;
 };
 
 export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
-  const [modalItem, setModalItem] = useState<CategoryItem | null>(null);
-
-  const handleCategoryClick = useCallback(
-    (item: CategoryItem) => {
-      onCategoryClick?.(item);
-      setModalItem(item);
-    },
-    [onCategoryClick],
-  );
-
-  const closeModal = useCallback(() => setModalItem(null), []);
-
   return (
     <section
       className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
@@ -100,7 +84,7 @@ export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
               key={`${item.title}-a`}
               item={item}
               instanceId={`service-category-${index}`}
-              onSelect={handleCategoryClick}
+              onSelect={onCategoryClick}
             />
           ))}
           {categories.map((item, index) => (
@@ -108,14 +92,12 @@ export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
               key={`${item.title}-b`}
               item={item}
               instanceId={`service-category-clone-${index}`}
-              onSelect={handleCategoryClick}
+              onSelect={onCategoryClick}
               decorative
             />
           ))}
         </div>
       </div>
-
-      <ServiceCategoryModal item={modalItem} onClose={closeModal} />
     </section>
   );
 }

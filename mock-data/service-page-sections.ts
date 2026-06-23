@@ -49,3 +49,9 @@ export const servicePageSections = [
 ] as const;
 
 export type ServicePageSection = (typeof servicePageSections)[number];
+
+export function getSectionByTitle(
+  title: string,
+): ServicePageSection | undefined {
+  return servicePageSections.find((section) => section.title === title);
+}

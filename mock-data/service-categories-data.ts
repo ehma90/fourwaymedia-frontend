@@ -1,32 +1,46 @@
 export const categories = [
   {
     title: "Branding & Visual Identity",
+    slug: "branding-visual-identity",
+    tagline: "Identity systems that make your brand unmistakable.",
     image:
       "https://ik.imagekit.io/vp72mg6kz/Homepage/88507498df3c2047a804f53ff310c763d35a7228%20(1).jpg",
   },
   {
     title: "Content Creation",
+    slug: "content-creation",
+    tagline: "Copy, visuals, and media that keep you publishing with purpose.",
     image:
       "https://ik.imagekit.io/vp72mg6kz/Homepage/b72df1311aae253c6a82830d1df7b54ccf567fe0.jpg",
   },
   {
     title: "Web & Mobile Development",
+    slug: "web-mobile-development",
+    tagline: "Fast, modern sites and apps built to convert.",
     image:
       "https://ik.imagekit.io/vp72mg6kz/Homepage/0598bb08693b596f79436327c0a4cdc9d8d5061a.jpg",
   },
   {
     title: "Social Media Management",
+    slug: "social-media-management",
+    tagline: "A consistent, on-brand presence your audience keeps coming back to.",
     image:
       "https://ik.imagekit.io/vp72mg6kz/Homepage/ffbe39adb7cb65e2198621ca9fc8fab7974e0543%20(1).jpg",
   },
   {
     title: "Performance Marketing (Paid Ads)",
+    slug: "performance-marketing",
+    tagline: "Paid media structured to turn spend into measurable outcomes.",
     image:
       "https://ik.imagekit.io/vp72mg6kz/Homepage/b95cb84d4fa291af30f0b5bea6a32196543a63b5.jpg",
   },
 ] as const;
 
 export type CategoryItem = (typeof categories)[number];
+
+export function getCategoryBySlug(slug: string): CategoryItem | undefined {
+  return categories.find((category) => category.slug === slug);
+}
 
 export type ServiceCategoryDetail = {
   paragraphs: string[];
