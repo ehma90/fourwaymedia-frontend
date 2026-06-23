@@ -24,7 +24,7 @@ const SLIDES = [
     image:
       "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80",
     title: "Download-ready projects",
-    body: "Get structured project files you can copy and paste, and export—without rebuilding everything from scratch.",
+    body: "Get structured project files you can copy and paste, and export, without rebuilding everything from scratch.",
   },
 ] as const;
 

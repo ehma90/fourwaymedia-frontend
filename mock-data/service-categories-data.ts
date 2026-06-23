@@ -68,7 +68,7 @@ export const serviceCategoryDetails: Record<
   "Branding & Visual Identity": {
     paragraphs: [
       "We build cohesive brand identities that make your brand recognizable, credible, and consistent across every touchpoint. Whether you're a startup starting from scratch or an established business planning a rebrand, we turn your positioning into a clear visual system.",
-      "From logos and color palettes to typography and practical brand guidelines, every element aligns look, tone, and application with your goals—so your team can apply the brand with confidence and build long-term recall.",
+      "From logos and color palettes to typography and practical brand guidelines, every element aligns look, tone, and application with your goals, so your team can apply the brand with confidence and build long-term recall.",
     ],
     included: [
       "Logo design & brand marks",
@@ -83,7 +83,7 @@ export const serviceCategoryDetails: Record<
   },
   "Content Creation": {
     paragraphs: [
-      "We deliver strategic copy, visuals, and media assets that support launches, campaigns, and a steady publishing rhythm. We shape messaging around your voice and objectives—engagement, education, or conversion—and format it for each channel.",
+      "We deliver strategic copy, visuals, and media assets that support launches, campaigns, and a steady publishing rhythm. We shape messaging around your voice and objectives, whether engagement, education, or conversion, and format it for each channel.",
       "From concepts through production-ready deliverables, we organize content so your team can ship consistently. Ideal for brands that need reliable creative, social graphics, motion assets, and editorial frameworks.",
     ],
     included: [
@@ -99,7 +99,7 @@ export const serviceCategoryDetails: Record<
   "Web & Mobile Development": {
     paragraphs: [
       "We design and build custom websites and high-converting landing pages that load fast, feel intuitive, and drive action. Our UI/UX and development process focuses on performance, clarity, accessibility, and measurable growth.",
-      "From full redesigns to SEO-ready content structures, we align engineering and design so your digital presence works harder—whether you need a startup site, an e-commerce experience, or a conversion-focused landing page.",
+      "From full redesigns to SEO-ready content structures, we align engineering and design so your digital presence works harder, whether you need a startup site, an e-commerce experience, or a conversion-focused landing page.",
     ],
     included: [
       "Custom website design & development",
@@ -115,7 +115,7 @@ export const serviceCategoryDetails: Record<
   "Social Media Management": {
     paragraphs: [
       "We build a consistent, on-brand social presence that keeps your audience engaged and reinforces your positioning over time. We plan calendars, adapt creative for each platform, and balance evergreen content with timely moments so feeds feel native and professional.",
-      "Reporting and iteration highlight what resonates, so we can refine creative and cadence and help your social efforts compound—reliable social design, content, and growth without the internal overhead.",
+      "Reporting and iteration highlight what resonates, so we can refine creative and cadence and help your social efforts compound, giving you reliable social design, content, and growth without the internal overhead.",
     ],
     included: [
       "Account setup, optimization & strategy",
@@ -129,7 +129,7 @@ export const serviceCategoryDetails: Record<
   },
   "Performance Marketing (Paid Ads)": {
     paragraphs: [
-      "We create ad creative and manage paid campaigns built to reach the right audiences, validate creative, and improve efficiency. We align account structure, targeting, and bidding with clear goals—leads, revenue, or awareness—so your budget maps to outcomes.",
+      "We create ad creative and manage paid campaigns built to reach the right audiences, validate creative, and improve efficiency. We align account structure, targeting, and bidding with clear goals like leads, revenue, or awareness, so your budget maps to outcomes.",
       "Ongoing testing, conversion optimization, and transparent reporting keep budgets accountable and decisions data-led. Ideal for e-commerce brands, startups, and businesses running Facebook, Instagram, and Google campaigns.",
     ],
     included: [
@@ -161,7 +161,7 @@ export const serviceCategoryDetails: Record<
   "Videography & Photography": {
     paragraphs: [
       "We're a video production team delivering end-to-end videography and photography. From brand and corporate videos to short films, podcasts, YouTube content, vlogs, event coverage, and commercial shoots, we handle every stage with cinematic quality and a storytelling focus.",
-      "Our team manages pre-production, shooting, directing, editing, color grading, and post-production—so you receive polished, platform-ready video and photo assets that elevate your brand.",
+      "Our team manages pre-production, shooting, directing, editing, color grading, and post-production, so you receive polished, platform-ready video and photo assets that elevate your brand.",
     ],
     included: [
       "Pre-production planning, scripting & storyboarding",

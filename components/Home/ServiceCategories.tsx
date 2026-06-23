@@ -66,7 +66,7 @@ export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
             Service categories
           </h2>
           <p className="mt-3 text-base leading-relaxed text-copy-body sm:text-lg">
-            Strategy through production—pick what you need or bundle for full
+            Strategy through production, pick what you need or bundle for full
             creative support.
           </p>
         </div>

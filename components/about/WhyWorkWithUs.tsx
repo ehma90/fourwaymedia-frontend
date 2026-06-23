@@ -47,7 +47,7 @@ export function WhyWorkWithUs() {
             Our mission is to design and build digital products that solve real
             problems and create meaningful impact. We focus on solutions that feel
             intuitive, stay accessible, and line up with what your users and
-            stakeholders actually need—from first sketch through launch and beyond.
+            stakeholders actually need, from first sketch through launch and beyond.
           </p>
           <p className="mt-4 text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-300">
             We combine clear creative direction with solid execution: tight feedback

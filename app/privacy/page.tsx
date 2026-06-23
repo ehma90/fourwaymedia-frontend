@@ -99,10 +99,10 @@ export default function PrivacyPage() {
               <SubHeading>1.1 Account Information</SubHeading>
               <BulletList
                 items={[
-                  "Full name — used to personalise your experience and identify your account",
-                  "Email address — used for account login, notifications, and communication",
-                  "Password — stored in an encrypted, hashed format; never readable by our staff",
-                  "Profile picture — used to personalise your public or internal profile display",
+                  "Full name: used to personalise your experience and identify your account",
+                  "Email address: used for account login, notifications, and communication",
+                  "Password: stored in an encrypted, hashed format; never readable by our staff",
+                  "Profile picture: used to personalise your public or internal profile display",
                 ]}
               />
 
@@ -200,9 +200,9 @@ export default function PrivacyPage() {
               </p>
               <BulletList
                 items={[
-                  "Service providers who assist us in operating our platform (e.g., cloud hosting, email delivery) — bound by confidentiality agreements",
-                  "Legal compliance — when required by law, court order, or to protect our rights",
-                  "Business transfers — in the event of a merger or acquisition, users will be notified",
+                  "Service providers who assist us in operating our platform (e.g., cloud hosting, email delivery), bound by confidentiality agreements",
+                  "Legal compliance: when required by law, court order, or to protect our rights",
+                  "Business transfers: in the event of a merger or acquisition, users will be notified",
                 ]}
               />
               <p className="mt-4 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
@@ -219,11 +219,11 @@ export default function PrivacyPage() {
               </p>
               <BulletList
                 items={[
-                  "Right to access — request a copy of the data we hold on you",
-                  "Right to correction — update inaccurate or incomplete information",
-                  "Right to deletion — request that we erase your personal data",
-                  "Right to data portability — receive your data in a structured, machine-readable format",
-                  "Right to withdraw consent — opt out of non-essential data processing at any time",
+                  "Right to access: request a copy of the data we hold on you",
+                  "Right to correction: update inaccurate or incomplete information",
+                  "Right to deletion: request that we erase your personal data",
+                  "Right to data portability: receive your data in a structured, machine-readable format",
+                  "Right to withdraw consent: opt out of non-essential data processing at any time",
                 ]}
               />
               <p className="mt-4 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">

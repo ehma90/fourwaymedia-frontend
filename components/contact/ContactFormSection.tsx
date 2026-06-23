@@ -251,7 +251,7 @@ export function ContactFormSection() {
                     role="status"
                     className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-800 dark:text-emerald-200"
                   >
-                    Thanks — your message was sent. We&apos;ll get back to you soon.
+                    Thanks! Your message was sent. We&apos;ll get back to you soon.
                   </p>
                 ) : null}
                 <div className="flex justify-center pt-1">

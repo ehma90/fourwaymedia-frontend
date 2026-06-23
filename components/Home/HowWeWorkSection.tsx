@@ -18,7 +18,7 @@ const STEPS = [
   {
     title: "Execution",
     description:
-      "We bring ideas to life across branding, design, content, motion, UI/UX, and digital campaigns—focused on quality and purpose.",
+      "We bring ideas to life across branding, design, content, motion, UI/UX, and digital campaigns, focused on quality and purpose.",
   },
   {
     title: "Review & Refinement",
@@ -72,7 +72,7 @@ export function HowWeWorkSection() {
               How We Work
             </h2>
             <p className="mt-6 text-base leading-relaxed text-copy-body">
-              At Fourway Media, we don&apos;t just create—we build clarity,
+              At Fourway Media, we don&apos;t just create; we build clarity,
               direction, and impact across every brand we touch.
             </p>
             <p className="mt-4 text-base leading-relaxed text-copy-body ">

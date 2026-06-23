@@ -72,7 +72,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
     duration: "15s",
     cardBlurb: "Bold vertical stories with neon accents and kinetic type.",
     paragraphs: [
-      "A punchy vertical set built for Reels, Shorts, and Stories—neon gradients, quick cuts, and readable supers that stay on brand.",
+      "A punchy vertical set built for Reels, Shorts, and Stories, with neon gradients, quick cuts, and readable supers that stay on brand.",
       "Layers are organized for fast swaps: swap logo, palette, and end card without rebuilding the whole timeline.",
     ],
     included: [
@@ -94,7 +94,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
     duration: "30s",
     cardBlurb: "Clean square posts with soft motion and editorial rhythm.",
     paragraphs: [
-      "Square-first layouts that feel editorial—great for product drops, quotes, and carousel-style campaigns.",
+      "Square-first layouts that feel editorial, great for product drops, quotes, and carousel-style campaigns.",
       "Motion is restrained so photography and typography lead; swap assets and ship the same day.",
     ],
     included: [
@@ -160,7 +160,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
     duration: "30s",
     cardBlurb: "High-energy promo blocks tuned for urgency and clarity.",
     paragraphs: [
-      "Built for flash sales and seasonal pushes—countdown hooks, offer lines, and CTA frames that scan fast on mobile.",
+      "Built for flash sales and seasonal pushes, with countdown hooks, offer lines, and CTA frames that scan fast on mobile.",
       "Editable offer text and price slots with contrast-checked backgrounds.",
     ],
     included: [
@@ -182,7 +182,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
     duration: "15s",
     cardBlurb: "Data-forward chapter opens with subtle chart motion.",
     paragraphs: [
-      "Translate dry metrics into motion that still feels trustworthy—ideal for investor updates and internal town halls.",
+      "Translate dry metrics into motion that still feels trustworthy, ideal for investor updates and internal town halls.",
       "Chart placeholders hook to simple value drivers; swap labels and re-time in minutes.",
     ],
     included: [
