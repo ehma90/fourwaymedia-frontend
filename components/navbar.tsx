@@ -122,7 +122,7 @@ export function Navbar() {
           <Button
             type="button"
             variant="outline"
-            className="h-9 w-9 shrink-0 border-white/20 bg-white/5 p-0 text-white hover:bg-white/10 md:hidden"
+            className="h-9 w-9 shrink-0 border-white/20 p-0 text-white hover:bg-white/10 md:hidden"
             aria-expanded={mobileOpen}
             aria-controls={mobileOpen ? "mobile-nav" : undefined}
             aria-label={mobileOpen ? "Close menu" : "Open menu"}

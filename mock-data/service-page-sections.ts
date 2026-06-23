@@ -46,6 +46,22 @@ export const servicePageSections = [
       "https://ik.imagekit.io/vp72mg6kz/Homepage/b95cb84d4fa291af30f0b5bea6a32196543a63b5.jpg",
     ],
   },
+  {
+    title: "Illustrated Art & Motion",
+    bullets:
+      "Custom illustration • Concept art • Storyboarding • 2D animation • Motion graphics • Animated logos • Explainer videos",
+    images: [
+      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
+  {
+    title: "Videography & Photography",
+    bullets:
+      "Brand & corporate video • Short films • Event coverage • Commercial photography • Editing & color grading • Podcast & YouTube production",
+    images: [
+      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80",
+    ],
+  },
 ] as const;
 
 export type ServicePageSection = (typeof servicePageSections)[number];
