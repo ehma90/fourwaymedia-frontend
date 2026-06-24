@@ -24,7 +24,7 @@ function getBottomRow() {
       title: "Company",
       links: [
         { label: "About", href: "/about" },
-        { label: "FAQ", href: "#" },
+        { label: "FAQ", href: "/faq" },
         { label: "Term & Service", href: "/terms" },
         { label: "Privacy Policy", href: "/privacy" },
       ],
