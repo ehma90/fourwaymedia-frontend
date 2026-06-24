@@ -4,7 +4,7 @@ export const categories = [
     slug: "branding-visual-identity",
     tagline: "Identity systems that make your brand unmistakable.",
     image:
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/88507498df3c2047a804f53ff310c763d35a7228%20(1).jpg",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782339516/img3_d2t3nf.png",
   },
   {
     title: "Content Creation",

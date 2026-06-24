@@ -8,7 +8,9 @@ export const servicePageSections = [
     bullets:
       "Logo design • Color systems • Typography • Brand guidelines • Creative direction • Rebranding / brand refresh • Visual systems",
     images: [
-      "https://ik.imagekit.io/vp72mg6kz/service-page/f3c144330654faa0c8034e190c5ac3bb28c29cbe.jpg",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782339518/img1_mf93wi.png",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782339516/img3_d2t3nf.png",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1782339514/img2_msh9bs.png"
     ],
   },
   {
