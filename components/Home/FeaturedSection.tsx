@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils";
 
 const ROW_TOP = [
   "https://ik.imagekit.io/szglholrw/Product%20Design/SPREADIT-MOCKUP-2.jpg?updatedAt=1769029906614",
-  "https://ik.imagekit.io/szglholrw/Social%20Media/Mirron%204.jpg?updatedAt=1769031707414",
   "https://ik.imagekit.io/szglholrw/Social%20Media/USPs%205.jpg?updatedAt=1769031690346",
   "https://ik.imagekit.io/szglholrw/Social%20Media/April%20Lotion%203.jpg?updatedAt=1769031694501",
   "https://ik.imagekit.io/szglholrw/Social%20Media/SA4.jpg?updatedAt=1769031668996",
@@ -17,6 +16,7 @@ const ROW_TOP = [
   "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%201.jpg?updatedAt=1773525280507",
   "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%2001.jpg?updatedAt=1773525278145",
   "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%204.jpg?updatedAt=1773525278089",
+  "https://ik.imagekit.io/szglholrw/Social%20Media/USPs%204.jpg?updatedAt=1769031715265"
 ] as const;
 
 const ROW_BOTTOM = [

@@ -37,7 +37,12 @@ export const servicePageSections = [
     bullets:
       "Account setup & optimization • Content calendars • Scheduling • Community management • Growth strategies • Influencer partnerships",
     images: [
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/ffbe39adb7cb65e2198621ca9fc8fab7974e0543%20(1).jpg",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/SA4.jpg?updatedAt=1769031668996",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/Costa%202.jpg?updatedAt=1769031709581",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/M5.jpg?updatedAt=1769031710953",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%203.jpg?updatedAt=1769031701932",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%205.jpg?updatedAt=1769031708413",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%202.jpg?updatedAt=1769031695833"
     ],
   },
   {
