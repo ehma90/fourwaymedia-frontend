@@ -1,4 +1,3 @@
-import { ContactFormSection } from "@/components/contact/ContactFormSection";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { ServiceHero } from "@/components/service/ServiceHero";
@@ -10,7 +9,6 @@ export default function ServicePage() {
       <Navbar />
       <ServiceHero />
       <ServicePageSections />
-      <ContactFormSection />
       <Footer />
     </div>
   );

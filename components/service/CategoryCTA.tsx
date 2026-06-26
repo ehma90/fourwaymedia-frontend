@@ -8,6 +8,8 @@ import { cn } from "@/lib/utils";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
+const CALENDLY_URL = "https://calendly.com/4waydesign/30min";
+
 type CategoryCTAProps = {
   title: string;
 };
@@ -38,15 +40,17 @@ export function CategoryCTA({ title }: CategoryCTAProps) {
               bring it to life.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <Link
-                href="/contact"
+              <a
+                href={CALENDLY_URL}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={cn(
                   buttonVariants({ variant: "primary", size: "lg" }),
                   "min-w-[160px] bg-white bg-none text-[#dc4437] shadow-[0_10px_24px_rgba(0,0,0,0.18)] hover:brightness-100 hover:bg-neutral-100",
                 )}
               >
                 Contact us
-              </Link>
+              </a>
               <Link
                 href="/service"
                 className="inline-flex h-11 min-w-[160px] items-center justify-center rounded-xl border border-white/70 px-7 text-sm font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"

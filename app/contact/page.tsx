@@ -1,8 +1,8 @@
-import { ContactFormSection } from "@/components/contact/ContactFormSection";
 import { ContactHero } from "@/components/contact/ContactHero";
 import { GetInTouch } from "@/components/contact/GetInTouch";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { CategoryCTA } from "@/components/service/CategoryCTA";
 
 export default function ContactPage() {
   return (
@@ -10,7 +10,7 @@ export default function ContactPage() {
       <Navbar />
       <ContactHero />
       <GetInTouch />
-      <ContactFormSection />
+      <CategoryCTA title=""/>
       <Footer />
     </div>
   );
