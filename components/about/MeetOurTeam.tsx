@@ -110,7 +110,7 @@ export function MeetOurTeam() {
               className="flex flex-col items-center text-center"
             >
               <motion.div
-                className="relative mx-auto mb-5"
+                className="group relative mx-auto mb-5"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
@@ -118,7 +118,7 @@ export function MeetOurTeam() {
                   <img
                     src={member.image}
                     alt=""
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
                   />
                 </div>
               </motion.div>

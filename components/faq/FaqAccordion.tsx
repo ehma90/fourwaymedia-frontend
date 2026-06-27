@@ -2,7 +2,6 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Plus } from "lucide-react";
-import Link from "next/link";
 import { useId, useState } from "react";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -10,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { faqItems, type FaqBlock } from "@/mock-data/faq";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
+
 const CALENDLY_URL = "https://calendly.com/4waydesign/30min";
 
 function FaqAnswer({ blocks }: { blocks: FaqBlock[] }) {
@@ -146,15 +146,17 @@ export function FaqAccordion() {
             Tell us about your project and we&apos;ll guide you through the next
             steps.
           </p>
-          <Link
-            href="/contact"
+          <a
+            href={CALENDLY_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className={cn(
               buttonVariants({ variant: "primary", size: "lg" }),
               "mt-6 min-w-[160px]",
             )}
           >
             Contact us
-          </Link>
+          </a>
         </div>
       </div>
     </section>

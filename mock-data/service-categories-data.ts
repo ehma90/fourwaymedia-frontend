@@ -46,7 +46,7 @@ export const categories = [
     slug: "videography-photography",
     tagline: "Cinematic video and photography, from concept to final cut.",
     image:
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1782580767/montage_short_tyj2e9.mp4",
   },
 ] as const;
 

@@ -161,7 +161,7 @@ export function ServicePageSections() {
         </h2>
 
         <div className="flex flex-col gap-20 sm:gap-24">
-          {servicePageSections.map((section, sectionIndex) => {
+          {servicePageSections.slice(0, 3).map((section, sectionIndex) => {
             const slug = slugByTitle(section.title);
             const href = slug ? `/service/${slug}` : "/service";
 

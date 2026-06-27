@@ -37,12 +37,13 @@ export const servicePageSections = [
     bullets:
       "Account setup & optimization • Content calendars • Scheduling • Community management • Growth strategies • Influencer partnerships",
     images: [
-      "https://ik.imagekit.io/szglholrw/Social%20Media/SA4.jpg?updatedAt=1769031668996",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/USPs%204.jpg?updatedAt=1769031715265",
       "https://ik.imagekit.io/szglholrw/Social%20Media/Costa%202.jpg?updatedAt=1769031709581",
       "https://ik.imagekit.io/szglholrw/Social%20Media/M5.jpg?updatedAt=1769031710953",
       "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%203.jpg?updatedAt=1769031701932",
       "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%205.jpg?updatedAt=1769031708413",
-      "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%202.jpg?updatedAt=1769031695833"
+      "https://ik.imagekit.io/szglholrw/Social%20Media/Hos%202.jpg?updatedAt=1769031695833",
+      "https://ik.imagekit.io/szglholrw/Social%20Media/Costa%204.jpg?updatedAt=1769031671195"
     ],
   },
   {
@@ -66,7 +67,7 @@ export const servicePageSections = [
     bullets:
       "Brand & corporate video • Short films • Event coverage • Commercial photography • Editing & color grading • Podcast & YouTube production",
     images: [
-      "https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1782580767/montage_short_tyj2e9.mp4",
     ],
   },
 ] as const;
