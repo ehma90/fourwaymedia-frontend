@@ -335,15 +335,15 @@ export function DashboardPurchasesContent() {
 
   useEffect(() => {
     if (searchParams.get("checkout") !== "success") return;
-    const sessionId = searchParams.get("session_id");
-    if (!sessionId || confirmStarted.current) return;
+    const reference = searchParams.get("reference") ?? searchParams.get("trxref");
+    if (!reference || confirmStarted.current) return;
     confirmStarted.current = true;
 
     void (async () => {
       setConfirmingCheckout(true);
       setConfirmError(null);
       try {
-        await apiPost("/api/me/checkout/confirm", { sessionId });
+        await apiPost("/api/me/checkout/confirm", { reference });
         await reload();
         router.replace("/dashboard/purchases");
       } catch (e) {

@@ -6,9 +6,6 @@ import { Mail, MapPin, Phone } from "lucide-react";
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 
-const OFFICE_IMAGE =
-  "https://ik.imagekit.io/vp72mg6kz/Shop-page/cd520ee99ee6b633e452c923cb2305efe463882b.jpg";
-
 /** Ikeja, Lagos State, Nigeria — OSM embed (bbox min_lon,min_lat,max_lon,max_lat; marker=lat,lon) */
 const MAP_EMBED_SRC =
   "https://www.openstreetmap.org/export/embed.html?bbox=3.330%2C6.575%2C3.370%2C6.620&layer=mapnik&marker=6.6018%2C3.3515";
@@ -136,14 +133,7 @@ export function GetInTouch() {
           transition={{ duration: 0.55, ease: easeOut }}
         >
           <div className="overflow-hidden rounded-2xl border border-neutral-200/80 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.08)] dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_24px_70px_rgba(0,0,0,0.45)] sm:rounded-3xl">
-            <div className="aspect-4/3 w-full overflow-hidden sm:aspect-16/10">
-              <img
-                src={OFFICE_IMAGE}
-                alt="Modern office building exterior"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <div className="relative h-[min(280px,50vh)] w-full min-h-[220px] bg-neutral-200 dark:bg-neutral-800">
+            <div className="relative h-[min(480px,50vh)] w-full min-h-[220px] bg-neutral-200 dark:bg-neutral-800">
               <iframe
                 title="Office location in Ikeja, Lagos State, Nigeria"
                 src={MAP_EMBED_SRC}

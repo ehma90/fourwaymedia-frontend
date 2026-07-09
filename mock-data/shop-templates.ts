@@ -81,7 +81,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
       "Color control layers",
       "Export presets (H.264)",
     ],
-    priceLabel: "$29",
+    priceLabel: "₦45,000",
   },
   {
     id: "minimal-feed",
@@ -103,7 +103,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
       "Safe-area guides",
       "Sound design stems (optional)",
     ],
-    priceLabel: "$24",
+    priceLabel: "₦37,000",
   },
   {
     id: "launch-teaser",
@@ -125,7 +125,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
       "LUT-friendly grade slots",
       "Cutdown markers",
     ],
-    priceLabel: "$39",
+    priceLabel: "₦60,000",
   },
   {
     id: "brand-manifesto",
@@ -147,7 +147,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
       "Brand-safe lower thirds",
       "PDF quick-start",
     ],
-    priceLabel: "$49",
+    priceLabel: "₦75,000",
   },
   {
     id: "sale-countdown",
@@ -191,7 +191,7 @@ export const shopTemplates: readonly ShopTemplate[] = [
       "Subtle grid motion",
       "VO-safe pacing",
     ],
-    priceLabel: "$34",
+    priceLabel: "₦52,000",
   },
 ];
 
