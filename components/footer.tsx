@@ -7,12 +7,15 @@ const DARK_LOGO =
 
 const topRow = [
   {
-    title: "Service",
+    title: " OurServices",
     links: [
-      { label: "Branding", href: "#" },
-      { label: "Content", href: "#" },
-      { label: "Web & Mobile", href: "#" },
-      { label: "Marketing", href: "#" },
+      { label: "Branding", href: "/service/branding-visual-identity" },
+      { label: "Content", href: "/service/content-creation" },
+      { label: "Web & Mobile", href: "/service/web-mobile-development" },
+      { label: "Marketing", href: "/service/performance-marketing" },
+      { label: "Social Media", href: "/service/social-media-management" },
+      { label: "Illustration & Motion", href: "/service/illustrated-art-motion" },
+      { label: "Videography & Photography", href: "/service/videography-photography" },
     ],
   },
 
@@ -70,7 +73,7 @@ type FooterLink =
 
 function FooterColumn({ title, links }: { title: string; links: readonly FooterLink[] }) {
   const linkClassName =
-    "block w-full cursor-pointer text-left text-sm text-copy-body transition-colors hover:text-copy-primary";
+    `${title === "Service" ? "text-end" : ""}block w-full cursor-pointer text-left text-sm text-copy-body transition-colors hover:text-copy-primary`;
 
   return (
     <div className="min-w-0">
@@ -95,12 +98,12 @@ function FooterColumn({ title, links }: { title: string; links: readonly FooterL
 }
 
 export function Footer() {
-  const navColumns = [...topRow, ...getBottomRow()];
+  const navColumns = [...getBottomRow(), ...topRow];
 
   return (
     <footer className="text-copy-primary border-t border-copy-body/15">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10 xl:gap-12">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10 xl:gap-12 w-full">
           <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
             <Link href="/" aria-label="Fourwaymedia home">
               <img
