@@ -23,7 +23,7 @@ export default function SignUpPage() {
         <div className="relative hidden md:flex flex-1 flex-col justify-center lg:min-h-screen lg:max-w-[52%] xl:max-w-none"
           style={{
             background:
-              "linear-gradient(95deg, rgba(196, 104, 211, 0.6) 0%, rgba(6, 161, 33, 0.6) 100%)",
+              "linear-gradient(-95deg, #dc4437 0%, #e1aa07 100%)",
           }}
         >
           <div className="pointer-events-none absolute inset-0 bg-neutral-50/80 dark:bg-neutral-950/40" />

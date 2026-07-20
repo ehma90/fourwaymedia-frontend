@@ -16,7 +16,7 @@ const SLIDES = [
   },
   {
     image:
-      "https://res.cloudinary.com/drrluhcad/video/upload/v1781633005/KNK_Expo_Video_cbrzra.mp4",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1782580767/montage_short_tyj2e9.mp4",
     title: "Built for brands & creators",
     body: "Professional layouts and assets tuned for campaigns, social, and product launches consistent quality you can rely on.",
   },

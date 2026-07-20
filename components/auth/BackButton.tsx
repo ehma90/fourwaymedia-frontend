@@ -11,7 +11,7 @@ export function BackButton({ className, children = "← Back" }: BackButtonProps
   const router = useRouter();
 
   return (
-    <button type="button" onClick={() => router.back()} className={`${className} cursor-pointer`}>
+    <button type="button" onClick={() => router.push('/')} className={`${className} cursor-pointer`}>
       {children}
     </button>
   );
