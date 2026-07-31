@@ -24,10 +24,10 @@ import { cn } from "@/lib/utils";
 
 /** Light chrome (no `html.dark`) — dark mark on light sidebar */
 const LOGO_FOR_LIGHT_UI =
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png";
 /** Dark chrome — light mark on dark sidebar (do not pick via useTheme; `resolvedTheme` is undefined on first paint) */
 const LOGO_FOR_DARK_UI =
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_Black-01_z2ommb.png";
 
 function getInitials(displayName: string): string {
   const parts = displayName.trim().split(/\s+/).filter(Boolean);

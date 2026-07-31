@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const LIGHT_LOGO =
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png";
 const DARK_LOGO =
-  "https://ik.imagekit.io/vp72mg6kz/Homepage/d2242744f33f60f914c35531a37adedc66f5bf87.png";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_Black-01_z2ommb.png";
 
 const topRow = [
   {
@@ -76,7 +76,7 @@ function FooterColumn({ title, links }: { title: string; links: readonly FooterL
     `${title === "Service" ? "text-end" : ""}block w-full cursor-pointer text-left text-sm text-copy-body transition-colors hover:text-copy-primary`;
 
   return (
-    <div className="min-w-0">
+    <div className={`min-w-0`}>
       <h4 className="mb-4 text-base font-semibold text-copy-primary">{title}</h4>
       <ul className="m-0 flex list-none flex-col gap-2.5 p-0">
         {links.map((link) => (
@@ -98,23 +98,23 @@ function FooterColumn({ title, links }: { title: string; links: readonly FooterL
 }
 
 export function Footer() {
-  const navColumns = [...getBottomRow(), ...topRow];
+  const navColumns = [...topRow, ...getBottomRow()];
 
   return (
     <footer className="text-copy-primary border-t border-copy-body/15">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
-        <div className="flex flex-col gap-10 lg:flex-row lg:items-start lg:gap-10 xl:gap-12 w-full">
+        <div className="flex flex-col gap-10 lg:flex-row lg:items-start justify-between lg:gap-10 xl:gap-12 w-full">
           <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
             <Link href="/" aria-label="Fourwaymedia home">
               <img
                 src={DARK_LOGO}
                 alt="Fourwaymedia logo"
-                className="block h-16 w-16 object-cover dark:hidden"
+                className="block h-16 w-36 object-cover dark:hidden"
               />
               <img
                 src={LIGHT_LOGO}
                 alt="Fourwaymedia logo"
-                className="hidden h-16 w-16 object-cover dark:block"
+                className="hidden h-16 w-36 md:h-16 md:w-36 object-cover dark:block"
               />
             </Link>
 
@@ -145,7 +145,7 @@ export function Footer() {
             </p>
           </div>
 
-          <div className="grid min-w-0 flex-1 grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-4">
+          <div className={`grid min-w-0 flex-1 grid-cols-2 gap-x-8 gap-y-10 lg:grid-cols-3`}>
             {navColumns.map((col) => (
               <FooterColumn key={col.title} {...col} />
             ))}

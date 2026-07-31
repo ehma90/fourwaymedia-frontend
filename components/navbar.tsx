@@ -74,9 +74,9 @@ export function Navbar() {
           aria-label="Fourwaymedia home"
         >
           <img
-            src="https://ik.imagekit.io/vp72mg6kz/Homepage/b6e6c23c2b27644f6c869e127d3df5e2d2aec9d8.png"
+            src="https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png"
             alt="Fourwaymedia logo"
-            className="h-20 w-20 object-cover mix-blend-difference dark:block md:h-16 md:w-16"
+            className="h-16 w-32 object-cover mix-blend-difference dark:block md:h-16 md:w-36"
           />
         </Link>
 
