@@ -19,7 +19,7 @@ const TEAM: readonly TeamMember[] = [
     name: "Emmanuel Etim",
     role: "Co-founder & Head of Operations",
     image:
-      "https://ik.imagekit.io/szglholrw/My%20Pics.png?updatedAt=1769029019252",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Nuel_wufoy1.jpg",
     linkedin: "https://linkedin.com",
     iconClass:
       "text-grey-400 hover:text-grey-300 dark:text-grey-400 dark:hover:text-grey-300",
@@ -28,7 +28,7 @@ const TEAM: readonly TeamMember[] = [
     name: "Emem Essang",
     role: "Co-founder & Creative Lead",
     image:
-      "https://res.cloudinary.com/drrluhcad/image/upload/v1782030837/DP-new_zslpcw.jpg",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1785521936/Emem_nzlcha.jpg",
     linkedin: "https://www.linkedin.com/in/peace-in-motion-134729195/",
     iconClass:
       "text-emerald-500 hover:text-emerald-400 dark:text-emerald-400 dark:hover:text-emerald-300",
@@ -37,7 +37,7 @@ const TEAM: readonly TeamMember[] = [
     name: "Emmanuel Essien",
     role: "Chief Technical Officer",
     image:
-      "https://res.cloudinary.com/drrluhcad/image/upload/v1782033321/StKh9_ad9d9s.jpg",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Emmah_u6bpr6.jpg",
     linkedin: "https://www.linkedin.com/in/ehmaessien/",
     iconClass:
       "text-violet-500 hover:text-violet-400 dark:text-violet-400 dark:hover:text-violet-300",
@@ -46,7 +46,7 @@ const TEAM: readonly TeamMember[] = [
     name: "Rosemary Effiong",
     role: "Marketing Lead",
     image:
-      "https://res.cloudinary.com/drrluhcad/image/upload/v1782030849/_MG_2523_yvpot2.png",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Rose_giymko.jpg",
     linkedin: "https://www.linkedin.com/in/rosemaryeffiong",
     iconClass:
       "text-red-500 hover:text-red-400 dark:text-red-400 dark:hover:text-red-300",
@@ -118,7 +118,7 @@ export function MeetOurTeam() {
                   <img
                     src={member.image}
                     alt=""
-                    className="h-full w-full object-cover grayscale transition-[filter] duration-500 ease-out group-hover:grayscale-0"
+                    className="h-full w-full object-cover grayscale transition-[filter] duration-500 ease-out"
                   />
                 </div>
               </motion.div>

@@ -4,11 +4,11 @@ import { motion } from "framer-motion";
 
 /** Dark abstract 3D-style render — Unsplash */
 const CONTACT_HERO_IMAGE =
-  "https://ik.imagekit.io/vp72mg6kz/Shop-page/6c052bfd8b5aad1bfe27102ae1f53b890c20b88c.jpg";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Contact_us_Page_shvnyx.jpg";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-const ACCENT = "#FEC107";
+// const ACCENT = "#FEC107";
 
 export function ContactHero() {
   return (
