@@ -4,19 +4,19 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
   Bell,
-  ChevronDown,
   Download,
   LayoutDashboard,
-  LogOut,
   PanelLeftClose,
   PanelLeftOpen,
   Settings,
-  Sparkles,
 } from "lucide-react";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
+import { MobileProfileMenu } from "@/components/dashboard/MobileProfileMenu";
+import { SidebarMenuFooter } from "@/components/dashboard/SidebarMenuFooter";
+import { SidebarNavLink, type NavItem } from "@/components/dashboard/SidebarNavLink";
+import { SidebarShopPromo } from "@/components/dashboard/SidebarShopPromo";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { buttonVariants } from "@/components/ui/button";
 import { useNotifications } from "@/hooks/use-notifications";
 import { usePurchases } from "@/hooks/use-purchases";
 import { useAuth } from "@/lib/auth-context";
@@ -56,8 +56,6 @@ function getDashboardPageTitle(pathname: string): string {
   return "Dashboard";
 }
 
-type NavItem = { href: string; label: string; icon: typeof LayoutDashboard };
-
 const navItems: NavItem[] = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/purchases", label: "Purchases", icon: Download },
@@ -66,286 +64,10 @@ const navItems: NavItem[] = [
 ];
 
 const SIDEBAR_COLLAPSED_KEY = "fourwaymedia-dashboard-sidebar-collapsed";
-const NOTIFICATIONS_HREF = "/dashboard/notifications";
 
 type DashboardShellProps = {
   children: React.ReactNode;
 };
-
-function SidebarShopPromo({
-  collapsed,
-  className,
-  onNavigate,
-}: {
-  collapsed: boolean;
-  className?: string;
-  onNavigate?: () => void;
-}) {
-  if (collapsed) {
-    return (
-      <Link
-        href="/shop"
-        title="Shop for more"
-        aria-label="Shop for more templates"
-        onClick={onNavigate}
-        className="flex h-10 w-full items-center justify-center rounded-lg bg-[linear-gradient(160deg,rgba(220,68,55,0.1),rgba(254,193,7,0.12))] text-[#DC4437] transition-colors hover:bg-[linear-gradient(160deg,rgba(220,68,55,0.18),rgba(254,193,7,0.2))] dark:text-[#FEC107]"
-      >
-        <Sparkles size={18} aria-hidden />
-      </Link>
-    );
-  }
-
-  return (
-    <div
-      className={cn(
-        "relative overflow-hidden mt-10 rounded-xl border border-[#DC4437]/15 bg-[linear-gradient(145deg,rgba(220,68,55,0.06)_0%,rgba(254,193,7,0.1)_100%)] p-3.5",
-        "dark:border-[#FEC107]/20 dark:bg-[linear-gradient(145deg,rgba(220,68,55,0.14)_0%,rgba(254,193,7,0.07)_55%,transparent_100%)]",
-        className,
-      )}
-    >
-      <div
-        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] opacity-[0.2] blur-2xl dark:opacity-30"
-        aria-hidden
-      />
-      <div className="relative">
-        <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[linear-gradient(160deg,#DC4437,#FEC107)] text-white shadow-sm">
-            <Sparkles size={14} aria-hidden />
-          </span>
-          <p className="text-sm font-semibold leading-tight text-zinc-900 dark:text-zinc-50">
-            Grow your library
-          </p>
-        </div>
-        <p className="mt-2 text-xs leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Fresh templates added regularly. Find your next project.
-        </p>
-        <Link
-          href="/shop"
-          onClick={onNavigate}
-          className={cn(
-            buttonVariants({ variant: "primary", size: "sm" }),
-            "mt-3 h-9 w-full rounded-lg text-xs font-semibold",
-          )}
-        >
-          Shop for more
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-function SidebarMenuFooter({
-  onLogout,
-  onAfterNavigate,
-  pinToBottom,
-  collapsed = false,
-}: {
-  onLogout: () => void;
-  onAfterNavigate?: () => void;
-  /** When true, push this block to the bottom of a flex sidebar (desktop). */
-  pinToBottom?: boolean;
-  collapsed?: boolean;
-}) {
-  return (
-    <div
-      className={cn(
-        "border-t border-zinc-200 pt-3 dark:border-zinc-800",
-        pinToBottom && "mt-auto",
-      )}
-    >
-      <button
-        type="button"
-        onClick={() => {
-          onLogout();
-          onAfterNavigate?.();
-        }}
-        title={collapsed ? "Log out" : undefined}
-        aria-label={collapsed ? "Log out" : undefined}
-        className={cn(
-          "flex w-full items-center rounded-lg text-left text-sm font-medium text-zinc-600 transition-colors hover:bg-red-500/10 hover:text-red-700 dark:text-zinc-400 dark:hover:bg-red-500/15 dark:hover:text-red-300 cursor-pointer",
-          collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2",
-        )}
-      >
-        <LogOut size={18} className="shrink-0 opacity-90" aria-hidden />
-        {!collapsed ? "Log out" : null}
-      </button>
-    </div>
-  );
-}
-
-function MobileProfileMenu({
-  displayName,
-  userInitials,
-  unreadNotificationCount,
-  hasPurchases,
-  onLogout,
-  linkClass,
-}: {
-  displayName: string;
-  userInitials: string;
-  unreadNotificationCount: number;
-  hasPurchases: boolean;
-  onLogout: () => void;
-  linkClass: (href: string) => string;
-}) {
-  const [open, setOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const menuId = useId();
-
-  useEffect(() => {
-    if (!open) return;
-    const onPointerDown = (e: PointerEvent) => {
-      const el = containerRef.current;
-      if (el && !el.contains(e.target as Node)) setOpen(false);
-    };
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", onPointerDown);
-      document.removeEventListener("keydown", onKeyDown);
-    };
-  }, [open]);
-
-  return (
-    <div ref={containerRef} className="relative">
-      <button
-        type="button"
-        id={`dashboard-mobile-menu-trigger-${menuId}`}
-        aria-label={`Account menu (${displayName})`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        aria-controls={open ? `dashboard-mobile-menu-${menuId}` : undefined}
-        onClick={() => setOpen((o) => !o)}
-        className="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-2 text-zinc-800 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800"
-      >
-        <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white"
-          aria-hidden
-        >
-          {userInitials}
-        </span>
-        <ChevronDown
-          className={cn(
-            "h-4 w-4 shrink-0 opacity-80 transition-transform",
-            open && "rotate-180",
-          )}
-          aria-hidden
-        />
-      </button>
-
-      {open ? (
-        <div
-          id={`dashboard-mobile-menu-${menuId}`}
-          role="menu"
-          aria-labelledby={`dashboard-mobile-menu-trigger-${menuId}`}
-          className="absolute right-0 z-50 mt-2 w-64 max-h-[min(70vh,calc(100vh-5.5rem))] overflow-y-auto rounded-xl border border-zinc-200 bg-white py-1.5 shadow-xl shadow-zinc-900/10 dark:border-zinc-800 dark:bg-zinc-950 dark:shadow-black/40"
-        >
-          <p className="border-b border-zinc-200 px-3 py-2 text-xs text-zinc-500 dark:border-zinc-800 dark:text-zinc-400">
-            {displayName}
-          </p>
-          <nav className="flex flex-col px-1 py-1" aria-label="Dashboard">
-            {navItems.map((item) => (
-              <SidebarNavLink
-                key={item.href}
-                item={item}
-                collapsed={false}
-                unreadNotificationCount={unreadNotificationCount}
-                className={cn(linkClass(item.href), "w-full")}
-                onNavigate={() => setOpen(false)}
-              />
-            ))}
-          </nav>
-          {hasPurchases ? (
-            <div className="border-t border-zinc-200 px-2 py-2 dark:border-zinc-800">
-              <SidebarShopPromo
-                collapsed={false}
-                className="mt-0"
-                onNavigate={() => setOpen(false)}
-              />
-            </div>
-          ) : null}
-          <div className="border-t border-zinc-200 px-1 py-1 dark:border-zinc-800">
-            <button
-              type="button"
-              role="menuitem"
-              className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-medium text-red-700 transition-colors hover:bg-red-500/10 dark:text-red-300 dark:hover:bg-red-500/15"
-              onClick={() => {
-                setOpen(false);
-                onLogout();
-              }}
-            >
-              <LogOut size={18} className="shrink-0 opacity-90" aria-hidden />
-              Log out
-            </button>
-          </div>
-        </div>
-      ) : null}
-    </div>
-  );
-}
-
-function SidebarNavLink({
-  item,
-  collapsed,
-  unreadNotificationCount,
-  className,
-  onNavigate,
-}: {
-  item: NavItem;
-  collapsed: boolean;
-  unreadNotificationCount: number;
-  className: string;
-  onNavigate?: () => void;
-}) {
-  const Icon = item.icon;
-  const showBadge = item.href === NOTIFICATIONS_HREF && unreadNotificationCount > 0;
-  const badgeLabel =
-    unreadNotificationCount > 99 ? "99+" : String(unreadNotificationCount);
-
-  return (
-    <Link
-      href={item.href}
-      className={className}
-      onClick={onNavigate}
-      title={
-        collapsed
-          ? showBadge
-            ? `${item.label} (${badgeLabel} unread)`
-            : item.label
-          : undefined
-      }
-      aria-label={
-        collapsed
-          ? showBadge
-            ? `${item.label}, ${badgeLabel} unread`
-            : item.label
-          : undefined
-      }
-    >
-      <span className="relative shrink-0">
-        <Icon size={18} className="opacity-90" aria-hidden />
-        {collapsed && showBadge ? (
-          <span className="absolute -right-1.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] px-1 text-[10px] font-bold leading-none text-white">
-            {badgeLabel}
-          </span>
-        ) : null}
-      </span>
-      {!collapsed ? (
-        <>
-          <span className="min-w-0 flex-1">{item.label}</span>
-          {showBadge ? (
-            <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] px-1.5 text-[11px] font-semibold tabular-nums text-white">
-              {badgeLabel}
-            </span>
-          ) : null}
-        </>
-      ) : null}
-    </Link>
-  );
-}
 
 export function DashboardShell({ children }: DashboardShellProps) {
   const pathname = usePathname();
@@ -431,17 +153,17 @@ export function DashboardShell({ children }: DashboardShellProps) {
             >
               <Link
                 href="/"
-                aria-label="Fourwaymedia home"
+                aria-label="Fourlabs Studio home"
                 className={cn("min-w-0 shrink", sidebarCollapsed && "md:hidden")}
               >
                 <img
                   src={LOGO_FOR_LIGHT_UI}
-                  alt="Fourwaymedia logo"
+                  alt="Fourlabs Studio logo"
                   className="h-20 w-20 object-cover md:h-11 md:w-11 dark:hidden"
                 />
                 <img
                   src={LOGO_FOR_DARK_UI}
-                  alt="Fourwaymedia logo"
+                  alt="Fourlabs Studio logo"
                   className="hidden h-20 w-20 object-cover md:h-11 md:w-11 dark:block"
                 />
               </Link>
@@ -455,6 +177,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                     hasPurchases={hasPurchases}
                     onLogout={handleLogout}
                     linkClass={(href) => linkClass(href, false)}
+                    navItems={navItems}
                   />
                 </div>
                 <button
