@@ -5,9 +5,9 @@ import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Fourwaymedia",
+  title: "Privacy Policy | Fourlabs Studio",
   description:
-    "How Fourwaymedia collects, uses, stores, protects, and shares your personal information when you use our platform.",
+    "How Fourlabs Studio collects, uses, stores, protects, and shares your personal information when you use our platform.",
 };
 
 const EFFECTIVE_DATE = "June 10, 2026";
@@ -147,7 +147,9 @@ export default function PrivacyPage() {
             </li>
 
             <li>
-              <SectionHeading>3. Protection of Your Personal Data</SectionHeading>
+              <SectionHeading>
+                3. Protection of Your Personal Data
+              </SectionHeading>
               <p className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
                 We take the security of your personal information seriously.
                 Below is how we protect each category of sensitive data:
@@ -195,8 +197,8 @@ export default function PrivacyPage() {
             <li>
               <SectionHeading>5. Sharing of Information</SectionHeading>
               <p className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
-                We do not share your personal information except in the following
-                limited circumstances:
+                We do not share your personal information except in the
+                following limited circumstances:
               </p>
               <BulletList
                 items={[
@@ -261,11 +263,11 @@ export default function PrivacyPage() {
             <li>
               <SectionHeading>9. Changes to This Policy</SectionHeading>
               <p className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
-                We may update this Privacy Policy from time to time. When we
-                do, we will revise the &apos;Last Updated&apos; date at the top
-                of this document and, where appropriate, notify you via email or
-                an in-platform notice. Your continued use of our services after
-                any changes constitutes your acceptance of the updated policy.
+                We may update this Privacy Policy from time to time. When we do,
+                we will revise the &apos;Last Updated&apos; date at the top of
+                this document and, where appropriate, notify you via email or an
+                in-platform notice. Your continued use of our services after any
+                changes constitutes your acceptance of the updated policy.
               </p>
             </li>
 

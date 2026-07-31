@@ -68,14 +68,10 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 px-3 sm:px-4">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-3 rounded-br-2xl rounded-bl-2xl border border-black/10 bg-black/45 px-3 backdrop-blur-xl dark:border-white/10 dark:bg-black/45 md:gap-6 md:px-5 md:py-3">
-        <Link
-          href="/"
-          className="shrink-0"
-          aria-label="Fourwaymedia home"
-        >
+        <Link href="/" className="shrink-0" aria-label="Fourlabs Studio home">
           <img
             src="https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png"
-            alt="Fourwaymedia logo"
+            alt="Fourlabs Studio logo"
             className="h-16 w-32 object-cover mix-blend-difference dark:block md:h-16 md:w-36"
           />
         </Link>
@@ -85,7 +81,11 @@ export function Navbar() {
           aria-label="Main"
         >
           {navLinks.map((item) => (
-            <Link key={item.label} href={item.href} className={linkClass(item.href)}>
+            <Link
+              key={item.label}
+              href={item.href}
+              className={linkClass(item.href)}
+            >
               {item.label}
             </Link>
           ))}
@@ -128,7 +128,11 @@ export function Navbar() {
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             onClick={() => setMobileOpen((o) => !o)}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? (
+              <X className="h-5 w-5" />
+            ) : (
+              <Menu className="h-5 w-5" />
+            )}
           </Button>
         </div>
       </div>
@@ -158,14 +162,19 @@ export function Navbar() {
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 32, stiffness: 380, mass: 0.85 }}
+              transition={{
+                type: "spring",
+                damping: 32,
+                stiffness: 380,
+                mass: 0.85,
+              }}
             >
               <div className="flex items-center justify-between border-b border-black/10 px-4 py-3 dark:border-white/10">
                 <Link
                   id={titleId}
                   href="/"
                   className="shrink-0"
-                  aria-label="Fourwaymedia home"
+                  aria-label="Fourlabs Studio home"
                   onClick={() => setMobileOpen(false)}
                 >
                   <img
@@ -183,7 +192,10 @@ export function Navbar() {
                   <X className="h-5 w-5" />
                 </button>
               </div>
-              <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4" aria-label="Mobile">
+              <nav
+                className="flex flex-1 flex-col gap-1 overflow-y-auto px-3 py-4"
+                aria-label="Mobile"
+              >
                 {navLinks.map((item) => (
                   <Link
                     key={item.label}
@@ -209,7 +221,11 @@ export function Navbar() {
                       className="flex w-full items-center gap-2 px-3 py-2.5 text-left text-sm text-red-700 transition-colors hover:bg-red-500/10 dark:text-red-300 dark:hover:bg-red-500/15 cursor-pointer"
                       onClick={handleSignOutFromDrawer}
                     >
-                      <LogOut size={18} className="shrink-0 opacity-90" aria-hidden />
+                      <LogOut
+                        size={18}
+                        className="shrink-0 opacity-90"
+                        aria-hidden
+                      />
                       Logout
                     </button>
                   </div>

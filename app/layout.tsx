@@ -16,8 +16,9 @@ const lexend = Lexend({
 });
 
 export const metadata: Metadata = {
-  title: "Fourwaymedia",
-  description: "Fourwaymedia is a creative agency that provides branding, content creation, web and mobile development, and social media management services.",
+  title: "Fourlabs Studio",
+  description:
+    "Fourlabs Studio is a creative agency that provides branding, content creation, web and mobile development, and social media management services.",
 };
 
 export default function RootLayout({

@@ -22,7 +22,10 @@ export function FaqHero() {
           animate={{ scale: 1, opacity: 1 }}
           transition={{ duration: 1.1, ease: easeOut }}
         />
-        <div className="absolute inset-0 bg-black/70 dark:bg-black/70" aria-hidden />
+        <div
+          className="absolute inset-0 bg-black/70 dark:bg-black/70"
+          aria-hidden
+        />
       </div>
 
       <div className="relative z-10 mx-auto flex min-h-[70vh] max-w-6xl flex-col items-center justify-center px-6 pb-20 pt-32 text-center sm:pb-28 sm:pt-36 md:pt-40">
@@ -49,8 +52,8 @@ export function FaqHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.28, ease: easeOut }}
         >
-          Everything you need to know about working with Fourway Media, from our
-          process and pricing to timelines and getting started.
+          Everything you need to know about working with Fourlabs Studio, from
+          our process and pricing to timelines and getting started.
         </motion.p>
       </div>
     </section>

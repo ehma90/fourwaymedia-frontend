@@ -9,11 +9,11 @@ export type FaqItem = {
 
 export const faqItems: FaqItem[] = [
   {
-    question: "What does Fourway Media do?",
+    question: "What does Fourlabs Studio do?",
     blocks: [
       {
         type: "text",
-        text: "Fourway Media helps startups, businesses, creators, organizations, and individuals bring ideas to life through creative and digital solutions.",
+        text: "Fourlabs Studio helps startups, businesses, creators, organizations, and individuals bring ideas to life through creative and digital solutions.",
       },
       { type: "text", text: "Our services span four core areas:" },
       {

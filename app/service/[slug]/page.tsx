@@ -30,11 +30,11 @@ export async function generateMetadata({
   const category = getCategoryBySlug(slug);
 
   if (!category) {
-    return { title: "Service not found | Fourway Media" };
+    return { title: "Service not found | Fourlabs Studio" };
   }
 
   return {
-    title: `${category.title} | Fourway Media`,
+    title: `${category.title} | Fourlabs Studio`,
     description: category.tagline,
   };
 }

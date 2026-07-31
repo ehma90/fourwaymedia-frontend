@@ -5,9 +5,9 @@ import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Fourwaymedia",
+  title: "Terms & Conditions | Fourlabs Studio",
   description:
-    "Terms and conditions for engaging Forway Media creative services, including scope, payment, revisions, and intellectual property.",
+    "Terms and conditions for engaging Fourlabs Studio creative services, including scope, payment, revisions, and intellectual property.",
 };
 
 const SECTIONS = [

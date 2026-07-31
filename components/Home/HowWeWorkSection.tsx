@@ -64,7 +64,6 @@ export function HowWeWorkSection() {
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, ease: easeOut }}
           >
-            
             <h2
               id="how-we-work-heading"
               className="mt-3 font-[family-name:var(--font-lexend),system-ui,sans-serif] text-3xl font-bold tracking-tight text-neutral-950 sm:text-4xl dark:text-white"
@@ -72,7 +71,7 @@ export function HowWeWorkSection() {
               How We Work
             </h2>
             <p className="mt-6 text-base leading-relaxed text-copy-body">
-              At Fourway Media, we don&apos;t just create; we build clarity,
+              At Fourlabs Studio, we don&apos;t just create; we build clarity,
               direction, and impact across every brand we touch.
             </p>
             <p className="mt-4 text-base leading-relaxed text-copy-body ">
@@ -93,7 +92,6 @@ export function HowWeWorkSection() {
             />
 
             {STEPS.map((step, index) => {
-             
               return (
                 <motion.li
                   key={step.title}
@@ -105,7 +103,6 @@ export function HowWeWorkSection() {
                       <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437,#FEC107)] text-sm font-bold text-white shadow-sm">
                         {index + 1}
                       </span>
-                     
                     </div>
                     <div className="min-w-0 pt-0.5">
                       <h3 className="font-[family-name:var(--font-lexend),system-ui,sans-serif] text-base font-bold text-neutral-950 sm:text-lg dark:text-white">

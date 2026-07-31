@@ -6,9 +6,9 @@ import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "FAQ | Fourway Media",
+  title: "FAQ | Fourlabs Studio",
   description:
-    "Answers to common questions about Fourway Media's services, process, pricing, timelines, and how to get started.",
+    "Answers to common questions about Fourlabs Studio's services, process, pricing, timelines, and how to get started.",
 };
 
 export default function FaqPage() {
