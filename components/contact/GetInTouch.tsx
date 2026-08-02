@@ -5,7 +5,6 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-
 /** Ikeja, Lagos State, Nigeria — OSM embed (bbox min_lon,min_lat,max_lon,max_lat; marker=lat,lon) */
 const MAP_EMBED_SRC =
   "https://www.openstreetmap.org/export/embed.html?bbox=3.330%2C6.575%2C3.370%2C6.620&layer=mapnik&marker=6.6018%2C3.3515";
@@ -37,8 +36,9 @@ export function GetInTouch() {
             id="get-in-touch-heading"
             className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-[2.5rem]"
           >
-            <span className="text-neutral-900 dark:text-white">Get in Touch </span>
-            
+            <span className="text-neutral-900 dark:text-white">
+              Get in Touch{" "}
+            </span>
           </h2>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-400">
             We&apos;d love to hear from you. Reach out with any questions or
@@ -55,7 +55,11 @@ export function GetInTouch() {
               viewport={{ once: true, margin: "-40px" }}
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-amber-500/25 bg-amber-500/15 dark:border-amber-500/20 dark:bg-amber-950/40">
-                <MapPin className="h-5 w-5 text-amber-500" strokeWidth={1.75} aria-hidden />
+                <MapPin
+                  className="h-5 w-5 text-amber-500"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
               </div>
               <div>
                 <h3 className="font-semibold text-neutral-900 dark:text-white">
@@ -76,7 +80,11 @@ export function GetInTouch() {
               viewport={{ once: true, margin: "-40px" }}
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-emerald-500/25 bg-emerald-500/15 dark:border-emerald-500/20 dark:bg-emerald-950/40">
-                <Mail className="h-5 w-5 text-emerald-500" strokeWidth={1.75} aria-hidden />
+                <Mail
+                  className="h-5 w-5 text-emerald-500"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
               </div>
               <div>
                 <h3 className="font-semibold text-neutral-900 dark:text-white">
@@ -84,17 +92,10 @@ export function GetInTouch() {
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
                   <a
-                    href="mailto:support@yourdomain.xxc"
+                    href="mailto:contact@fourlabs.studio"
                     className="underline-offset-2 hover:text-neutral-900 hover:underline dark:hover:text-white"
                   >
-                    Contact@fourwaymedia.com
-                  </a>
-                  <br />
-                  <a
-                    href="mailto:hello@yourdomain.fgl"
-                    className="underline-offset-2 hover:text-neutral-900 hover:underline dark:hover:text-white"
-                  >
-                    info@fourwaymedia.com
+                    contact@fourlabs.studio
                   </a>
                 </p>
               </div>
@@ -109,7 +110,11 @@ export function GetInTouch() {
               viewport={{ once: true, margin: "-40px" }}
             >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-violet-500/25 bg-violet-500/15 dark:border-violet-500/20 dark:bg-violet-950/40">
-                <Phone className="h-5 w-5 text-violet-500" strokeWidth={1.75} aria-hidden />
+                <Phone
+                  className="h-5 w-5 text-violet-500"
+                  strokeWidth={1.75}
+                  aria-hidden
+                />
               </div>
               <div>
                 <h3 className="font-semibold text-neutral-900 dark:text-white">

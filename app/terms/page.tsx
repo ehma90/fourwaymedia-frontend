@@ -70,7 +70,7 @@ const SECTIONS = [
 ] as const;
 
 const EFFECTIVE_DATE = "June 6, 2026";
-const CONTACT_EMAIL = "Contact@fourwaymedia.com";
+const CONTACT_EMAIL = "contact@fourlabs.studio";
 const CONTACT_PHONE = "+234 816 021 5890";
 
 export default function TermsPage() {

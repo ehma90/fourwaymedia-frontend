@@ -145,10 +145,10 @@ export function Footer() {
                 Contact us
               </p>
               <a
-                href="mailto:@4waydesigngmail.com"
+                href="mailto:contact@fourlabs.studio"
                 className="text-sm text-copy-body transition-colors hover:text-copy-primary"
               >
-                @4waydesigngmail.com
+                contact@fourlabs.studio
               </a>
             </div>
 

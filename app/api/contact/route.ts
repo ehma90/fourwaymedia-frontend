@@ -8,8 +8,8 @@ import {
 
 export const runtime = "nodejs";
 
-const DEFAULT_TO = "Contact@fourwaymedia.com";
-const DEFAULT_FROM = "Fourwaymedia <Contact@fourwaymedia.com>";
+const DEFAULT_TO = "contact@fourlabs.studio";
+const DEFAULT_FROM = "Fourlabs Studio <contact@fourlabs.studio>";
 
 export async function POST(request: Request) {
   const apiKey = process.env.RESEND_API_KEY?.trim();
@@ -51,7 +51,10 @@ export async function POST(request: Request) {
   if (error) {
     console.error("[contact] Resend error:", error);
     return NextResponse.json(
-      { error: "Could not send your message. Try again later.", code: "SEND_FAILED" },
+      {
+        error: "Could not send your message. Try again later.",
+        code: "SEND_FAILED",
+      },
       { status: 502 },
     );
   }
