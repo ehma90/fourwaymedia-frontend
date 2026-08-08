@@ -20,6 +20,7 @@ export const testimonials: readonly Testimonial[] = [
     quote:
       "Working with Fourlabs Studio felt like having an extension of our internal team. Professional, creative, responsive, and deeply invested in our success.",
     name: "Etim Essang",
+    role: "Founder",
     company: "SwiftShopper",
   },
   {
@@ -27,5 +28,7 @@ export const testimonials: readonly Testimonial[] = [
     quote:
       "I have consulted Fourlabs Studio to design a motion ads and users direction for our Pathzing platform. Fourlabs Studio has carried out the project with good commitment and produced a great result. I strongly recommend Fourlabs Studio for your Motion Design Project.",
     name: "Kayode Adio Oladosu",
+    role: "Founder",
+    company: "Pathzing",
   },
 ];
