@@ -76,10 +76,10 @@ export function WhyFourway() {
             id="why-fourway-heading"
             className="mt-3 text-3xl font-bold leading-tight tracking-tight text-neutral-950 sm:text-4xl md:text-[2.5rem] dark:text-white"
           >
-            Why &ldquo;Fourway&rdquo;?
+            Why &ldquo;Fourlabs&rdquo;?
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-300">
-            Fourway represents the four fundamental ways stories are told.
+            Fourlabs Studio represents the four fundamental ways stories are told.
           </p>
         </motion.div>
 
