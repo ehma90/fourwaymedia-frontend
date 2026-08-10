@@ -59,7 +59,9 @@ export const servicePageSections = [
     bullets:
       "Custom illustration • Concept art • Storyboarding • 2D animation • Motion graphics • Animated logos • Explainer videos",
     images: [
-      "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1781248019/schematics_ui_design_and_animation_for_fabrik_v1_1080p_2_1_pk2kyc.mp4",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1781248109/Air_Travel_Video_stweky.mp4",
+
     ],
   },
   {
