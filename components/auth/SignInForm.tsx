@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { SocialAuthSection } from "@/components/auth/SocialAuthSection";
 import { Button } from "@/components/ui/button";
@@ -49,6 +49,20 @@ export function SignInForm() {
   };
 
   const next = searchParams.get("next");
+  const registered = searchParams.get("registered") === "1";
+  const [developmentVerificationUrl, setDevelopmentVerificationUrl] =
+    useState<string | null>(null);
+
+  useEffect(() => {
+    if (registered && typeof window !== "undefined") {
+      const url = window.sessionStorage.getItem(
+        "fourwaymedia-verification-url",
+      );
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- consume the development-only verification handoff
+      setDevelopmentVerificationUrl(url);
+      window.sessionStorage.removeItem("fourwaymedia-verification-url");
+    }
+  }, [registered]);
   const signUpHref = next
     ? `/sign-up?next=${encodeURIComponent(next)}`
     : "/sign-up";
@@ -65,6 +79,22 @@ export function SignInForm() {
       </div>
 
       <form className="mt-8 space-y-5" noValidate onSubmit={handleSubmit}>
+        {registered ? (
+          <p className="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800 dark:border-green-900/50 dark:bg-green-950/40 dark:text-green-200">
+            Account created. Check your email and verify your address before signing in.
+            {developmentVerificationUrl ? (
+              <>
+                <br />
+                <a
+                  href={developmentVerificationUrl}
+                  className="font-semibold underline"
+                >
+                  Open the development verification link
+                </a>
+              </>
+            ) : null}
+          </p>
+        ) : null}
         {error ? (
           <p
             className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200"

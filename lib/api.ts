@@ -16,6 +16,25 @@ export class ApiError extends Error {
   }
 }
 
+async function redirectExpiredDashboardSession(): Promise<void> {
+  if (
+    typeof window === "undefined" ||
+    !window.location.pathname.startsWith("/dashboard")
+  ) {
+    return;
+  }
+
+  try {
+    await fetch("/api/auth/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+  } finally {
+    const next = `${window.location.pathname}${window.location.search}`;
+    window.location.assign(`/sign-in?next=${encodeURIComponent(next)}`);
+  }
+}
+
 export async function fetchShopCatalog(): Promise<ShopCatalogResponse> {
   const res = await fetch(`${getPublicApiBaseUrl()}/api/v1/shop/catalog`, {
     cache: "no-store",
@@ -42,6 +61,9 @@ export async function apiPost<T>(
     code?: string;
   };
   if (!res.ok) {
+    if (res.status === 401) {
+      await redirectExpiredDashboardSession();
+    }
     throw new ApiError(
       (data as { error?: string }).error ?? "Request failed",
       res.status,
@@ -55,6 +77,9 @@ export async function apiGet<T>(path: string): Promise<T> {
   const res = await fetch(path, { credentials: "include", cache: "no-store" });
   const data = (await res.json().catch(() => ({}))) as T & { error?: string };
   if (!res.ok) {
+    if (res.status === 401) {
+      await redirectExpiredDashboardSession();
+    }
     throw new ApiError(
       (data as { error?: string }).error ?? "Request failed",
       res.status,
@@ -78,6 +103,9 @@ export async function apiPatch<T>(
     code?: string;
   };
   if (!res.ok) {
+    if (res.status === 401) {
+      await redirectExpiredDashboardSession();
+    }
     throw new ApiError(
       (data as { error?: string }).error ?? "Request failed",
       res.status,

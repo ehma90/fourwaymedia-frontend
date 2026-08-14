@@ -48,8 +48,15 @@ export function SignUpForm() {
 
     setIsSubmitting(true);
     try {
-      await signUp(email, password, displayName, true);
-      router.push(safeInternalPath(searchParams.get("next")));
+      const result = await signUp(email, password, displayName, true);
+      if (result.verificationUrl) {
+        window.sessionStorage.setItem(
+          "fourwaymedia-verification-url",
+          result.verificationUrl,
+        );
+      }
+      const next = safeInternalPath(searchParams.get("next"));
+      router.push(`/sign-in?registered=1&next=${encodeURIComponent(next)}`);
       router.refresh();
     } catch (err) {
       setError(

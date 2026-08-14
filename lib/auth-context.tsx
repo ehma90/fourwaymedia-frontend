@@ -22,7 +22,7 @@ type AuthContextValue = {
     password: string,
     displayName: string,
     acceptedTerms: boolean,
-  ) => Promise<void>;
+  ) => Promise<{ verificationUrl?: string }>;
   signOut: () => Promise<void>;
   /** Re-fetch session from the server. Returns false on transient errors without clearing the user. */
   refreshSession: () => Promise<boolean>;
@@ -76,13 +76,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       displayName: string,
       acceptedTerms: boolean,
     ) => {
-      const data = await apiPost<{ user: AuthUser }>("/api/auth/register", {
+      const data = await apiPost<{
+        user: AuthUser;
+        verificationUrl?: string;
+      }>("/api/auth/register", {
         email,
         password,
         displayName,
         acceptedTerms,
       });
       setUser(data.user);
+      return { verificationUrl: data.verificationUrl };
     },
     [],
   );
