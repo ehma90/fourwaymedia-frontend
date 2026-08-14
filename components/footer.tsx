@@ -154,7 +154,7 @@ export function Footer() {
 
             <div className="flex items-center gap-4">
               <a
-                href="#"
+                href="https://www.instagram.com/fourlabs_studio?igsh=MWQ4eTRkN3F4aHJ0eg%3D%3D&utm_source=qr"
                 aria-label="Instagram"
                 className="text-copy-body transition-colors hover:text-copy-primary"
               >
@@ -169,13 +169,13 @@ export function Footer() {
               >
                 <LinkedInIcon />
               </a>
-              <a
+              {/* <a
                 href="#"
                 aria-label="X"
                 className="text-copy-body transition-colors hover:text-copy-primary"
               >
                 <XIcon />
-              </a>
+              </a> */}
             </div>
 
             <p className="text-xs text-copy-body">

@@ -1,9 +1,14 @@
 "use client";
 
+import { useSearchParams } from "next/navigation";
+
 /**
  * Divider + OAuth actions shared by sign-in and sign-up.
  */
 export function SocialAuthSection() {
+  const searchParams = useSearchParams();
+  const next = searchParams.get("next");
+
   return (
     <>
       <div className="relative my-8">
@@ -18,7 +23,14 @@ export function SocialAuthSection() {
       </div>
 
       <div className="grid grid-cols-1 gap-3">
-        <SocialButton label="Google" ariaLabel="Continue with Google">
+        <SocialButton
+          label="Google"
+          ariaLabel="Continue with Google"
+          onClick={() => {
+            const query = next ? `?next=${encodeURIComponent(next)}` : "";
+            window.location.assign(`/api/auth/google${query}`);
+          }}
+        >
           <GoogleIcon />
         </SocialButton>
       </div>
@@ -30,15 +42,18 @@ function SocialButton({
   children,
   label,
   ariaLabel,
+  onClick,
 }: {
   children: React.ReactNode;
   label: string;
   ariaLabel: string;
+  onClick: () => void;
 }) {
   return (
     <button
       type="button"
       aria-label={ariaLabel}
+      onClick={onClick}
       className="flex h-11 w-full items-center justify-center rounded-xl border border-neutral-200 bg-white text-neutral-700 transition-colors hover:bg-neutral-50 dark:border-neutral-600 dark:bg-neutral-950 dark:text-neutral-200 dark:hover:bg-neutral-800"
     >
       <span className="sr-only">{label}</span>

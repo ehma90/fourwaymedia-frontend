@@ -51,7 +51,7 @@ export const servicePageSections = [
     bullets:
       "Ad creatives • Campaign setup • Conversion optimization • Analytics-driven iteration",
     images: [
-      "https://ik.imagekit.io/vp72mg6kz/Homepage/b95cb84d4fa291af30f0b5bea6a32196543a63b5.jpg",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1786734959/2026-08-14_8.14.25_PM_xtgzgo.jpg",
     ],
   },
   {
