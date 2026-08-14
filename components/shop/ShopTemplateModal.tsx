@@ -80,6 +80,8 @@ export function ShopTemplateModal({
 
   useEffect(() => {
     if (!template) return;
+    // Reset tied to the DOM listener/focus management below, which must run in an effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setCheckoutError(null);
     resumeCheckoutStartedRef.current = false;
     document.addEventListener("keydown", handleKeyDown);

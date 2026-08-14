@@ -1,7 +1,7 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -42,23 +42,29 @@ export function SignInShowcase() {
     [],
   );
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const subscribeToSelection = useCallback(
+    (callback: () => void) => {
+      if (!emblaApi) return () => {};
+      emblaApi.on("reInit", callback);
+      emblaApi.on("select", callback);
+      return () => {
+        emblaApi.off("reInit", callback);
+        emblaApi.off("select", callback);
+      };
+    },
+    [emblaApi],
+  );
 
-  const onSelect = useCallback(() => {
-    if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, [emblaApi]);
+  const getSelectedIndex = useCallback(
+    () => emblaApi?.selectedScrollSnap() ?? 0,
+    [emblaApi],
+  );
 
-  useEffect(() => {
-    if (!emblaApi) return;
-    onSelect();
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-    return () => {
-      emblaApi.off("reInit", onSelect);
-      emblaApi.off("select", onSelect);
-    };
-  }, [emblaApi, onSelect]);
+  const selectedIndex = useSyncExternalStore(
+    subscribeToSelection,
+    getSelectedIndex,
+    () => 0,
+  );
 
   useEffect(() => {
     if (!emblaApi) return;

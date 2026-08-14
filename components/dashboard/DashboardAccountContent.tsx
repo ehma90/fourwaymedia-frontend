@@ -12,7 +12,7 @@ import {
   Mail,
   User,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
@@ -56,6 +56,7 @@ export function DashboardAccountContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [displayName, setDisplayName] = useState("");
+  const [syncedUserId, setSyncedUserId] = useState<string | null>(null);
 
   const [photoUploading, setPhotoUploading] = useState(false);
   const [photoFeedback, setPhotoFeedback] = useState<Feedback>(null);
@@ -72,10 +73,11 @@ export function DashboardAccountContent() {
   const [passwordSaving, setPasswordSaving] = useState(false);
   const [passwordFeedback, setPasswordFeedback] = useState<Feedback>(null);
 
-  useEffect(() => {
-    if (!user) return;
+  // Sync the editable field from the loaded user during render instead of in an effect.
+  if (user && user.id !== syncedUserId) {
+    setSyncedUserId(user.id);
     setDisplayName(user.displayName.trim());
-  }, [user]);
+  }
 
   const profileDirty = useMemo(() => {
     if (!user) return false;

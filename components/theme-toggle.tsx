@@ -2,10 +2,21 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 
 import { cn } from "@/lib/utils";
+
+const emptySubscribe = () => () => {};
+
+// Detects whether hydration has completed, without setState in an effect.
+function useMounted() {
+  return useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+}
 
 type ThemeToggleProps = {
   className?: string;
@@ -18,11 +29,7 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ className, variant = "default" }: ThemeToggleProps = {}) {
   const { resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useMounted();
 
   const isDark = mounted && resolvedTheme === "dark";
   const toggleLabel = isDark ? "Switch to light mode" : "Switch to dark mode";

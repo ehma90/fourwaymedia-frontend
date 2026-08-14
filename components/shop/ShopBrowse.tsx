@@ -117,6 +117,9 @@ export function ShopBrowse() {
     }
 
     resumedPurchaseRef.current = buyTemplateId;
+    // Opening the modal here is tied to the router.replace side effect above and
+    // depends on async catalog data, so it can't be derived during render.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedTemplate(match);
   }, [buyTemplateId, isLoading, templates, router]);
 

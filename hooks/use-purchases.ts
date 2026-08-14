@@ -24,6 +24,8 @@ export function usePurchases() {
   }, []);
 
   useEffect(() => {
+    // Fetch-on-mount: setState inside reload() is the intended loading/error sync.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void reload();
   }, [reload]);
 

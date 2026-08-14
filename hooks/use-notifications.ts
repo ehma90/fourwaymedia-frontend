@@ -50,11 +50,14 @@ export function useNotifications(options?: { markReadOnMount?: boolean }) {
   }, [applyResponse]);
 
   useEffect(() => {
+    // Fetch-on-mount: setState inside reload() is the intended loading/error sync.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void reload();
   }, [reload]);
 
   useEffect(() => {
     if (!markReadOnMount || isLoading || unreadCount === 0) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void markAllRead();
   }, [markReadOnMount, isLoading, unreadCount, markAllRead]);
 

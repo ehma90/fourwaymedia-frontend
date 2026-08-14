@@ -24,7 +24,14 @@ export function Navbar() {
   const router = useRouter();
   const { isAuthenticated, signOut } = useAuth();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
   const titleId = useId();
+
+  // Close the drawer during render on navigation instead of in an effect.
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setMobileOpen(false);
+  }
 
   const handleSignOutFromDrawer = () => {
     setMobileOpen(false);
@@ -33,10 +40,6 @@ export function Navbar() {
 
   const isActiveLink = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
-
-  useEffect(() => {
-    setMobileOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     return () => {
