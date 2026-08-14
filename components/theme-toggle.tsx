@@ -27,7 +27,10 @@ type ThemeToggleProps = {
   variant?: "default" | "onDark";
 };
 
-export function ThemeToggle({ className, variant = "default" }: ThemeToggleProps = {}) {
+export function ThemeToggle({
+  className,
+  variant = "default",
+}: ThemeToggleProps = {}) {
   const { resolvedTheme, setTheme } = useTheme();
   const mounted = useMounted();
 
@@ -55,7 +58,10 @@ export function ThemeToggle({ className, variant = "default" }: ThemeToggleProps
         )}
       >
         {!mounted ? (
-          <span className="inline-flex h-[18px] w-[18px] shrink-0" aria-hidden />
+          <span
+            className="inline-flex h-[18px] w-[18px] shrink-0"
+            aria-hidden
+          />
         ) : (
           <AnimatePresence mode="wait" initial={false}>
             {isDark ? (

@@ -45,7 +45,9 @@ export function useNotifications(options?: { markReadOnMount?: boolean }) {
       applyResponse(data);
       window.dispatchEvent(new Event("notifications-updated"));
     } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to update notifications");
+      setError(
+        e instanceof Error ? e.message : "Failed to update notifications",
+      );
     }
   }, [applyResponse]);
 

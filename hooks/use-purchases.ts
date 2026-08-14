@@ -13,7 +13,9 @@ export function usePurchases() {
     setIsLoading(true);
     setError(null);
     try {
-      const data = await apiGet<{ downloads: DownloadedAsset[] }>("/api/me/downloads");
+      const data = await apiGet<{ downloads: DownloadedAsset[] }>(
+        "/api/me/downloads",
+      );
       setDownloads(data.downloads ?? []);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to load purchases");

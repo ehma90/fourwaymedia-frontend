@@ -35,9 +35,10 @@ function initialsFromName(name: string): string {
 
 function formatMemberSince(iso: string): string {
   try {
-    return new Intl.DateTimeFormat(undefined, { month: "long", year: "numeric" }).format(
-      new Date(iso),
-    );
+    return new Intl.DateTimeFormat(undefined, {
+      month: "long",
+      year: "numeric",
+    }).format(new Date(iso));
   } catch {
     return iso;
   }
@@ -84,7 +85,9 @@ export function DashboardAccountContent() {
     return displayName.trim() !== user.displayName.trim();
   }, [displayName, user]);
 
-  const handleProfilePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleProfilePhotoChange = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = e.target.files?.[0];
     e.target.value = "";
     if (!file) return;
@@ -113,15 +116,19 @@ export function DashboardAccountContent() {
     setProfileFeedback(null);
     setProfileSaving(true);
     try {
-      const { user: updatedUser } = await apiPatch<{ user: AuthUser }>("/api/me", {
-        displayName: displayName.trim(),
-      });
+      const { user: updatedUser } = await apiPatch<{ user: AuthUser }>(
+        "/api/me",
+        {
+          displayName: displayName.trim(),
+        },
+      );
       applyUser(updatedUser);
       setProfileFeedback({ type: "success", message: "Profile saved." });
     } catch (err) {
       setProfileFeedback({
         type: "error",
-        message: err instanceof ApiError ? err.message : "Could not save profile.",
+        message:
+          err instanceof ApiError ? err.message : "Could not save profile.",
       });
     } finally {
       setProfileSaving(false);
@@ -140,7 +147,10 @@ export function DashboardAccountContent() {
       return;
     }
     if (newPassword !== confirmPassword) {
-      setPasswordFeedback({ type: "error", message: "New passwords do not match." });
+      setPasswordFeedback({
+        type: "error",
+        message: "New passwords do not match.",
+      });
       return;
     }
 
@@ -153,11 +163,15 @@ export function DashboardAccountContent() {
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
-      setPasswordFeedback({ type: "success", message: "Password updated successfully." });
+      setPasswordFeedback({
+        type: "success",
+        message: "Password updated successfully.",
+      });
     } catch (err) {
       setPasswordFeedback({
         type: "error",
-        message: err instanceof ApiError ? err.message : "Could not update password.",
+        message:
+          err instanceof ApiError ? err.message : "Could not update password.",
       });
     } finally {
       setPasswordSaving(false);
@@ -171,7 +185,9 @@ export function DashboardAccountContent() {
           <Skeleton className="h-8 w-32" />
           <Skeleton className="mt-2 h-4 w-64" />
         </header>
-        <div className={cn(cardClass, "flex flex-col items-center gap-4 py-12")}>
+        <div
+          className={cn(cardClass, "flex flex-col items-center gap-4 py-12")}
+        >
           <LoadingSpinner label="Loading account" />
         </div>
       </div>
@@ -207,14 +223,23 @@ export function DashboardAccountContent() {
         </p>
       </header>
 
-      <section className={cn(cardClass, "flex flex-col gap-4 sm:flex-row sm:items-center")}>
+      <section
+        className={cn(
+          cardClass,
+          "flex flex-col gap-4 sm:flex-row sm:items-center",
+        )}
+      >
         <div
           className="relative flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-full border border-zinc-200/90 bg-zinc-100 text-lg font-semibold text-zinc-600 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-300"
           aria-hidden={!!avatarUrl}
         >
           {avatarUrl ? (
             // eslint-disable-next-line @next/next/no-img-element -- user-uploaded Cloudinary URL
-            <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
+            <img
+              src={avatarUrl}
+              alt=""
+              className="h-full w-full object-cover"
+            />
           ) : (
             initialsFromName(displayName || user.displayName)
           )}
@@ -242,10 +267,14 @@ export function DashboardAccountContent() {
           Profile
         </h2>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
-          Your email is fixed to this account. Update your photo and how your name appears in the
-          dashboard.
+          Your email is fixed to this account. Update your photo and how your
+          name appears in the dashboard.
         </p>
-        <form className="mt-6 space-y-5" noValidate onSubmit={(e) => void handleProfileSubmit(e)}>
+        <form
+          className="mt-6 space-y-5"
+          noValidate
+          onSubmit={(e) => void handleProfileSubmit(e)}
+        >
           <div>
             <label htmlFor="account-profile-photo" className={labelClass}>
               Profile photo
@@ -257,13 +286,20 @@ export function DashboardAccountContent() {
               >
                 {avatarUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
+                  <img
+                    src={avatarUrl}
+                    alt=""
+                    className="h-full w-full object-cover"
+                  />
                 ) : (
                   <span aria-hidden>{initialsFromName(displayName)}</span>
                 )}
                 {photoUploading ? (
                   <span className="absolute inset-0 flex items-center justify-center bg-zinc-900/50">
-                    <Loader2 className="h-8 w-8 animate-spin text-white" aria-hidden />
+                    <Loader2
+                      className="h-8 w-8 animate-spin text-white"
+                      aria-hidden
+                    />
                     <span className="sr-only">Uploading photo</span>
                   </span>
                 ) : null}
@@ -286,11 +322,16 @@ export function DashboardAccountContent() {
                   disabled={photoUploading}
                   onClick={() => fileInputRef.current?.click()}
                 >
-                  <Camera className="mr-2 h-4 w-4" strokeWidth={1.75} aria-hidden />
+                  <Camera
+                    className="mr-2 h-4 w-4"
+                    strokeWidth={1.75}
+                    aria-hidden
+                  />
                   {photoUploading ? "Uploading…" : "Change photo"}
                 </Button>
                 <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
-                  JPEG, PNG, or WebP up to 2 MB. Saves automatically after upload.
+                  JPEG, PNG, or WebP up to 2 MB. Saves automatically after
+                  upload.
                 </p>
                 {photoFeedback ? (
                   <p
@@ -334,7 +375,6 @@ export function DashboardAccountContent() {
                 aria-hidden
               />
             </div>
-           
           </div>
 
           <div>
@@ -403,7 +443,11 @@ export function DashboardAccountContent() {
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
           Choose a strong password you do not use on other sites.
         </p>
-        <form className="mt-6 space-y-5" noValidate onSubmit={(e) => void handlePasswordSubmit(e)}>
+        <form
+          className="mt-6 space-y-5"
+          noValidate
+          onSubmit={(e) => void handlePasswordSubmit(e)}
+        >
           <div>
             <label htmlFor="account-current-password" className={labelClass}>
               Current password
@@ -465,7 +509,9 @@ export function DashboardAccountContent() {
                 )}
               </button>
             </div>
-            <p className="mt-1.5 text-xs text-zinc-500">At least 8 characters.</p>
+            <p className="mt-1.5 text-xs text-zinc-500">
+              At least 8 characters.
+            </p>
           </div>
           <div>
             <label htmlFor="account-confirm-password" className={labelClass}>
@@ -488,7 +534,11 @@ export function DashboardAccountContent() {
                 type="button"
                 onClick={() => setShowConfirm((v) => !v)}
                 className="absolute top-1/2 right-3 -translate-y-1/2 rounded-lg p-1.5 text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-800 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
-                aria-label={showConfirm ? "Hide confirm password" : "Show confirm password"}
+                aria-label={
+                  showConfirm
+                    ? "Hide confirm password"
+                    : "Show confirm password"
+                }
               >
                 {showConfirm ? (
                   <EyeOff className="h-5 w-5" strokeWidth={1.75} />

@@ -101,7 +101,14 @@ export function ShopTemplateModal({
     resumeCheckoutStartedRef.current = true;
     router.replace("/shop", { scroll: false });
     void handleBuy();
-  }, [resumeCheckout, template, authLoading, isAuthenticated, handleBuy, router]);
+  }, [
+    resumeCheckout,
+    template,
+    authLoading,
+    isAuthenticated,
+    handleBuy,
+    router,
+  ]);
 
   if (typeof document === "undefined" || !template) return null;
 
@@ -152,12 +159,12 @@ export function ShopTemplateModal({
           </div>
 
           <div className="flex min-h-0 flex-col gap-5 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
-          <p
-            id={titleId}
-            className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
-          >
-            {template.title}
-          </p>
+            <p
+              id={titleId}
+              className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
+            >
+              {template.title}
+            </p>
             <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
               {template.paragraphs.map((p, i) => (
                 <p key={i}>{p}</p>
@@ -183,10 +190,12 @@ export function ShopTemplateModal({
         </div>
 
         <footer className="flex flex-col gap-4 border-t border-[#e0dcd4] bg-[#f2ede4] px-6 py-5 sm:flex-row sm:items-center sm:justify-between sm:px-8 dark:border-neutral-700 dark:bg-[#1f1f1f]">
-          
           <div className="flex justify-end w-full flex-col gap-2 sm:flex-row sm:items-center">
             {checkoutError ? (
-              <p className="text-sm text-red-700 dark:text-red-300" role="alert">
+              <p
+                className="text-sm text-red-700 dark:text-red-300"
+                role="alert"
+              >
                 {checkoutError}
               </p>
             ) : null}

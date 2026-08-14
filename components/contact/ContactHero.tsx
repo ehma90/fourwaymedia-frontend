@@ -40,7 +40,6 @@ export function ContactHero() {
           transition={{ duration: 0.5, delay: 0.15, ease: easeOut }}
         >
           Contact us
-          
         </motion.h1>
         <motion.p
           className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/85 sm:mt-8 sm:text-lg md:text-xl"
@@ -48,9 +47,9 @@ export function ContactHero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.32, ease: easeOut }}
         >
-          Tell us about your project, social content, web, or shop
-          templates and we&apos;ll help you plan the right next step. Share a bit
-          below and our team will respond, typically within one business day.
+          Tell us about your project, social content, web, or shop templates and
+          we&apos;ll help you plan the right next step. Share a bit below and
+          our team will respond, typically within one business day.
         </motion.p>
       </div>
     </section>

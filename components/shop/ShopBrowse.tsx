@@ -1,7 +1,13 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Maximize2, Minimize2, Search, SlidersHorizontal, X } from "lucide-react";
+import {
+  Maximize2,
+  Minimize2,
+  Search,
+  SlidersHorizontal,
+  X,
+} from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
@@ -24,7 +30,11 @@ import {
   emptyAppliedFilters,
   filterShopTemplates,
 } from "@/lib/shop-filters";
-import type { AppliedFilters, ShopTemplate, ShopTopCategoryId } from "@/lib/types/shop";
+import type {
+  AppliedFilters,
+  ShopTemplate,
+  ShopTopCategoryId,
+} from "@/lib/types/shop";
 import { cn } from "@/lib/utils";
 
 export function ShopBrowse() {
@@ -43,15 +53,18 @@ export function ShopBrowse() {
     useState<ShopTopCategoryId>("all");
   const [appliedFilters, setAppliedFilters] = useState<AppliedFilters>({});
   const [draftFilters, setDraftFilters] = useState<AppliedFilters>({});
-  const [selectedTemplate, setSelectedTemplate] =
-    useState<ShopTemplate | null>(null);
+  const [selectedTemplate, setSelectedTemplate] = useState<ShopTemplate | null>(
+    null,
+  );
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [browseExpanded, setBrowseExpanded] = useState(false);
 
   const emptyFilters = useMemo(
     () =>
-      filterGroups.length ? emptyAppliedFilters(filterGroups) : ({} as AppliedFilters),
+      filterGroups.length
+        ? emptyAppliedFilters(filterGroups)
+        : ({} as AppliedFilters),
     [filterGroups],
   );
 
@@ -137,11 +150,7 @@ export function ShopBrowse() {
     };
   }, [mobileFiltersOpen, closeMobileFilters]);
 
-  const gridSkeleton = (
-    <ShopGridSkeleton
-      count={browseExpanded ? 8 : 6}
-    />
-  );
+  const gridSkeleton = <ShopGridSkeleton count={browseExpanded ? 8 : 6} />;
 
   return (
     <section
@@ -402,13 +411,11 @@ export function ShopBrowse() {
 
       <ShopTemplateModal
         template={selectedTemplate}
-        resumeCheckout={
-          Boolean(
-            buyTemplateId &&
-              selectedTemplate &&
-              buyTemplateId === selectedTemplate.id,
-          )
-        }
+        resumeCheckout={Boolean(
+          buyTemplateId &&
+          selectedTemplate &&
+          buyTemplateId === selectedTemplate.id,
+        )}
         onClose={() => {
           setSelectedTemplate(null);
           if (buyTemplateId) {
