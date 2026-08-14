@@ -62,10 +62,10 @@ function InstagramIcon() {
   );
 }
 
-function TikTokIcon() {
+function LinkedInIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-      <path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 0 1-2.59 2.5c-1.43 0-2.6-1.16-2.6-2.6a2.6 2.6 0 0 1 2.6-2.6c.27 0 .53.04.78.12V9.6a5.82 5.82 0 0 0-.78-.05A5.83 5.83 0 0 0 4 15.38a5.83 5.83 0 0 0 5.86 5.8 5.83 5.83 0 0 0 5.86-5.8V9.01a7.33 7.33 0 0 0 4.28 1.37V7.29a4.28 4.28 0 0 1-3.4-1.47Z" />
+      <path d="M6.94 8.5A1.56 1.56 0 1 0 6.94 5.38a1.56 1.56 0 0 0 0 3.12ZM5.5 9.75h2.88V18H5.5V9.75Zm4.8 0h2.76v1.12h.04c.38-.72 1.32-1.48 2.72-1.48 2.9 0 3.44 1.91 3.44 4.39V18H16.3v-7.56c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.89 1.96-2.89 3.98V18H10.3V9.75Z" />
     </svg>
   );
 }
@@ -161,11 +161,13 @@ export function Footer() {
                 <InstagramIcon />
               </a>
               <a
-                href="#"
-                aria-label="TikTok"
+                href="https://www.linkedin.com/company/fourwaymedia/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
                 className="text-copy-body transition-colors hover:text-copy-primary"
               >
-                <TikTokIcon />
+                <LinkedInIcon />
               </a>
               <a
                 href="#"

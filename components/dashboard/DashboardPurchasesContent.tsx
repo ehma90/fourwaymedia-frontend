@@ -145,7 +145,7 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
   return (
     <section aria-labelledby="purchases-library-heading" className={cardClass}>
       <div className="flex w-full flex-col gap-4 border-b border-zinc-200 pb-5 dark:border-zinc-800 sm:flex-row sm:items-end sm:justify-between">
-        <div className="flex flex-col lg:flex-row">
+        <div className="flex flex-col ">
           <h2
             id="purchases-library-heading"
             className="text-lg font-semibold text-zinc-900 dark:text-zinc-50"

@@ -24,10 +24,10 @@ import { cn } from "@/lib/utils";
 
 /** Light chrome (no `html.dark`) — dark mark on light sidebar */
 const LOGO_FOR_LIGHT_UI =
-  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_Black-01_z2ommb.png";
 /** Dark chrome — light mark on dark sidebar (do not pick via useTheme; `resolvedTheme` is undefined on first paint) */
 const LOGO_FOR_DARK_UI =
-  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_Black-01_z2ommb.png";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png";
 
 function getInitials(displayName: string): string {
   const parts = displayName.trim().split(/\s+/).filter(Boolean);
@@ -159,12 +159,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
                 <img
                   src={LOGO_FOR_LIGHT_UI}
                   alt="Fourlabs Studio logo"
-                  className="h-20 w-20 object-cover md:h-11 md:w-11 dark:hidden"
+                  className="h-16 w-32 md:h-16 md:w-32  object-cover dark:hidden"
                 />
                 <img
                   src={LOGO_FOR_DARK_UI}
                   alt="Fourlabs Studio logo"
-                  className="hidden h-20 w-20 object-cover md:h-11 md:w-11 dark:block"
+                  className="hidden h-16 w-32 md:h-16 md:w-32  object-cover dark:block"
                 />
               </Link>
               <div className="flex shrink-0 items-center gap-2 md:gap-3">

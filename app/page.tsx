@@ -11,7 +11,6 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      {/* Hero outside overflow-x-hidden wrapper so negative margin isn’t clipped and the bg can sit behind the navbar */}
       <HeroSection />
       <div className="min-h-screen max-w-[100vw] overflow-x-hidden bg-background text-foreground">
         <ServiceCategories />
