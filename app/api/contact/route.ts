@@ -44,7 +44,7 @@ export async function POST(request: Request) {
     from,
     to: [to],
     replyTo: parsed.data.email,
-    subject: `[Fourwaymedia Contact] ${parsed.data.subject}`,
+    subject: `[Fourlabs Studio Contact] ${parsed.data.subject}`,
     html: buildContactEmailHtml(parsed.data),
   });
 
