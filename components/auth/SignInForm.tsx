@@ -50,8 +50,9 @@ export function SignInForm() {
 
   const next = searchParams.get("next");
   const registered = searchParams.get("registered") === "1";
-  const [developmentVerificationUrl, setDevelopmentVerificationUrl] =
-    useState<string | null>(null);
+  const [developmentVerificationUrl, setDevelopmentVerificationUrl] = useState<
+    string | null
+  >(null);
 
   useEffect(() => {
     if (registered && typeof window !== "undefined") {
@@ -81,7 +82,8 @@ export function SignInForm() {
       <form className="mt-8 space-y-5" noValidate onSubmit={handleSubmit}>
         {registered ? (
           <p className="rounded-lg border border-green-200 bg-green-50 px-3 py-2 text-sm text-green-800 dark:border-green-900/50 dark:bg-green-950/40 dark:text-green-200">
-            Account created. Check your email and verify your address before signing in.
+            Account created. Check your email and verify your address before
+            signing in.
             {developmentVerificationUrl ? (
               <>
                 <br />

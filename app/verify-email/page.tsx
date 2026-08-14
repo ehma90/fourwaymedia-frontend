@@ -13,7 +13,9 @@ export default function VerifyEmailPage() {
     token ? "loading" : "error",
   );
   const [message, setMessage] = useState(
-    token ? "Verifying your email..." : "This verification link is missing a token.",
+    token
+      ? "Verifying your email..."
+      : "This verification link is missing a token.",
   );
 
   useEffect(() => {
@@ -30,7 +32,10 @@ export default function VerifyEmailPage() {
           error?: string;
         };
         if (!res.ok) {
-          throw new ApiError(data.error ?? "This link is invalid or expired.", res.status);
+          throw new ApiError(
+            data.error ?? "This link is invalid or expired.",
+            res.status,
+          );
         }
         setState("success");
         setMessage(data.message ?? "Your email has been verified.");

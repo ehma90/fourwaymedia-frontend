@@ -60,7 +60,9 @@ export function SignUpForm() {
       router.refresh();
     } catch (err) {
       setError(
-        err instanceof ApiError ? err.message : "Could not create account. Try again.",
+        err instanceof ApiError
+          ? err.message
+          : "Could not create account. Try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -75,7 +77,6 @@ export function SignUpForm() {
   return (
     <div className="w-full max-w-[520px] rounded-2xl border border-neutral-200/80 bg-white p-8 shadow-[0_4px_40px_rgba(0,0,0,0.06)] sm:p-10 dark:border-white/10 dark:bg-neutral-900 dark:shadow-[0_4px_40px_rgba(0,0,0,0.4)]">
       <div className="text-center">
-       
         <h1 className="mt-5 text-2xl font-bold tracking-tight text-neutral-950 dark:text-white">
           Create your account
         </h1>
@@ -115,8 +116,8 @@ export function SignUpForm() {
           <label
             htmlFor="signup-email"
             className="mb-1.5 block text-sm font-medium text-neutral-600 dark:text-neutral-300"
-            >
-              Email address
+          >
+            Email address
           </label>
           <input
             id="signup-email"
