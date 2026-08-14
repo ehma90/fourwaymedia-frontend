@@ -46,7 +46,11 @@ export async function GET(request: Request) {
 
   const redirect = NextResponse.redirect(new URL(next, request.url));
   forwardSetCookie(res, redirect);
-  for (const name of ["fw_google_state", "fw_google_verifier", "fw_google_next"]) {
+  for (const name of [
+    "fw_google_state",
+    "fw_google_verifier",
+    "fw_google_next",
+  ]) {
     redirect.cookies.delete(name);
   }
   return redirect;

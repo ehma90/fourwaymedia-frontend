@@ -13,7 +13,10 @@ export async function GET(request: Request) {
   const clientId = process.env.GOOGLE_CLIENT_ID?.trim();
   if (!clientId) {
     return NextResponse.json(
-      { error: "Google auth is not configured.", code: "GOOGLE_AUTH_NOT_CONFIGURED" },
+      {
+        error: "Google auth is not configured.",
+        code: "GOOGLE_AUTH_NOT_CONFIGURED",
+      },
       { status: 503 },
     );
   }
