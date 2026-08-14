@@ -1,11 +1,7 @@
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
-import {
-  backendUnavailableBody,
-  fetchBackend,
-  forwardSetCookie,
-} from "@/lib/server-backend";
+import { backendUnavailableBody, fetchBackend } from "@/lib/server-backend";
 
 export const runtime = "nodejs";
 
@@ -45,7 +41,29 @@ export async function GET(request: Request) {
   }
 
   const redirect = NextResponse.redirect(new URL(next, request.url));
-  forwardSetCookie(res, redirect);
+  const setCookies =
+    typeof res.headers.getSetCookie === "function"
+      ? res.headers.getSetCookie()
+      : ([res.headers.get("set-cookie")].filter(Boolean) as string[]);
+  const sessionCookie = setCookies.find((cookie) =>
+    cookie.startsWith("fw_customer_session="),
+  );
+  const sessionValue = sessionCookie
+    ?.split(";", 1)[0]
+    .slice("fw_customer_session=".length);
+  if (sessionValue) {
+    redirect.cookies.set(
+      "fw_customer_session",
+      decodeURIComponent(sessionValue),
+      {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        path: "/",
+        maxAge: 60 * 60 * 24 * 7,
+      },
+    );
+  }
   for (const name of [
     "fw_google_state",
     "fw_google_verifier",
