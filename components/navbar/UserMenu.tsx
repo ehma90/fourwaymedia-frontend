@@ -113,7 +113,9 @@ export function UserMenu() {
               item.href === "/dashboard/notifications" &&
               unreadNotificationCount > 0;
             const notificationBadgeLabel =
-              unreadNotificationCount > 99 ? "99+" : String(unreadNotificationCount);
+              unreadNotificationCount > 99
+                ? "99+"
+                : String(unreadNotificationCount);
             return (
               <Link
                 key={item.href}
