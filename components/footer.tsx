@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Linkedin } from "lucide-react";
 
 const LIGHT_LOGO =
   "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png";
@@ -39,7 +40,7 @@ function getBottomRow() {
     },
     {
       title: "Get help",
-      links: [{ label: "Contact", href: "/contact" }],
+      links: [{ label: "Contact us", href: "/contact" }],
     },
   ] as const;
 }
@@ -62,21 +63,13 @@ function InstagramIcon() {
   );
 }
 
-function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-      <path d="M6.94 8.5A1.56 1.56 0 1 0 6.94 5.38a1.56 1.56 0 0 0 0 3.12ZM5.5 9.75h2.88V18H5.5V9.75Zm4.8 0h2.76v1.12h.04c.38-.72 1.32-1.48 2.72-1.48 2.9 0 3.44 1.91 3.44 4.39V18H16.3v-7.56c0-1.8-.03-4.12-2.51-4.12-2.51 0-2.89 1.96-2.89 3.98V18H10.3V9.75Z" />
-    </svg>
-  );
-}
-
-function XIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
-      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-    </svg>
-  );
-}
+// function XIcon() {
+//   return (
+//     <svg viewBox="0 0 24 24" fill="currentColor" className="size-5">
+//       <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+//     </svg>
+//   );
+// }
 
 type FooterLink =
   | { label: string; href: string }
@@ -123,7 +116,7 @@ export function Footer() {
   const navColumns = [...topRow, ...getBottomRow()];
 
   return (
-    <footer className="text-copy-primary border-t border-copy-body/15">
+    <footer className="text-primary border-t border-copy-body/15">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start justify-between lg:gap-10 xl:gap-12 w-full">
           <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
@@ -142,7 +135,7 @@ export function Footer() {
 
             <div>
               <p className="text-sm font-medium text-copy-primary transition-colors">
-                Contact us
+                Email us:
               </p>
               <a
                 href="mailto:contact@fourlabs.studio"
@@ -167,7 +160,7 @@ export function Footer() {
                 aria-label="LinkedIn"
                 className="text-copy-body transition-colors hover:text-copy-primary"
               >
-                <LinkedInIcon />
+                <Linkedin className="size-5" aria-hidden />
               </a>
               {/* <a
                 href="#"

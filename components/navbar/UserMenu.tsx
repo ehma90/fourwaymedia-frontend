@@ -11,6 +11,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
+import { useNotifications } from "@/hooks/use-notifications";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -36,6 +37,7 @@ function getInitials(displayName: string): string {
 
 export function UserMenu() {
   const { user, signOut } = useAuth();
+  const { unreadCount: unreadNotificationCount } = useNotifications();
   const displayName = user?.displayName ?? "Account";
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -107,16 +109,31 @@ export function UserMenu() {
           </p>
           {dashboardMenuItems.map((item) => {
             const Icon = item.icon;
+            const showNotificationBadge =
+              item.href === "/dashboard/notifications" &&
+              unreadNotificationCount > 0;
+            const notificationBadgeLabel =
+              unreadNotificationCount > 99 ? "99+" : String(unreadNotificationCount);
             return (
               <Link
                 key={item.href}
                 role="menuitem"
                 href={item.href}
+                aria-label={
+                  showNotificationBadge
+                    ? `${item.label}, ${notificationBadgeLabel} unread`
+                    : undefined
+                }
                 className="flex items-center gap-2 px-3 py-2.5 text-sm transition-colors hover:bg-black/5 dark:hover:bg-white/10"
                 onClick={() => setOpen(false)}
               >
                 <Icon size={18} className="shrink-0 opacity-90" aria-hidden />
-                {item.label}
+                <span className="min-w-0 flex-1">{item.label}</span>
+                {showNotificationBadge ? (
+                  <span className="inline-flex h-5 min-w-5 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] px-1.5 text-[11px] font-semibold tabular-nums text-white">
+                    {notificationBadgeLabel}
+                  </span>
+                ) : null}
               </Link>
             );
           })}
