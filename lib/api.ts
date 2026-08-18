@@ -126,7 +126,7 @@ export type AuthUser = {
 export type DownloadedAsset = {
   id: string;
   title: string;
-  category: "Motion" | "Design" | "Video";
+  category: string;
   thumbnailUrl?: string;
   downloadedAt: string;
   productHref: string;
