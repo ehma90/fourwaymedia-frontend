@@ -1,32 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
+import {
+  Compass,
+  FileCheck2,
+  Lightbulb,
+  MessageSquareMore,
+  Search,
+} from "lucide-react";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
 const STEPS = [
   {
     title: "Discovery",
+    icon: Search,
     description:
       "We start by understanding your brand, goals, audience, and challenges. This ensures every decision is aligned with what you want to achieve.",
   },
   {
     title: "Strategy & Direction",
+    icon: Compass,
     description:
       "Before design begins, we define the creative direction. This includes concept development, mood direction, and a clear execution plan.",
   },
   {
     title: "Execution",
+    icon: Lightbulb,
     description:
       "We bring ideas to life across branding, design, content, motion, UI/UX, and digital campaigns, focused on quality and purpose.",
   },
   {
     title: "Review & Refinement",
+    icon: MessageSquareMore,
     description:
       "You review the work, and we refine it based on structured feedback within the agreed scope.",
   },
   {
     title: "Final Delivery",
+    icon: FileCheck2,
     description:
       "Once approved, we deliver fully prepared assets ready for real-world use across your platforms and channels.",
   },
@@ -91,7 +103,8 @@ export function HowWeWorkSection() {
               aria-hidden
             />
 
-            {STEPS.map((step, index) => {
+            {STEPS.map((step) => {
+              const StepIcon = step.icon;
               return (
                 <motion.li
                   key={step.title}
@@ -101,7 +114,7 @@ export function HowWeWorkSection() {
                   <div className="flex gap-4 sm:gap-5">
                     <div className="relative shrink-0">
                       <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#DC4437] dark:border-[#FEC107] text-sm font-bold text-[#DC4437] dark:text-[#FEC107] shadow-sm">
-                        {index + 1}
+                        <StepIcon className="h-5 w-5" strokeWidth={2} aria-hidden />
                       </span>
                     </div>
                     <div className="min-w-0 pt-0.5">
