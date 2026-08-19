@@ -114,7 +114,11 @@ export function HowWeWorkSection() {
                   <div className="flex gap-4 sm:gap-5">
                     <div className="relative shrink-0">
                       <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#DC4437] dark:border-[#FEC107] text-sm font-bold text-[#DC4437] dark:text-[#FEC107] shadow-sm">
-                        <StepIcon className="h-5 w-5" strokeWidth={2} aria-hidden />
+                        <StepIcon
+                          className="h-5 w-5"
+                          strokeWidth={2}
+                          aria-hidden
+                        />
                       </span>
                     </div>
                     <div className="min-w-0 pt-0.5">
