@@ -12,7 +12,7 @@ export function ShopTemplateCard({ template, onOpen }: ShopTemplateCardProps) {
     <button
       type="button"
       onClick={onOpen}
-      className="group flex w-full flex-col overflow-hidden rounded-2xl border border-neutral-200/90 bg-white text-left shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] outline-none transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-neutral-900/40 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+      className="group flex w-full flex-col overflow-hidden rounded-2xl border border-neutral-200/90 bg-white text-left shadow-[0_1px_0_rgba(255,255,255,0.04)_inset] outline-none transition-[transform,box-shadow] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(0,0,0,0.1)] focus-visible:ring-2 focus-visible:ring-[#FEC107]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-white/10 dark:bg-neutral-900 dark:hover:shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
       aria-label={`${template.title}. View details and purchase options.`}
     >
       <div className="relative aspect-4/3 overflow-hidden">
@@ -33,12 +33,12 @@ export function ShopTemplateCard({ template, onOpen }: ShopTemplateCardProps) {
         <span className="text-base font-semibold leading-snug text-copy-primary sm:text-lg">
           {template.title}
         </span>
-        <p className="line-clamp-2 text-sm leading-relaxed text-copy-body">
+        <p className="line-clamp-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-100">
           {template.cardBlurb}
         </p>
-        <span className="mt-1 text-xs font-medium uppercase tracking-wide text-neutral-500 dark:text-neutral-400">
-          {template.format.toUpperCase()} · {template.aspectRatio.replace("-", ":")} ·{" "}
-          {template.duration}
+        <span className="mt-1 text-xs font-medium uppercase tracking-wide text-neutral-500 dark:text-neutral-200">
+          {template.format.toUpperCase()} ·{" "}
+          {template.aspectRatio.replace("-", ":")} · {template.duration}
         </span>
       </div>
     </button>

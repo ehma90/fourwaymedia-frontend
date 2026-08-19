@@ -116,7 +116,7 @@ export function Footer() {
   const navColumns = [...topRow, ...getBottomRow()];
 
   return (
-    <footer className="text-primary border-t border-copy-body/15">
+    <footer className="text-copy-primary [--copy-body:#4b5563] border-t border-copy-body/15 dark:[--copy-body:#d1d5db]">
       <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start justify-between lg:gap-10 xl:gap-12 w-full">
           <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
