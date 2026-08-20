@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Fourlabs Studio frontend
 
-## Getting Started
+Customer-facing Next.js application for Fourlabs Studio. It includes the marketing site, template shop, authentication, checkout, purchases, notifications, receipts, and customer account pages.
 
-First, run the development server:
+## Requirements
+
+- Node.js 20 or newer
+- `fourwaymedia-backend` running locally for authentication, catalog, checkout, and dashboard data
+- A configured PostgreSQL/Paystack backend for real purchases
+
+## Local development
+
+Install dependencies and start the frontend:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Start the backend separately from `fourwaymedia-backend`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run db:up
+npm run db:migrate
+npm run db:seed
+npm run dev
+```
 
-## Learn More
+The backend runs at [http://localhost:4000](http://localhost:4000) by default.
 
-To learn more about Next.js, take a look at the following resources:
+## Environment variables
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Create `.env.local` in this directory:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```env
+# Used by the browser to load the public shop catalog.
+NEXT_PUBLIC_API_URL=http://localhost:4000
 
-## Deploy on Vercel
+# Used by Next.js server-side proxy routes. Keep this server-only.
+API_URL=http://localhost:4000
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The backend has its own environment configuration. See the backend [README](../fourwaymedia-backend/README.md) and [build guide](../fourwaymedia-backend/BACKEND-BUILD-GUIDE.md).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Main routes
+
+| Route                           | Purpose                            |
+| ------------------------------- | ---------------------------------- |
+| `/`                             | Marketing homepage                 |
+| `/shop`                         | Browse and purchase templates      |
+| `/sign-in`, `/sign-up`          | Customer authentication            |
+| `/verify-email`                 | Email verification                 |
+| `/forgot-password`              | Password reset request             |
+| `/dashboard`                    | Customer overview                  |
+| `/dashboard/purchases`          | Purchased templates and downloads  |
+| `/dashboard/notifications`      | Purchase and billing notifications |
+| `/dashboard/receipts/[orderId]` | Authenticated purchase receipt     |
+| `/dashboard/account`            | Profile and password settings      |
+
+## API integration
+
+The frontend uses the backend through same-origin Next.js proxy routes for authenticated requests. Public catalog data is fetched from `NEXT_PUBLIC_API_URL`.
+
+Authenticated customer flows include:
+
+- Registration, login, logout, email verification, and password reset
+- One-time Paystack checkout
+- Purchase confirmation and entitlement-based downloads
+- Purchase notifications with amounts and receipt links
+- User-owned receipt details
+
+## Validation
+
+Run the frontend checks before opening a pull request or deploying:
+
+```bash
+npm run lint
+npm run build
+```
+
+The production build validates TypeScript, route generation, and the frontend bundle.
