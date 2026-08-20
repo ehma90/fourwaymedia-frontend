@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Bitter, Lexend } from "next/font/google";
 import "./globals.css";
+import { ImageProtection } from "@/components/ImageProtection";
 import { ThemeProvider } from "@/context/theme-provider";
 import { AuthProvider } from "@/lib/auth-context";
 import { themeInitScript, THEME_STORAGE_KEY } from "@/lib/theme-init";
@@ -46,6 +47,7 @@ export default function RootLayout({
         >
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
+        <ImageProtection />
       </body>
     </html>
   );

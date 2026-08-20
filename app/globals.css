@@ -33,6 +33,11 @@ body {
   font-family: var(--font-lexend), Arial, Helvetica, sans-serif;
 }
 
+img {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 /* Smooth theme switch (next-themes toggles `.dark` on <html>) — interpolate paint when `dark:` utilities flip */
 @media (prefers-reduced-motion: no-preference) {
   html {
