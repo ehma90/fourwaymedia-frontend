@@ -1,4 +1,8 @@
-export const NOTIFICATION_KINDS = ["billing", "subscription", "product"] as const;
+export const NOTIFICATION_KINDS = [
+  "billing",
+  "subscription",
+  "product",
+] as const;
 
 export type NotificationKind = (typeof NOTIFICATION_KINDS)[number];
 
@@ -10,4 +14,7 @@ export type NotificationItem = {
   createdAt: string;
   read: boolean;
   href?: string;
+  orderId?: string;
+  amount?: string;
+  receiptHref?: string;
 };

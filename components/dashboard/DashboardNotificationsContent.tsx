@@ -32,7 +32,9 @@ function formatRelativeTime(iso: string): string {
   const now = new Date();
   const diffMs = now.getTime() - d.getTime();
   if (diffMs < 0) {
-    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(d);
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(
+      d,
+    );
   }
   const diffMins = Math.floor(diffMs / 60_000);
   const diffHours = Math.floor(diffMs / 3_600_000);
@@ -49,7 +51,11 @@ function formatRelativeTime(iso: string): string {
 
 const KIND_ICONS: Record<
   NotificationKind,
-  React.ComponentType<{ className?: string; strokeWidth?: number; "aria-hidden"?: boolean }>
+  React.ComponentType<{
+    className?: string;
+    strokeWidth?: number;
+    "aria-hidden"?: boolean;
+  }>
 > = {
   billing: CreditCard,
   subscription: Sparkles,
@@ -85,14 +91,13 @@ function NotificationRow({ item }: { item: NotificationItem }) {
               <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {item.body}
               </p>
+              {item.amount ? (
+                <p className="mt-2 text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                  {item.amount}
+                </p>
+              ) : null}
             </div>
           </div>
-          <time
-            className="shrink-0 rounded-md bg-zinc-100/90 px-2 py-0.5 text-[11px] font-medium tabular-nums text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
-            dateTime={item.createdAt}
-          >
-            {formatRelativeTime(item.createdAt)}
-          </time>
         </div>
       </div>
     </>
@@ -108,24 +113,39 @@ function NotificationRow({ item }: { item: NotificationItem }) {
   if (item.href) {
     return (
       <li>
-        <Link href={item.href} className={rowClass}>
-          {content}
-        </Link>
+        <div className={rowClass}>
+          <Link href={item.href} className="contents">
+            {content}
+          </Link>
+          <div className="mt-2 flex flex-col justify-between gap-3 sm:mt-0 sm:flex-col sm:items-end">
+            <time
+              className="shrink-0 rounded-md bg-zinc-100/90 px-2 py-0.5 text-[11px] font-medium tabular-nums text-zinc-600 dark:bg-zinc-800 dark:text-zinc-400"
+              dateTime={item.createdAt}
+            >
+              {formatRelativeTime(item.createdAt)}
+            </time>
+            {item.receiptHref ? (
+              <Link
+                href={item.receiptHref}
+                className="shrink-0 self-end text-xs font-semibold text-[#DC4437] hover:underline dark:text-[#FEC107] sm:self-center"
+              >
+                View receipt
+              </Link>
+            ) : null}
+          </div>
+        </div>
       </li>
     );
   }
 
-  return (
-    <li className={rowClass}>
-      {content}
-    </li>
-  );
+  return <li className={rowClass}>{content}</li>;
 }
 
 export function DashboardNotificationsContent() {
-  const { notifications, unreadCount, isLoading, error, reload } = useNotifications({
-    markReadOnMount: true,
-  });
+  const { notifications, unreadCount, isLoading, error, reload } =
+    useNotifications({
+      markReadOnMount: true,
+    });
 
   const hasUnread = unreadCount > 0;
 
@@ -136,12 +156,15 @@ export function DashboardNotificationsContent() {
           Notifications
         </h1>
         <p className="mt-1.5 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Purchase updates and billing events. Opening this page marks current notifications as
-          read.
+          Purchase updates and billing events. Opening this page marks current
+          notifications as read.
         </p>
       </header>
 
-      <section aria-labelledby="notifications-feed-heading" className={cardClass}>
+      <section
+        aria-labelledby="notifications-feed-heading"
+        className={cardClass}
+      >
         <div className="flex flex-col gap-4 border-b border-zinc-200/90 pb-3 dark:border-zinc-800 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-3">
             <h2
@@ -169,7 +192,13 @@ export function DashboardNotificationsContent() {
         {error ? (
           <div className="py-10 text-center">
             <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
-            <Button type="button" variant="outline" size="sm" className="mt-4" onClick={() => void reload()}>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="mt-4"
+              onClick={() => void reload()}
+            >
               Try again
             </Button>
           </div>
@@ -191,7 +220,8 @@ export function DashboardNotificationsContent() {
               No notifications yet
             </p>
             <p className="mt-2 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-              When you purchase a template or receive a refund, it will show up here.
+              When you purchase a template or receive a refund, it will show up
+              here.
             </p>
             <p className="mt-6 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm">
               <Link
