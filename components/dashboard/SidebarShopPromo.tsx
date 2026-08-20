@@ -38,7 +38,7 @@ export function SidebarShopPromo({
       )}
     >
       <div
-        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-[linear-gradient(160deg,#DC4437,#FEC107)] opacity-[0.2] blur-2xl dark:opacity-30"
+        className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-lg bg-[linear-gradient(160deg,#DC4437,#FEC107)] opacity-[0.2] blur-2xl dark:opacity-30"
         aria-hidden
       />
       <div className="relative">
@@ -58,7 +58,7 @@ export function SidebarShopPromo({
           onClick={onNavigate}
           className={cn(
             buttonVariants({ variant: "primary", size: "sm" }),
-            "mt-3 h-9 w-full rounded-lg text-xs font-semibold",
+            "mt-3 h-9 w-full rounded-md text-xs font-semibold",
           )}
         >
           Shop for more
