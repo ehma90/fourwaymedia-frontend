@@ -179,7 +179,7 @@ export function ShopBrowse() {
           <button
             type="button"
             onClick={() => setBrowseExpanded((v) => !v)}
-            className="hidden h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-neutral-200/90 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 md:inline-flex dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
+            className="hidden h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-neutral-200/90 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 md:inline-flex dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
             aria-label={
               browseExpanded ? "Use normal browse width" : "Expand browse width"
             }
@@ -224,7 +224,9 @@ export function ShopBrowse() {
                 />
                 <input
                   id="shop-search"
-                  type="search"
+                  type="text"
+                  name="shop-search"
+                  aria-label="Search templates"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search templates…"

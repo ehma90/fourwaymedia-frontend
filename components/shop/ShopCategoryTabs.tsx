@@ -36,7 +36,7 @@ export function ShopCategoryTabs({
             tabIndex={selected ? 0 : -1}
             onClick={() => onChange(cat.id)}
             className={cn(
-              "shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors",
+              "shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors cursor-pointer",
               selected
                 ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-950"
                 : "border border-neutral-200/90 bg-white text-neutral-700 hover:bg-neutral-50 dark:border-white/10 dark:bg-neutral-900/60 dark:text-neutral-200 dark:hover:bg-neutral-800",

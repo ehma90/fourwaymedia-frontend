@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 
 import { ShopBrowse } from "@/components/shop/ShopBrowse";
-import { ShopHero } from "@/components/shop/ShopHero";
+// import { ShopHero } from "@/components/shop/ShopHero";
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
