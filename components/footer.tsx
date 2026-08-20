@@ -8,7 +8,7 @@ const DARK_LOGO =
 
 const topRow = [
   {
-    title: " OurServices",
+    title: " Our Services",
     links: [
       { label: "Branding", href: "/service/branding-visual-identity" },
       { label: "Content", href: "/service/content-creation" },
