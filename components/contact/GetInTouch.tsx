@@ -121,9 +121,9 @@ export function GetInTouch() {
                   Call us
                 </h3>
                 <p className="mt-1 text-sm leading-relaxed text-neutral-600 dark:text-neutral-400">
-                  Phone: +6 62783849302
-                  <br />
-                  Fax: +6 7377282919739
+                  Phone: +234 9127034899
+                  {/* <br /> */}
+                  {/* Fax: +6 7377282919739 */}
                 </p>
               </div>
             </motion.li>
