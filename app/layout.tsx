@@ -16,10 +16,16 @@ const lexend = Lexend({
   subsets: ["latin"],
 });
 
+const FAVICON_URL =
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1786667623/2026-08-14_1.33.18_AM_uplo2z.jpg";
+
 export const metadata: Metadata = {
   title: "Fourlabs Studio",
   description:
     "Fourlabs Studio is a creative agency that provides branding, content creation, web and mobile development, and social media management services.",
+  icons: {
+    icon: FAVICON_URL,
+  },
 };
 
 export default function RootLayout({
