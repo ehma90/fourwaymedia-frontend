@@ -19,6 +19,7 @@ export type ShopTemplate = {
   cardBlurb: string;
   paragraphs: string[];
   included: string[];
+  tags: string[];
   priceLabel: string;
   priceCents?: number;
   currency?: string;

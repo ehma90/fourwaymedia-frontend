@@ -93,7 +93,8 @@ export function ShopBrowse() {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return baseFiltered;
     return baseFiltered.filter((t) => {
-      const haystack = `${t.title} ${t.cardBlurb}`.toLowerCase();
+      const haystack =
+        `${t.title} ${t.cardBlurb} ${t.tags?.join(" ") ?? ""}`.toLowerCase();
       return haystack.includes(q);
     });
   }, [baseFiltered, searchQuery]);
@@ -214,7 +215,7 @@ export function ShopBrowse() {
               />
             )}
             <div className="flex w-full min-w-0 basis-full items-center gap-3 sm:ml-auto sm:w-auto sm:flex-initial sm:basis-auto sm:justify-end">
-              <div className="relative min-w-0 flex-1 sm:max-w-sm sm:min-w-[220px] sm:shrink-0">
+              <div className="relative min-w-0 flex-1 sm:max-w-sm sm:min-w-55 sm:shrink-0">
                 <label htmlFor="shop-search" className="sr-only">
                   Search templates
                 </label>
@@ -253,7 +254,7 @@ export function ShopBrowse() {
         </div>
 
         <div className="mt-8 flex flex-col gap-10 lg:flex-row lg:gap-10">
-          <aside className="hidden min-h-0 w-[272px] shrink-0 lg:block">
+          <aside className="hidden min-h-0 w-68 shrink-0 lg:block">
             <div
               className={cn(
                 "sticky rounded-2xl border border-neutral-200/90 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-neutral-900/50",
@@ -348,7 +349,7 @@ export function ShopBrowse() {
               role="dialog"
               aria-modal="true"
               aria-labelledby="mobile-filters-title"
-              className="fixed inset-y-0 right-0 z-160 flex w-full max-w-[200px] flex-col rounded-tl-2xl rounded-bl-2xl border-l border-neutral-200/90 bg-[#f7f3eb] shadow-2xl lg:hidden dark:border-white/10 dark:bg-[#252525]"
+              className="fixed inset-y-0 right-0 z-160 flex w-full max-w-50 flex-col rounded-tl-2xl rounded-bl-2xl border-l border-neutral-200/90 bg-[#f7f3eb] shadow-2xl lg:hidden dark:border-white/10 dark:bg-[#252525]"
               initial={{ x: "100%" }}
               animate={{ x: 0 }}
               exit={{ x: "100%" }}

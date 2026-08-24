@@ -11,18 +11,20 @@ import { cn } from "@/lib/utils";
 /** Placeholder marketplace visuals — swap URLs when final assets are ready */
 const MARKETPLACE_SLIDES = [
   {
+    type: "image",
     src: "https://ik.imagekit.io/vp72mg6kz/Homepage/ff3db51ebb7041f19386395e394515c9299a8b3a.png",
     alt: "Template with warm tones and typography",
   },
   {
-    src: "https://ik.imagekit.io/vp72mg6kz/Homepage/72e6f08be6a6c56b05def63096110a3dd1c66bf8.jpg",
+    type: "video",
+    src: "https://res.cloudinary.com/drrluhcad/video/upload/v1787581157/2026-08-24_12.40.08_PM_ee2jep.mp4",
     alt: "Creative layout mockup",
   },
   {
+    type: "image",
     src: "https://ik.imagekit.io/vp72mg6kz/Homepage/0a1850f1617c2e0d083a0a6ae9643a1a8f7c563a.jpg",
     alt: "Social Media Post",
   },
-
 ] as const;
 
 export function ShopDigital() {
@@ -123,20 +125,35 @@ export function ShopDigital() {
                   <ChevronRight className="h-5 w-5" strokeWidth={2} />
                 </button>
 
-                <div ref={emblaRef} className="overflow-hidden pl-9 pr-9 sm:pl-11 sm:pr-11">
-
+                <div
+                  ref={emblaRef}
+                  className="overflow-hidden pl-9 pr-9 sm:pl-11 sm:pr-11"
+                >
                   <div className="flex touch-pan-y">
                     {MARKETPLACE_SLIDES.map((slide) => (
                       <div
-                        key={slide.src}
+                        key={`${slide.type}-${slide.src}`}
                         className="min-w-0 shrink-0 grow-0 basis-[78%] max-w-80 w-full px-4"
                       >
                         <div className="overflow-hidden rounded-2xl bg-zinc-900/50 ring-1 ring-white/10">
-                          <img
-                            src={slide.src}
-                            alt={slide.alt}
-                            className="aspect-3/4 w-full object-cover sm:aspect-4/5 min-h-72 lg:min-h-96 "
-                          />
+                          {slide.type === "video" ? (
+                            <video
+                              src={slide.src}
+                              autoPlay
+                              muted
+                              loop
+                              playsInline
+                              preload="metadata"
+                              className="aspect-3/4 w-full object-cover sm:aspect-4/5 min-h-72 lg:min-h-96"
+                              aria-label={slide.alt}
+                            />
+                          ) : (
+                            <img
+                              src={slide.src}
+                              alt={slide.alt}
+                              className="aspect-3/4 w-full object-cover sm:aspect-4/5 min-h-72 lg:min-h-96"
+                            />
+                          )}
                         </div>
                       </div>
                     ))}

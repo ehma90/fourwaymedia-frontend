@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 const AUTOPLAY_MS = 5000;
 
 const SLIDES = [
-  {
-    image:
-      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
-    title: "Curated templates",
-    body: "Browse video and motion templates by format, style, and use case so you can find a strong starting point without digging through clutter.",
-  },
+  // {
+  //   image:
+  //     "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=1200&q=80",
+  //   title: "Curated templates",
+  //   body: "Browse video and motion templates by format, style, and use case so you can find a strong starting point without digging through clutter.",
+  // },
   {
     image:
       "https://res.cloudinary.com/drrluhcad/video/upload/v1782580767/montage_short_tyj2e9.mp4",
@@ -22,7 +22,7 @@ const SLIDES = [
   },
   {
     image:
-      "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=1200&q=80",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1787581157/2026-08-24_12.40.08_PM_ee2jep.mp4",
     title: "Download-ready projects",
     body: "Get structured project files you can copy and paste, and export, without rebuilding everything from scratch.",
   },

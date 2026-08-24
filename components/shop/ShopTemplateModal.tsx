@@ -139,8 +139,8 @@ export function ShopTemplateModal({
           <X className="h-5 w-5" strokeWidth={1.75} aria-hidden />
         </button>
 
-        <div className="grid max-h-[inherit] items-center flex-1 gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1fr)] lg:gap-8">
-          <div className="flex min-h-0 flex-col gap-4 rounded-2xl bg-[#e8e4dc] p-4 sm:p-5 dark:bg-neutral-800/70">
+        <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:flex-row lg:items-stretch lg:gap-8">
+          <div className="flex w-full min-h-0 flex-col gap-4 rounded-2xl bg-[#e8e4dc] p-4 sm:p-5 lg:w-[54%] dark:bg-neutral-800/70">
             <div className="overflow-hidden rounded-xl border border-[#d6d1c7] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-neutral-600 dark:bg-neutral-950 dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
               <img
                 src={template.image}
@@ -153,32 +153,33 @@ export function ShopTemplateModal({
               <span className="mx-2 text-neutral-400" aria-hidden>
                 ·
               </span>
-              {template.format.toUpperCase()} ·{" "}
-              {template.aspectRatio.replace("-", ":")} · {template.duration}
+              {template.format.toUpperCase()} · {template.aspectRatio.replace("-", ":")} · {template.duration}
             </p>
           </div>
 
-          <div className="flex min-h-0 flex-col gap-5 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+          <div className="flex w-full min-h-0 flex-col gap-5 lg:w-[46%] font-[family-name:var(--font-lexend),system-ui,sans-serif]">
             <p
               id={titleId}
               className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
             >
               {template.title}
             </p>
+
             <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
-              {template.paragraphs.map((p, i) => (
-                <p key={i}>{p}</p>
+              {(template.paragraphs?.length ? template.paragraphs : [template.cardBlurb]).map((text, i) => (
+                <p key={`${text}-${i}`}>{text}</p>
               ))}
             </div>
+
             <div>
               <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
                 What&apos;s included
               </h3>
               <ul className="mt-3 space-y-2.5 text-sm text-neutral-700 sm:text-[15px] dark:text-neutral-300">
-                {template.included.map((line) => (
+                {(template.included?.length ? template.included : ["Master project / export file", "License for one brand", "Download from your purchases library"]).map((line) => (
                   <li key={line} className="flex gap-2.5 leading-snug">
                     <span
-                      className="mt-2 h-1 w-1 shrink-0 rounded-full bg-neutral-500 dark:bg-neutral-400"
+                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-500 dark:bg-neutral-400"
                       aria-hidden
                     />
                     <span>{line}</span>
@@ -186,6 +187,24 @@ export function ShopTemplateModal({
                 ))}
               </ul>
             </div>
+
+            {template.tags?.length ? (
+              <div className="pt-1">
+                <div className="mb-2 text-sm font-medium text-neutral-800 dark:text-neutral-200">
+                  Tags
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {template.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ) : null}
           </div>
         </div>
 
@@ -205,7 +224,7 @@ export function ShopTemplateModal({
               onClick={() => void handleBuy()}
               className={cn(
                 buttonVariants({ variant: "primary" }),
-                "relative h-10 min-w-[120px] justify-center px-8 text-base font-medium disabled:opacity-70",
+                "relative h-10 min-w-30 justify-center px-8 text-base font-medium disabled:opacity-70",
               )}
             >
               {checkoutLoading ? (
