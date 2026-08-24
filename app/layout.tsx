@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Bitter, Lexend } from "next/font/google";
 import "./globals.css";
 import { ImageProtection } from "@/components/ImageProtection";
@@ -53,6 +54,7 @@ export default function RootLayout({
         >
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
+        <Analytics />
         <ImageProtection />
       </body>
     </html>
