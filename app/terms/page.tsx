@@ -82,7 +82,7 @@ export default function TermsPage() {
         <article className="mx-auto max-w-3xl px-6 py-16 sm:py-24">
           <header className="text-center">
             <h1 className="font-[family-name:var(--font-lexend),system-ui,sans-serif] text-2xl font-bold tracking-tight text-neutral-950 sm:text-3xl dark:text-white">
-              FORWAY MEDIA — TERMS &amp; CONDITIONS
+              TERMS &amp; CONDITIONS
             </h1>
             <p className="mt-6 text-left text-sm text-neutral-600 dark:text-neutral-400">
               Effective Date: {EFFECTIVE_DATE}
@@ -91,7 +91,7 @@ export default function TermsPage() {
 
           <div className="mt-10 space-y-6 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
             <p>
-              Welcome to Forway Media. We operate as a premium creative agency
+              Welcome to Fourlabs Studio. We operate as a premium creative agency
               specializing in high-impact brand design, digital storytelling,
               UI/UX systems, content direction, motion design, and strategic
               creative execution.
@@ -118,9 +118,9 @@ export default function TermsPage() {
             </h2>
             <address className="mt-4 space-y-1 text-sm not-italic leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
               <p className="font-medium text-neutral-950 dark:text-white">
-                Forway Media
+                Fourlabs Studio
               </p>
-              <p>Lagos, Nigeria</p>
+              <p>{CONTACT_PHONE}</p>
               <p>
                 <a
                   href={`mailto:${CONTACT_EMAIL}`}
