@@ -116,11 +116,6 @@ export function IndustriesWeServe() {
             That is why we don&apos;t limit ourselves to one industry.
           </p>
           <p className="text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-300">
-            If you have a story to tell, a vision to share, a product to launch,
-            or a dream to bring to life, Fourlabs Studio is built to help you do
-            it.
-          </p>
-          <p className="text-base leading-relaxed text-neutral-600 sm:text-lg dark:text-neutral-300">
             Whether you&apos;re just getting started or already established, we
             meet you where you are and help move your vision forward.
           </p>

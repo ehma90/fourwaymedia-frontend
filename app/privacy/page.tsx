@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 const EFFECTIVE_DATE = "June 10, 2026";
 const LAST_UPDATED = "June 11, 2026";
-const PRIVACY_EMAIL = "privacy@fourwaymedia.com";
-const CONTACT_ADDRESS = "12 Platform Street, Lagos, Nigeria";
-const CONTACT_PHONE = "+234 816 021 5890";
+const PRIVACY_EMAIL = "privacy@fourlabs.studio";
+const CONTACT_ADDRESS = "No. 9, Ikeja, Lagos State, Nigeria";
+const CONTACT_PHONE = "+234 9127034899";
 
 const DATA_PROTECTION_ROWS = [
   {

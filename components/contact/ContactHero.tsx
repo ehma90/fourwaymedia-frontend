@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 /** Dark abstract 3D-style render — Unsplash */
 const CONTACT_HERO_IMAGE =
-  "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Contact_us_Page_shvnyx.jpg";
+  "https://res.cloudinary.com/drrluhcad/image/upload/v1787679478/julian-hochgesang-Dkn8-zPIbwo-unsplash_1_xepj0m.jpg";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
@@ -26,7 +26,7 @@ export function ContactHero() {
           transition={{ duration: 1.1, ease: easeOut }}
         />
         <div
-          className="absolute inset-0 bg-black/65 dark:bg-black/60"
+          className="absolute inset-0 bg-black/95 dark:bg-black/90"
           aria-hidden
         />
       </div>

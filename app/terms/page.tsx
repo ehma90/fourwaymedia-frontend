@@ -71,7 +71,7 @@ const SECTIONS = [
 
 const EFFECTIVE_DATE = "June 6, 2026";
 const CONTACT_EMAIL = "contact@fourlabs.studio";
-const CONTACT_PHONE = "+234 816 021 5890";
+const CONTACT_PHONE = "+234 9127034899";
 
 export default function TermsPage() {
   return (
