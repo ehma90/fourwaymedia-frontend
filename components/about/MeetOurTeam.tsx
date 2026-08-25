@@ -46,7 +46,7 @@ const TEAM: readonly TeamMember[] = [
     name: "Rosemary Effiong",
     role: "Marketing Lead",
     image:
-      "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Rose_giymko.jpg",
+      "https://res.cloudinary.com/drrluhcad/image/upload/v1787678925/2026-08-25_6.28.20_PM_yaizkh.jpg",
     linkedin: "https://www.linkedin.com/in/rosemaryeffiong",
     iconClass:
       "text-red-500 hover:text-red-400 dark:text-red-400 dark:hover:text-red-300",
