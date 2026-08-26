@@ -2,7 +2,14 @@
 
 import { X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useId, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 import { buttonVariants } from "@/components/ui/button";
@@ -37,6 +44,23 @@ export function ShopTemplateModal({
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+
+  const visibleTags = useMemo(() => {
+    if (!template) return [] as string[];
+
+    const normalized = (template.tags ?? [])
+      .map((tag) => tag.trim())
+      .filter(Boolean);
+    if (normalized.length) {
+      return [...new Set(normalized)];
+    }
+
+    return [
+      template.format.toUpperCase(),
+      template.aspectRatio.replace("-", ":"),
+      template.duration,
+    ];
+  }, [template]);
 
   const handleBuy = useCallback(async () => {
     if (!template) return;
@@ -153,11 +177,12 @@ export function ShopTemplateModal({
               <span className="mx-2 text-neutral-400" aria-hidden>
                 ·
               </span>
-              {template.format.toUpperCase()} · {template.aspectRatio.replace("-", ":")} · {template.duration}
+              {template.format.toUpperCase()} ·{" "}
+              {template.aspectRatio.replace("-", ":")} · {template.duration}
             </p>
           </div>
 
-          <div className="flex w-full min-h-0 flex-col gap-5 lg:w-[46%] font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+          <div className="flex w-full min-h-0 flex-col gap-4 lg:w-[46%] font-[family-name:var(--font-lexend),system-ui,sans-serif]">
             <p
               id={titleId}
               className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
@@ -166,7 +191,10 @@ export function ShopTemplateModal({
             </p>
 
             <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
-              {(template.paragraphs?.length ? template.paragraphs : [template.cardBlurb]).map((text, i) => (
+              {(template.paragraphs?.length
+                ? template.paragraphs
+                : [template.cardBlurb]
+              ).map((text, i) => (
                 <p key={`${text}-${i}`}>{text}</p>
               ))}
             </div>
@@ -176,7 +204,14 @@ export function ShopTemplateModal({
                 What&apos;s included
               </h3>
               <ul className="mt-3 space-y-2.5 text-sm text-neutral-700 sm:text-[15px] dark:text-neutral-300">
-                {(template.included?.length ? template.included : ["Master project / export file", "License for one brand", "Download from your purchases library"]).map((line) => (
+                {(template.included?.length
+                  ? template.included
+                  : [
+                      "Master project / export file",
+                      "License for one brand",
+                      "Download from your purchases library",
+                    ]
+                ).map((line) => (
                   <li key={line} className="flex gap-2.5 leading-snug">
                     <span
                       className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-500 dark:bg-neutral-400"
@@ -188,13 +223,13 @@ export function ShopTemplateModal({
               </ul>
             </div>
 
-            {template.tags?.length ? (
-              <div className="pt-1">
+            {visibleTags.length ? (
+              <div className="hidden pt-1 lg:block">
                 <div className="mb-2 text-sm font-medium text-neutral-800 dark:text-neutral-200">
                   Tags
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {template.tags.map((tag) => (
+                  {visibleTags.map((tag) => (
                     <span
                       key={tag}
                       className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
@@ -203,6 +238,18 @@ export function ShopTemplateModal({
                     </span>
                   ))}
                 </div>
+              </div>
+            ) : null}
+            {visibleTags.length ? (
+              <div className="-mt-1 flex flex-wrap gap-2 lg:hidden">
+                {visibleTags.map((tag) => (
+                  <span
+                    key={`mobile-${tag}`}
+                    className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
+                  >
+                    {tag}
+                  </span>
+                ))}
               </div>
             ) : null}
           </div>
