@@ -26,7 +26,7 @@ const TEAM: readonly TeamMember[] = [
   },
   {
     name: "Emem Essang",
-    role: "Co-founder & Execute Creative Director",
+    role: "Co-founder & Executive Creative Director",
     image:
       "https://res.cloudinary.com/drrluhcad/image/upload/v1785521936/Emem_nzlcha.jpg",
     linkedin: "https://www.linkedin.com/in/peace-in-motion-134729195/",

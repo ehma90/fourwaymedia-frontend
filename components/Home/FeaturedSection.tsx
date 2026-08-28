@@ -22,6 +22,7 @@ const ROW_TOP = [
 const ROW_BOTTOM = [
   "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551456/Video_1_Memorial_Day_Sale_May2024_4x5_rz1vzp.mp4",
   "https://res.cloudinary.com/drrluhcad/video/upload/v1781248109/Air_Travel_Video_stweky.mp4",
+  "https://res.cloudinary.com/drrluhcad/video/upload/v1787940614/2026-08-28_7.09.07_PM_aazqyz.mp4",
   "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551420/Tombo_tub1ye.mp4",
   "https://res.cloudinary.com/dqokmztzc/video/upload/q_auto/f_auto/v1775551513/Video_2_Split_Screen_October2024_bgmphz.mp4",
   "https://res.cloudinary.com/drrluhcad/video/upload/v1781248016/logo_animation_for_hijjabr_v1_1080p_nieln1.mp4",
@@ -170,7 +171,7 @@ function FeaturedMarqueeRow({
 
   return (
     <div
-      className="featured-marquee-viewport overflow-hidden py-0.5 [mask-image:linear-gradient(to_right,transparent,black_3%,black_95%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_3%,black_95%,transparent)]"
+      className="featured-marquee-viewport overflow-hidden py-0.5  [-webkit-mask-image:linear-gradient(to_right,transparent,black_2%,black_98%,transparent)]"
       role="region"
       aria-label={ariaLabel}
     >
@@ -222,7 +223,7 @@ export function FeaturedSection() {
             </h2>
           </div>
 
-          <div className="rounded-2xl border border-[#DC4437]/35 bg-black/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-5 md:p-6 dark:border-[#DC4437]/40 dark:bg-black/35">
+          <div className="rounded-2xl border border-[#DC4437]/35 bg-black/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:border-[#DC4437]/40 dark:bg-black/35">
             <div className="space-y-4 sm:space-y-5">
               <FeaturedMarqueeRow
                 images={ROW_TOP}
