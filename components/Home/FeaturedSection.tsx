@@ -16,7 +16,7 @@ const ROW_TOP = [
   "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%201.jpg?updatedAt=1773525280507",
   "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%2001.jpg?updatedAt=1773525278145",
   "https://ik.imagekit.io/nuelt/Print%20designs/Artboard%204.jpg?updatedAt=1773525278089",
-  "https://ik.imagekit.io/szglholrw/Social%20Media/USPs%204.jpg?updatedAt=1769031715265"
+  "https://ik.imagekit.io/szglholrw/Social%20Media/USPs%204.jpg?updatedAt=1769031715265",
 ] as const;
 
 const ROW_BOTTOM = [
