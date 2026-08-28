@@ -7,13 +7,10 @@ import {
   Download,
   HelpCircle,
   Inbox,
-  Settings,
   Sparkles,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useMemo } from "react";
-
-import { buttonVariants } from "@/components/ui/button";
 import { useNotifications } from "@/hooks/use-notifications";
 import { usePurchases } from "@/hooks/use-purchases";
 import { useAuth } from "@/lib/auth-context";
@@ -63,9 +60,11 @@ export function DashboardOverview() {
     notifications,
     isLoading: notificationsLoading,
   } = useNotifications();
+
   const name = firstName(user?.displayName ?? "there");
 
   const totalNotificationCount = notifications.length;
+  
 
   const downloadsRolling30 = useMemo(
     () => countDownloadsRolling30Days(downloads),

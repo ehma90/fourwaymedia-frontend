@@ -122,7 +122,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
       "flex items-center rounded-lg text-sm font-medium transition-colors",
       collapsed ? "justify-center px-2 py-2.5" : "gap-3 px-3 py-2",
       active
-        ? "bg-zinc-200/90 text-zinc-900 dark:bg-white/[0.08] dark:text-white dark:shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)]"
+        ? "bg-[linear-gradient(135deg,#DC4437_0%,#FEC107_100%)] text-white shadow-[0_6px_18px_rgba(220,68,55,0.2)]"
         : "text-zinc-600 hover:bg-zinc-200/60 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.05] dark:hover:text-zinc-100",
     );
   };
