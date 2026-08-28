@@ -207,8 +207,7 @@ export function SignInForm() {
         >
           Privacy Policy
         </Link>
-        .
-        Your data is encrypted and secure.
+        . Your data is encrypted and secure.
       </p>
     </div>
   );

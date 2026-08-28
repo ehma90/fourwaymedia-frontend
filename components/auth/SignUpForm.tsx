@@ -81,7 +81,7 @@ export function SignUpForm() {
           Create your account
         </h1>
         <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-          Join thousands of teams building better products
+        Build, manage, and grow your creative projects with Fourlabs Studio.
         </p>
       </div>
 
