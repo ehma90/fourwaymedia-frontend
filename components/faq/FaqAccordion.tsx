@@ -10,7 +10,7 @@ import { faqItems, type FaqBlock } from "@/mock-data/faq";
 
 const easeOut = [0.22, 1, 0.36, 1] as const;
 
-const CALENDLY_URL = "https://calendly.com/4waydesign/30min";
+const CALENDLY_URL = "https://calendly.com/fourlabs-studio/30min";
 
 function FaqAnswer({ blocks }: { blocks: FaqBlock[] }) {
   return (
