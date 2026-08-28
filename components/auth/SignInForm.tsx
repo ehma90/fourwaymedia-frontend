@@ -193,7 +193,21 @@ export function SignInForm() {
       </div>
 
       <p className="mt-8 text-center text-xs leading-relaxed text-neutral-500 dark:text-neutral-500">
-        By signing in, you agree to our Terms of Service and Privacy Policy.
+        By signing in, you agree to our{" "}
+        <Link
+          href="/terms"
+          className="font-medium text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
+        >
+          Terms of Service
+        </Link>{" "}
+        and{" "}
+        <Link
+          href="/privacy"
+          className="font-medium text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
+        >
+          Privacy Policy
+        </Link>
+        .
         Your data is encrypted and secure.
       </p>
     </div>

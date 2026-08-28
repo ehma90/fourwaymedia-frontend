@@ -224,10 +224,6 @@ export function SignUpForm() {
           Sign in
         </Link>
       </p>
-
-      <p className="mt-4 text-center text-xs leading-relaxed text-neutral-500 dark:text-neutral-500">
-        You can change branding later in workspace settings.
-      </p>
     </div>
   );
 }
