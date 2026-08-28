@@ -133,7 +133,7 @@ export function ShopDigital() {
                     {MARKETPLACE_SLIDES.map((slide) => (
                       <div
                         key={`${slide.type}-${slide.src}`}
-                        className="min-w-0 shrink-0 grow-0 basis-[78%] max-w-80 w-full px-4"
+                        className="min-w-0 shrink-0 grow-0 basis-[78%] max-w-80 w-full px-2"
                       >
                         <div className="overflow-hidden rounded-2xl bg-zinc-900/50 ring-1 ring-white/10">
                           {slide.type === "video" ? (
