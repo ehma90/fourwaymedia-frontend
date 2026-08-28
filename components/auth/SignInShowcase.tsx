@@ -89,7 +89,7 @@ export function SignInShowcase() {
                 key={slide.title}
                 className="min-w-0 shrink-0 grow-0 basis-full"
               >
-                <div className="aspect-video w-full overflow-hidden">
+                <div className="aspect-video w-full h-4/6 overflow-hidden">
                   {isVideoSrc(slide.image) ? (
                     <video
                       src={slide.image}
