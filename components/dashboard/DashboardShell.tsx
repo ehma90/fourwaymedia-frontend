@@ -14,7 +14,10 @@ import { useEffect, useState } from "react";
 
 import { MobileProfileMenu } from "@/components/dashboard/MobileProfileMenu";
 import { SidebarMenuFooter } from "@/components/dashboard/SidebarMenuFooter";
-import { SidebarNavLink, type NavItem } from "@/components/dashboard/SidebarNavLink";
+import {
+  SidebarNavLink,
+  type NavItem,
+} from "@/components/dashboard/SidebarNavLink";
 import { SidebarShopPromo } from "@/components/dashboard/SidebarShopPromo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { useNotifications } from "@/hooks/use-notifications";
@@ -110,7 +113,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
     };
     window.addEventListener("notifications-updated", onNotificationsUpdated);
     return () => {
-      window.removeEventListener("notifications-updated", onNotificationsUpdated);
+      window.removeEventListener(
+        "notifications-updated",
+        onNotificationsUpdated,
+      );
     };
   }, [reloadNotifications]);
 
@@ -154,7 +160,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <Link
                 href="/"
                 aria-label="Fourlabs Studio home"
-                className={cn("min-w-0 shrink", sidebarCollapsed && "md:hidden")}
+                className={cn(
+                  "min-w-0 shrink",
+                  sidebarCollapsed && "md:hidden",
+                )}
               >
                 <img
                   src={LOGO_FOR_LIGHT_UI}
@@ -184,8 +193,12 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   type="button"
                   className="hidden h-9 w-9 items-center justify-center rounded-lg border border-zinc-300 bg-white text-zinc-800 transition-colors hover:bg-zinc-100 md:inline-flex dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800 dark:hover:text-white"
                   aria-expanded={!sidebarCollapsed}
-                  aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-                  title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+                  aria-label={
+                    sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"
+                  }
+                  title={
+                    sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"
+                  }
                   onClick={toggleSidebarCollapsed}
                 >
                   {sidebarCollapsed ? (
@@ -207,7 +220,10 @@ export function DashboardShell({ children }: DashboardShellProps) {
                     item={item}
                     collapsed={sidebarCollapsed}
                     unreadNotificationCount={unreadNotificationCount}
-                    className={cn(linkClass(item.href, sidebarCollapsed), !sidebarCollapsed && "w-full")}
+                    className={cn(
+                      linkClass(item.href, sidebarCollapsed),
+                      !sidebarCollapsed && "w-full",
+                    )}
                   />
                 ))}
               </div>
@@ -227,7 +243,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
 
         <main className="flex min-h-0 min-w-0 flex-1 flex-col bg-white text-zinc-950 dark:bg-zinc-900/70 dark:text-zinc-50 md:overflow-y-auto">
           <header className="sticky top-0 z-30 items-center justify-end border-b border-zinc-200 bg-white/90 px-4 md:py-3 shadow-sm backdrop-blur-md dark:border-zinc-800 dark:bg-zinc-950/95 dark:shadow-[0_1px_0_0_rgba(0,0,0,0.35)] md:px-8 hidden md:flex">
-
             <div className="flex items-center gap-2">
               <ThemeToggle />
               <Link
