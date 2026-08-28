@@ -69,7 +69,7 @@ export function CategoryOverview({ paragraphs, included }: CategoryOverviewProps
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.5, delay: 0.08, ease: easeOut }}
         >
-          <div className="rounded-2xl border border-neutral-200/90 bg-white p-7 shadow-[0_8px_30px_rgba(0,0,0,0.05)] dark:border-white/10 dark:bg-neutral-900/40 dark:shadow-[0_8px_40px_rgba(0,0,0,0.35)] sm:p-8">
+          <div className="rounded-2xl border border-neutral-200/90  p-7  sm:p-8">
             <h3 className="font-[family-name:var(--font-lexend),system-ui,sans-serif] text-lg font-semibold text-neutral-950 dark:text-white">
               What&apos;s included
             </h3>

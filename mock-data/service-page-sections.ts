@@ -61,6 +61,7 @@ export const servicePageSections = [
     images: [
       "https://res.cloudinary.com/drrluhcad/video/upload/v1781248019/schematics_ui_design_and_animation_for_fabrik_v1_1080p_2_1_pk2kyc.mp4",
       "https://res.cloudinary.com/drrluhcad/video/upload/v1781248109/Air_Travel_Video_stweky.mp4",
+      "https://res.cloudinary.com/drrluhcad/video/upload/v1787940614/2026-08-28_7.09.07_PM_aazqyz.mp4"
 
     ],
   },
