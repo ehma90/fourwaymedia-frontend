@@ -2,8 +2,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
-  Maximize2,
-  Minimize2,
+  // Maximize2,
+  // Minimize2,
   Search,
   SlidersHorizontal,
   X,
@@ -177,7 +177,7 @@ export function ShopBrowse() {
             </p>
           </div>
 
-          <button
+          {/* <button
             type="button"
             onClick={() => setBrowseExpanded((v) => !v)}
             className="hidden h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-xl border border-neutral-200/90 bg-white text-neutral-700 shadow-sm transition-colors hover:bg-neutral-50 md:inline-flex dark:border-white/10 dark:bg-neutral-900 dark:text-neutral-200 dark:hover:bg-neutral-800"
@@ -194,7 +194,7 @@ export function ShopBrowse() {
             ) : (
               <Maximize2 className="h-5 w-5" strokeWidth={1.75} aria-hidden />
             )}
-          </button>
+          </button> */}
         </div>
 
         <div
