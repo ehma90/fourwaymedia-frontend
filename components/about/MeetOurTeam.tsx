@@ -76,7 +76,7 @@ export function MeetOurTeam() {
       className="border-t border-neutral-200/90 bg-neutral-100 py-16 sm:py-24 dark:border-white/10 dark:bg-[#121212]"
       aria-labelledby="meet-team-heading"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 24 }}

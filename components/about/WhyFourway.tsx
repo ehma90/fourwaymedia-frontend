@@ -61,7 +61,7 @@ export function WhyFourway() {
       className="border-t border-neutral-200/90 bg-neutral-100 py-16 sm:py-24 dark:border-white/10 dark:bg-[#121212]"
       aria-labelledby="why-fourway-heading"
     >
-      <div className="mx-auto max-w-5xl px-6 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+      <div className="mx-auto max-w-5xl px-4 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 24 }}

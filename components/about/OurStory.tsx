@@ -37,7 +37,7 @@ export function OurStory() {
       className="border-t border-neutral-200/90 bg-background py-16 sm:py-24 dark:border-white/10"
       aria-labelledby="our-story-heading"
     >
-      <div className="mx-auto max-w-3xl px-6 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+      <div className="mx-auto max-w-3xl px-4 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -51,7 +51,7 @@ export function WereHiring() {
       className="border-t border-neutral-200/90 bg-[#f4f4f2] py-16 sm:py-24 dark:border-white/10 dark:bg-[#1a1a1a]"
       aria-labelledby="were-hiring-heading"
     >
-      <div className="mx-auto max-w-3xl px-6">
+      <div className="mx-auto max-w-3xl px-4">
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 24 }}
