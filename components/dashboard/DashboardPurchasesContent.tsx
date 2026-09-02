@@ -335,7 +335,11 @@ export function DashboardPurchasesContent() {
 
   useEffect(() => {
     if (searchParams.get("checkout") !== "success") return;
-    const reference = searchParams.get("reference") ?? searchParams.get("trxref");
+    const reference =
+      searchParams.get("transactionReference") ??
+      searchParams.get("paymentReference") ??
+      searchParams.get("reference") ??
+      searchParams.get("trxref");
     if (!reference || confirmStarted.current) return;
     confirmStarted.current = true;
 
