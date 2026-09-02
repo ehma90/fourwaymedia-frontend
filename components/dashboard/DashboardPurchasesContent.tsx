@@ -22,7 +22,9 @@ function formatDownloadedAt(iso: string): string {
   const now = Date.now();
   const diffMs = now - d.getTime();
   if (diffMs < 0) {
-    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(d);
+    return new Intl.DateTimeFormat(undefined, { dateStyle: "medium" }).format(
+      d,
+    );
   }
   const diffDays = Math.floor(diffMs / 86_400_000);
   if (diffDays === 0) return "Today";
@@ -92,8 +94,8 @@ function PurchasesEmptyState() {
           No purchases yet
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          Your library is empty. Browse the shop to purchase templates, everything you buy will
-          show up here for easy access later.
+          Your library is empty. Browse the shop to purchase templates,
+          everything you buy will show up here for easy access later.
         </p>
         <div className="mt-8 flex w-full flex-col gap-3 sm:flex-row sm:justify-center">
           <Link
@@ -135,7 +137,8 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
       if (category !== "all" && item.category !== category) return false;
       if (!q) return true;
       return (
-        item.title.toLowerCase().includes(q) || item.category.toLowerCase().includes(q)
+        item.title.toLowerCase().includes(q) ||
+        item.category.toLowerCase().includes(q)
       );
     });
   }, [items, query, category]);
@@ -192,7 +195,10 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
       </div>
 
       {filtered.length === 0 ? (
-        <p className="mt-6 text-sm text-zinc-600 dark:text-zinc-400" role="status">
+        <p
+          className="mt-6 text-sm text-zinc-600 dark:text-zinc-400"
+          role="status"
+        >
           {hasActiveFilters
             ? "No results match your search. Try clearing filters or a different term."
             : "No purchases to show."}
@@ -255,7 +261,9 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
                       </div>
                     </td>
                     <td className="px-4 py-3 align-middle text-zinc-600 dark:text-zinc-400">
-                      <time dateTime={item.downloadedAt}>{formatDownloadedAt(item.downloadedAt)}</time>
+                      <time dateTime={item.downloadedAt}>
+                        {formatDownloadedAt(item.downloadedAt)}
+                      </time>
                     </td>
                     <td className="px-4 py-3 align-middle text-right">
                       <div className="flex justify-end">
@@ -271,7 +279,10 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
             </table>
           </div>
 
-          <ul className="mt-6 flex list-none flex-col gap-3 md:hidden" aria-label="Your purchases">
+          <ul
+            className="mt-6 flex list-none flex-col gap-3 md:hidden"
+            aria-label="Your purchases"
+          >
             {filtered.map((item) => (
               <li
                 key={item.id}
@@ -293,7 +304,9 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
                     )}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-zinc-900 dark:text-zinc-50">{item.title}</p>
+                    <p className="font-medium text-zinc-900 dark:text-zinc-50">
+                      {item.title}
+                    </p>
                     <span className="mt-1 inline-flex rounded-md bg-zinc-200/80 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300">
                       {item.category}
                     </span>
@@ -366,13 +379,21 @@ export function DashboardPurchasesContent() {
     <div className="mx-auto flex max-w-4xl flex-col gap-8">
       <PurchasesPageHeader />
       {confirmingCheckout ? (
-        <div className={cn(cardClass, "flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400")}>
+        <div
+          className={cn(
+            cardClass,
+            "flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400",
+          )}
+        >
           <LoadingSpinner label="Confirming purchase" />
           <span>Confirming your purchase…</span>
         </div>
       ) : null}
       {confirmError ? (
-        <p className={cn(cardClass, "text-sm text-red-800 dark:text-red-200")} role="alert">
+        <p
+          className={cn(cardClass, "text-sm text-red-800 dark:text-red-200")}
+          role="alert"
+        >
           {confirmError}
         </p>
       ) : null}
@@ -389,14 +410,13 @@ export function DashboardPurchasesContent() {
           </div>
         </div>
       ) : error ? (
-        <div
-          className={cn(cardClass, "text-center")}
-          role="alert"
-        >
+        <div className={cn(cardClass, "text-center")} role="alert">
           <p className="text-sm font-medium text-red-800 dark:text-red-200">
             Could not load purchases
           </p>
-          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">{error}</p>
+          <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">
+            {error}
+          </p>
         </div>
       ) : downloads.length === 0 ? (
         <PurchasesEmptyState />
