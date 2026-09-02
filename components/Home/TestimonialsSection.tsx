@@ -30,7 +30,7 @@ export function TestimonialsSection() {
       className="relative overflow-x-hidden border-t border-copy-body/15 bg-background py-16 sm:py-24"
       aria-labelledby="testimonials-heading"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4">
         <motion.div
           className="mx-auto max-w-2xl text-center"
           initial={{ opacity: 0, y: 20 }}

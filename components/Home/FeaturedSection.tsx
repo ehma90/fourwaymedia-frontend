@@ -213,7 +213,7 @@ export function FeaturedSection() {
         className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
         aria-labelledby="featured-work-heading"
       >
-        <div className="mx-auto max-w-7xl px-6">
+        <div className="mx-auto max-w-7xl px-4">
           <div className="mb-8 flex flex-col gap-4 sm:mb-10 sm:flex-row sm:items-center sm:justify-between">
             <h2
               id="featured-work-heading"
@@ -223,7 +223,7 @@ export function FeaturedSection() {
             </h2>
           </div>
 
-          <div className="rounded-2xl border border-[#DC4437]/35 bg-black/25 p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:border-[#DC4437]/40 dark:bg-black/35">
+          <div className="rounded-2xl border border-[#DC4437]/35 bg-black/25 px-0 py-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] dark:border-[#DC4437]/40 dark:bg-black/35">
             <div className="space-y-4 sm:space-y-5">
               <FeaturedMarqueeRow
                 images={ROW_TOP}

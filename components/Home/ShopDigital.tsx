@@ -73,7 +73,7 @@ export function ShopDigital() {
       className="relative overflow-x-hidden py-16 sm:py-24"
       aria-labelledby="shop-digital-heading"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="grid items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-14">
           {/* Copy + CTA */}
           <div className="max-w-xl">

@@ -117,19 +117,19 @@ export function Footer() {
 
   return (
     <footer className="text-copy-primary [--copy-body:#4b5563] border-t border-copy-body/15 dark:[--copy-body:#d1d5db]">
-      <div className="mx-auto max-w-7xl px-6 pb-8 pt-16">
+      <div className="mx-auto max-w-7xl px-4 pb-8 pt-16">
         <div className="flex flex-col gap-10 lg:flex-row lg:items-start justify-between lg:gap-10 xl:gap-12 w-full">
           <div className="flex shrink-0 flex-col gap-5 lg:max-w-[280px]">
-            <Link href="/" aria-label="Fourlabs Studio home">
+            <Link href="/" aria-label="Fourlabs Studio home" className="block h-16 w-36">
               <img
                 src={DARK_LOGO}
                 alt="Fourlabs Studio logo"
-                className="block h-16 w-36 object-cover dark:hidden"
+                className="block h-full w-full object-cover dark:hidden"
               />
               <img
                 src={LIGHT_LOGO}
                 alt="Fourlabs Studio logo"
-                className="hidden h-16 w-36 md:h-16 md:w-36 object-cover dark:block"
+                className="hidden h-full w-full md:h-full md:w-full object-cover dark:block"
               />
             </Link>
 

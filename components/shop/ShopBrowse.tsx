@@ -159,7 +159,7 @@ export function ShopBrowse() {
     >
       <div
         className={cn(
-          "mx-auto w-full px-6",
+          "mx-auto w-full px-4",
           browseExpanded ? "max-w-none" : "max-w-7xl",
         )}
       >

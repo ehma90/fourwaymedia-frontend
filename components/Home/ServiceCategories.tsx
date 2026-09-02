@@ -57,7 +57,7 @@ export function ServiceCategories({ onCategoryClick }: ServiceCategoriesProps) {
       className="relative overflow-x-hidden border-t border-copy-body/15 py-16 sm:py-24"
       aria-labelledby="service-categories-heading"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      <div className="mx-auto max-w-6xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2
             id="service-categories-heading"

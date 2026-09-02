@@ -67,7 +67,7 @@ export function HowWeWorkSection() {
       className="border-t border-neutral-200/90 bg-[#f4f4f2] py-16 sm:py-24 dark:border-white/10 dark:bg-[#1a1a1a]"
       aria-labelledby="how-we-work-heading"
     >
-      <div className="mx-auto max-w-7xl px-6">
+      <div className="mx-auto max-w-7xl px-4">
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:items-start lg:gap-16 xl:gap-20">
           <motion.div
             className="min-w-0 lg:sticky lg:top-28"
