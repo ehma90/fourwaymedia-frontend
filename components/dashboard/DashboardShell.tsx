@@ -20,6 +20,7 @@ import {
 } from "@/components/dashboard/SidebarNavLink";
 import { SidebarShopPromo } from "@/components/dashboard/SidebarShopPromo";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { useNotifications } from "@/hooks/use-notifications";
 import { usePurchases } from "@/hooks/use-purchases";
 import { useAuth } from "@/lib/auth-context";
@@ -31,13 +32,6 @@ const LOGO_FOR_LIGHT_UI =
 /** Dark chrome — light mark on dark sidebar (do not pick via useTheme; `resolvedTheme` is undefined on first paint) */
 const LOGO_FOR_DARK_UI =
   "https://res.cloudinary.com/drrluhcad/image/upload/v1785428482/Fourlabs_White-01_t9pt0w.png";
-
-function getInitials(displayName: string): string {
-  const parts = displayName.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "?";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return `${parts[0][0]!}${parts[parts.length - 1]![0]!}`.toUpperCase();
-}
 
 const DASHBOARD_ROUTE_TITLES: Record<string, string> = {
   "/dashboard": "Overview",
@@ -81,6 +75,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
   const { downloads, isLoading: purchasesLoading } = usePurchases();
   const hasPurchases = !purchasesLoading && downloads.length > 0;
   const displayName = user?.displayName ?? "Account";
+  const avatarUrl = user?.avatarUrl ?? null;
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   useEffect(() => {
@@ -134,8 +129,6 @@ export function DashboardShell({ children }: DashboardShellProps) {
   };
 
   // const pageTitle = getDashboardPageTitle(pathname);
-  const userInitials = getInitials(displayName);
-
   return (
     <div className="min-h-screen bg-zinc-100 text-zinc-950 dark:bg-zinc-950 dark:text-zinc-50 md:h-screen md:overflow-hidden">
       <div className="flex min-h-screen flex-col md:h-full md:min-h-0 md:flex-row">
@@ -181,7 +174,7 @@ export function DashboardShell({ children }: DashboardShellProps) {
                   <ThemeToggle />
                   <MobileProfileMenu
                     displayName={displayName}
-                    userInitials={userInitials}
+                    avatarUrl={avatarUrl}
                     unreadNotificationCount={unreadNotificationCount}
                     hasPurchases={hasPurchases}
                     onLogout={handleLogout}
@@ -247,11 +240,15 @@ export function DashboardShell({ children }: DashboardShellProps) {
               <ThemeToggle />
               <Link
                 href="/dashboard/account"
-                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl  text-xs font-semibold text-white md:h-9 md:w-9 md:text-sm"
                 aria-label={`Account settings (${displayName})`}
                 title={displayName}
               >
-                {userInitials}
+                <UserAvatar
+                  displayName={displayName}
+                  avatarUrl={avatarUrl}
+                  className="h-9 w-9 text-sm"
+                />
               </Link>
             </div>
           </header>

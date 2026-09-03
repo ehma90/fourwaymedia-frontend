@@ -57,8 +57,8 @@ export function SidebarShopPromo({
           href="/shop"
           onClick={onNavigate}
           className={cn(
-            buttonVariants({ variant: "primary", size: "sm" }),
-            "mt-3 h-9 w-full rounded-md text-xs font-semibold",
+            buttonVariants({ variant: "outline", size: "sm" }),
+            "mt-3 h-9 w-full navbar-outline-button text-white justify-center rounded-md text-xs font-semibold",
           )}
         >
           Shop for more

@@ -3,11 +3,12 @@ import { useEffect, useId, useRef, useState } from "react";
 
 import { SidebarNavLink } from "@/components/dashboard/SidebarNavLink";
 import { SidebarShopPromo } from "@/components/dashboard/SidebarShopPromo";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { cn } from "@/lib/utils";
 
 type MobileProfileMenuProps = {
   displayName: string;
-  userInitials: string;
+  avatarUrl?: string | null;
   unreadNotificationCount: number;
   hasPurchases: boolean;
   onLogout: () => void;
@@ -21,7 +22,7 @@ type MobileProfileMenuProps = {
 
 export function MobileProfileMenu({
   displayName,
-  userInitials,
+  avatarUrl,
   unreadNotificationCount,
   hasPurchases,
   onLogout,
@@ -61,12 +62,11 @@ export function MobileProfileMenu({
         onClick={() => setOpen((o) => !o)}
         className="flex h-9 cursor-pointer items-center gap-1.5 rounded-xl border border-zinc-300 bg-white px-2 text-zinc-800 transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900/80 dark:text-zinc-200 dark:hover:bg-zinc-800"
       >
-        <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white"
-          aria-hidden
-        >
-          {userInitials}
-        </span>
+        <UserAvatar
+          displayName={displayName}
+          avatarUrl={avatarUrl}
+          className="h-7 w-7"
+        />
         <ChevronDown
           className={cn(
             "h-4 w-4 shrink-0 opacity-80 transition-transform",

@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 import { useNotifications } from "@/hooks/use-notifications";
+import { UserAvatar } from "@/components/ui/user-avatar";
 import { useAuth } from "@/lib/auth-context";
 import { cn } from "@/lib/utils";
 
@@ -27,13 +28,6 @@ const dashboardMenuItems: MenuNavItem[] = [
   { href: "/dashboard/notifications", label: "Notifications", icon: Bell },
   { href: "/dashboard/account", label: "Account", icon: Settings },
 ];
-
-function getInitials(displayName: string): string {
-  const parts = displayName.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "?";
-  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
-  return `${parts[0][0]!}${parts[parts.length - 1]![0]!}`.toUpperCase();
-}
 
 export function UserMenu() {
   const { user, signOut } = useAuth();
@@ -66,8 +60,6 @@ export function UserMenu() {
     void signOut().then(() => router.push("/"));
   };
 
-  const initials = getInitials(displayName);
-
   return (
     <div ref={containerRef} className="relative">
       <button
@@ -82,12 +74,11 @@ export function UserMenu() {
           "flex h-9 border border-white/20 cursor-pointer items-center gap-1.5 rounded-xl px-2 text-white transition-colors hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FEC107]/40 md:h-10 md:gap-2 md:px-2.5",
         )}
       >
-        <span
-          className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(160deg,#DC4437_15%,#FEC107_100%)] text-xs font-semibold text-white md:h-8 md:w-8 md:text-sm"
-          aria-hidden
-        >
-          {initials}
-        </span>
+        <UserAvatar
+          displayName={displayName}
+          avatarUrl={user?.avatarUrl}
+          className="h-7 w-7 md:h-8 md:w-8 md:text-sm"
+        />
         <ChevronDown
           className={cn(
             "h-4 w-4 shrink-0 opacity-80 transition-transform",
