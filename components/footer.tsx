@@ -154,7 +154,7 @@ export function Footer() {
                 <InstagramIcon />
               </a>
               <a
-                href="https://www.linkedin.com/company/fourwaymedia/"
+                href="https://www.linkedin.com/company/fourlabs-studio/home/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
