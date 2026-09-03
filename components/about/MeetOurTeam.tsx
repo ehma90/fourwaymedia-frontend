@@ -35,7 +35,7 @@ const TEAM: readonly TeamMember[] = [
   },
   {
     name: "Emmanuel Essien",
-    role: "Chief Technical Officer",
+    role: "Chief Technology Officer",
     image:
       "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Emmah_u6bpr6.jpg",
     linkedin: "https://www.linkedin.com/in/ehmaessien/",
