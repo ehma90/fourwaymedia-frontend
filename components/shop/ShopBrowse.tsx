@@ -6,6 +6,7 @@ import {
   // Minimize2,
   Search,
   SlidersHorizontal,
+  Sparkles,
   X,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -298,6 +299,34 @@ export function ShopBrowse() {
               <div className="flex flex-col items-center gap-6">
                 <LoadingSpinner label="Loading templates" />
                 <div className="w-full">{gridSkeleton}</div>
+              </div>
+            ) : templates.length === 0 ? (
+              <div
+                className="relative isolate overflow-hidden rounded-2xl border border-[#DC4437]/20 bg-[linear-gradient(135deg,rgba(220,68,55,0.08),rgba(254,193,7,0.12))] px-5 py-8 shadow-sm sm:px-8 sm:py-10 dark:border-[#FEC107]/20 dark:bg-[linear-gradient(135deg,rgba(220,68,55,0.14),rgba(254,193,7,0.08))]"
+                role="status"
+              >
+                <div className="absolute -top-16 -right-12 -z-10 h-40 w-40 rounded-full bg-[#FEC107]/20 blur-3xl dark:bg-[#FEC107]/10" />
+                <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+                  <div className="flex min-w-0 items-start gap-4">
+                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/80 text-[#DC4437] shadow-sm dark:bg-white/10 dark:text-[#FEC107]">
+                      <Sparkles className="h-5 w-5" aria-hidden />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#DC4437] dark:text-[#FEC107]">
+                        Coming soon
+                      </p>
+                      <h3 className="mt-1.5 text-xl font-semibold tracking-tight text-neutral-950 sm:text-2xl dark:text-white">
+                        New templates are on the way
+                      </h3>
+                      <p className="mt-2 max-w-xl text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+                        We are preparing the first collection for the shop. Check back soon to explore and download fresh creative assets.
+                      </p>
+                    </div>
+                  </div>
+                  <span className="shrink-0 self-start rounded-full border border-[#DC4437]/20 bg-white/60 px-3 py-1.5 text-xs font-medium text-neutral-700 sm:self-center dark:border-[#FEC107]/20 dark:bg-white/10 dark:text-neutral-200">
+                    Collection in progress
+                  </span>
+                </div>
               </div>
             ) : baseFiltered.length === 0 ? (
               <p className="rounded-2xl border border-dashed border-neutral-300/90 bg-neutral-50/80 px-6 py-12 text-center text-sm text-neutral-600 dark:border-white/15 dark:bg-neutral-900/30 dark:text-neutral-400">
