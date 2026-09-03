@@ -319,7 +319,9 @@ export function ShopBrowse() {
                         New templates are on the way
                       </h3>
                       <p className="mt-2 max-w-xl text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        We are preparing the first collection for the shop. Check back soon to explore and download fresh creative assets.
+                        We are preparing the first collection for the shop.
+                        Check back soon to explore and download fresh creative
+                        assets.
                       </p>
                     </div>
                   </div>
