@@ -20,7 +20,7 @@ const TEAM: readonly TeamMember[] = [
     role: "Co-founder & Head of Operations",
     image:
       "https://res.cloudinary.com/drrluhcad/image/upload/v1785521934/Nuel_wufoy1.jpg",
-    linkedin: "https://linkedin.com",
+    linkedin: "https://www.linkedin.com/in/emmanueletim11",
     iconClass:
       "text-grey-400 hover:text-grey-300 dark:text-grey-400 dark:hover:text-grey-300",
   },
