@@ -348,11 +348,9 @@ export function DashboardPurchasesContent() {
 
   useEffect(() => {
     if (searchParams.get("checkout") !== "success") return;
+    // Polar checkout id, set by the backend's success_url.
     const reference =
-      searchParams.get("transactionReference") ??
-      searchParams.get("paymentReference") ??
-      searchParams.get("reference") ??
-      searchParams.get("trxref");
+      searchParams.get("reference") ?? searchParams.get("checkout_id");
     if (!reference || confirmStarted.current) return;
     confirmStarted.current = true;
 

@@ -264,6 +264,10 @@ export function ShopTemplateModal({
               >
                 {checkoutError}
               </p>
+            ) : template.priceLabel !== "Free" ? (
+              <p className="text-xs text-neutral-500 dark:text-neutral-400">
+                Taxes calculated at checkout
+              </p>
             ) : null}
             <button
               type="button"
