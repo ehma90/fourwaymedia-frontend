@@ -130,6 +130,7 @@ export type DownloadedAsset = {
   thumbnailUrl?: string;
   downloadedAt: string;
   productHref: string;
-  fileHref?: string;
+  /** The file link itself comes from /api/me/downloads/:id/url at click time. */
+  hasFile?: boolean;
   catalogItemId?: string;
 };

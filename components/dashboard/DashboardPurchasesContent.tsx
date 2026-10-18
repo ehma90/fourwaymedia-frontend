@@ -9,7 +9,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { PurchasesTableSkeleton } from "@/components/ui/skeleton";
 import { usePurchases } from "@/hooks/use-purchases";
-import { apiPost, type DownloadedAsset } from "@/lib/api";
+import { apiGet, apiPost, type DownloadedAsset } from "@/lib/api";
 import { inputFieldClassName } from "@/lib/input-classes";
 import { cn } from "@/lib/utils";
 
@@ -34,30 +34,66 @@ function formatDownloadedAt(iso: string): string {
 }
 
 function DownloadAgainButton({
-  fileHref,
+  catalogItemId,
+  hasFile,
   productHref,
 }: {
-  fileHref?: string;
+  catalogItemId?: string;
+  hasFile?: boolean;
   productHref: string;
 }) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  async function download() {
+    if (!catalogItemId || !hasFile) {
+      window.open(productHref, "_blank", "noopener,noreferrer");
+      return;
+    }
+    setLoading(true);
+    setError(null);
+    try {
+      // The backend checks ownership and returns a link that expires in minutes.
+      const { url } = await apiGet<{ url: string }>(
+        `/api/me/downloads/${encodeURIComponent(catalogItemId)}/url`,
+      );
+      // Served as an attachment, so the browser saves it and stays on this page.
+      window.location.assign(url);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Download failed. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
-    <Button
-      type="button"
-      variant="outline"
-      className={cn(
-        "navbar-outline-button inline-flex h-9 min-w-0 items-center justify-center border-2 px-2 text-sm font-medium text-white md:h-10 md:min-w-[120px] md:px-6 ",
-        "w-full shrink-0 transition-opacity duration-200 md:w-auto",
-        "opacity-100",
-        "md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100",
-      )}
-      onClick={() => {
-        const target = fileHref || productHref;
-        if (target) window.open(target, "_blank", "noopener,noreferrer");
-      }}
-    >
-      <Download className="h-4 w-4" strokeWidth={2} aria-hidden />
-      <span className="ml-2">Download</span>
-    </Button>
+    <div className="flex w-full flex-col items-stretch gap-1 md:w-auto md:items-end">
+      <Button
+        type="button"
+        variant="outline"
+        disabled={loading}
+        className={cn(
+          "navbar-outline-button inline-flex h-9 min-w-0 items-center justify-center border-2 px-2 text-sm font-medium text-white md:h-10 md:min-w-[120px] md:px-6 ",
+          "w-full shrink-0 transition-opacity duration-200 md:w-auto",
+          "opacity-100",
+          "md:opacity-0 md:group-hover:opacity-100 md:focus-visible:opacity-100",
+          loading && "md:opacity-100",
+        )}
+        onClick={() => void download()}
+      >
+        {loading ? (
+          <LoadingSpinner className="h-4 w-4" label="Preparing download" />
+        ) : (
+          <Download className="h-4 w-4" strokeWidth={2} aria-hidden />
+        )}
+        <span className="ml-2">{loading ? "Preparing…" : "Download"}</span>
+      </Button>
+      {error ? (
+        <p className="text-xs text-red-700 dark:text-red-300" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </div>
   );
 }
 
@@ -268,7 +304,8 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
                     <td className="px-4 py-3 align-middle text-right">
                       <div className="flex justify-end">
                         <DownloadAgainButton
-                          fileHref={item.fileHref}
+                          catalogItemId={item.catalogItemId}
+                          hasFile={item.hasFile}
                           productHref={item.productHref}
                         />
                       </div>
@@ -325,7 +362,8 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
                 </div>
                 <div className="mt-4 flex justify-stretch">
                   <DownloadAgainButton
-                    fileHref={item.fileHref}
+                    catalogItemId={item.catalogItemId}
+                    hasFile={item.hasFile}
                     productHref={item.productHref}
                   />
                 </div>
