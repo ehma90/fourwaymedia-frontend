@@ -1,5 +1,6 @@
 "use client";
 
+import { ShopTemplateMedia } from "@/components/shop/ShopTemplateMedia";
 import type { ShopTemplate } from "@/lib/types/shop";
 
 type ShopTemplateCardProps = {
@@ -16,9 +17,9 @@ export function ShopTemplateCard({ template, onOpen }: ShopTemplateCardProps) {
       aria-label={`${template.title}. View details and purchase options.`}
     >
       <div className="relative aspect-4/3 overflow-hidden">
-        <img
+        <ShopTemplateMedia
           src={template.image}
-          alt=""
+          alt={template.title}
           className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
         />
         <div

@@ -12,6 +12,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
+import { ShopTemplateMedia } from "@/components/shop/ShopTemplateMedia";
 import { buttonVariants } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { ApiError, apiPost } from "@/lib/api";
@@ -166,9 +167,8 @@ export function ShopTemplateModal({
         <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:flex-row lg:items-stretch lg:gap-8">
           <div className="flex w-full min-h-0 flex-col gap-4 rounded-2xl bg-[#e8e4dc] p-4 sm:p-5 lg:w-[54%] dark:bg-neutral-800/70">
             <div className="overflow-hidden rounded-xl border border-[#d6d1c7] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-neutral-600 dark:bg-neutral-950 dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
-              <img
+              <ShopTemplateMedia
                 src={template.image}
-                alt=""
                 className="aspect-4/3 w-full object-cover"
               />
             </div>

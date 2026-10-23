@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Download, Search } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { ShopTemplateMedia } from "@/components/shop/ShopTemplateMedia";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { LoadingSpinner } from "@/components/ui/loading-spinner";
 import { PurchasesTableSkeleton } from "@/components/ui/skeleton";
@@ -266,10 +267,8 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
                       <div className="flex items-center gap-3">
                         <div className="h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
                           {item.thumbnailUrl ? (
-                            // eslint-disable-next-line @next/next/no-img-element -- mock / CDN thumbnails
-                            <img
+                            <ShopTemplateMedia
                               src={item.thumbnailUrl}
-                              alt=""
                               className="h-full w-full object-cover"
                             />
                           ) : (
@@ -328,10 +327,8 @@ function PurchasesLibrary({ items }: { items: DownloadedAsset[] }) {
                 <div className="flex gap-3">
                   <div className="h-16 w-16 shrink-0 overflow-hidden rounded-lg border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-800">
                     {item.thumbnailUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
+                      <ShopTemplateMedia
                         src={item.thumbnailUrl}
-                        alt=""
                         className="h-full w-full object-cover"
                       />
                     ) : (
