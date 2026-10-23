@@ -201,7 +201,7 @@ export function ShopTemplateModal({
 
             <div>
               <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                What&apos;s included
+                Key Features
               </h3>
               <ul className="mt-3 space-y-2.5 text-sm text-neutral-700 sm:text-[15px] dark:text-neutral-300">
                 {(template.included?.length
