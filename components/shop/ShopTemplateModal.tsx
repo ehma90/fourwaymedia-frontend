@@ -182,76 +182,79 @@ export function ShopTemplateModal({
             </p>
           </div>
 
-          <div className="flex w-full min-h-0 flex-col gap-4 lg:w-[46%] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
-            <p
-              id={titleId}
-              className="lg:pr-10 text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
-            >
-              {template.title}
-            </p>
+          {/* On desktop the text is taken out of flow so the preview panel sets the modal height. */}
+          <div className="relative w-full lg:w-[46%]">
+            <div className="flex min-h-0 flex-col gap-4 lg:absolute lg:inset-0 lg:overflow-y-auto lg:overscroll-contain lg:pr-2 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+              <p
+                id={titleId}
+                className="lg:pr-10 text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
+              >
+                {template.title}
+              </p>
 
-            <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
-              {(template.paragraphs?.length
-                ? template.paragraphs
-                : [template.cardBlurb]
-              ).map((text, i) => (
-                <p key={`${text}-${i}`}>{text}</p>
-              ))}
-            </div>
-
-            <div>
-              <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                Key Features
-              </h3>
-              <ul className="mt-3 space-y-2.5 text-sm text-neutral-700 sm:text-[15px] dark:text-neutral-300">
-                {(template.included?.length
-                  ? template.included
-                  : [
-                      "Master project / export file",
-                      "License for one brand",
-                      "Download from your purchases library",
-                    ]
-                ).map((line) => (
-                  <li key={line} className="flex gap-2.5 leading-snug">
-                    <span
-                      className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-500 dark:bg-neutral-400"
-                      aria-hidden
-                    />
-                    <span>{line}</span>
-                  </li>
+              <div className="space-y-3 text-sm leading-relaxed text-neutral-700 sm:text-[15px] dark:text-neutral-300">
+                {(template.paragraphs?.length
+                  ? template.paragraphs
+                  : [template.cardBlurb]
+                ).map((text, i) => (
+                  <p key={`${text}-${i}`}>{text}</p>
                 ))}
-              </ul>
-            </div>
+              </div>
 
-            {visibleTags.length ? (
-              <div className="hidden pt-1 lg:block">
-                <div className="mb-2 text-sm font-medium text-neutral-800 dark:text-neutral-200">
-                  Tags
+              <div>
+                <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
+                  Key Features
+                </h3>
+                <ul className="mt-3 space-y-2.5 text-sm text-neutral-700 sm:text-[15px] dark:text-neutral-300">
+                  {(template.included?.length
+                    ? template.included
+                    : [
+                        "Master project / export file",
+                        "License for one brand",
+                        "Download from your purchases library",
+                      ]
+                  ).map((line) => (
+                    <li key={line} className="flex gap-2.5 leading-snug">
+                      <span
+                        className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-neutral-500 dark:bg-neutral-400"
+                        aria-hidden
+                      />
+                      <span>{line}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {visibleTags.length ? (
+                <div className="hidden pt-1 lg:block">
+                  <div className="mb-2 text-sm font-medium text-neutral-800 dark:text-neutral-200">
+                    Tags
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {visibleTags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
+              ) : null}
+              {visibleTags.length ? (
+                <div className="-mt-1 flex flex-wrap gap-2 lg:hidden">
                   {visibleTags.map((tag) => (
                     <span
-                      key={tag}
+                      key={`mobile-${tag}`}
                       className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
                     >
                       {tag}
                     </span>
                   ))}
                 </div>
-              </div>
-            ) : null}
-            {visibleTags.length ? (
-              <div className="-mt-1 flex flex-wrap gap-2 lg:hidden">
-                {visibleTags.map((tag) => (
-                  <span
-                    key={`mobile-${tag}`}
-                    className="rounded-full border border-neutral-200 bg-white px-2.5 py-1 text-xs font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-900 dark:text-neutral-200"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            ) : null}
+              ) : null}
+            </div>
           </div>
         </div>
 
