@@ -164,8 +164,8 @@ export function ShopTemplateModal({
           <X className="h-5 w-5" strokeWidth={1.75} aria-hidden />
         </button>
 
-        <div className="flex flex-1 flex-col gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:flex-row lg:items-stretch lg:gap-8">
-          <div className="flex w-full min-h-0 flex-col gap-4 rounded-2xl bg-[#e8e4dc] p-4 sm:p-5 lg:w-[54%] dark:bg-neutral-800/70">
+        <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto p-6 pt-14 sm:p-8 sm:pt-10 lg:flex-row lg:items-stretch lg:gap-8 lg:overflow-hidden">
+          <div className="flex w-full min-h-0 shrink-0 flex-col gap-4 rounded-2xl bg-[#e8e4dc] p-4 sm:p-5 lg:w-[54%] lg:justify-center dark:bg-neutral-800/70">
             <div className="overflow-hidden rounded-xl border border-[#d6d1c7] bg-white shadow-[0_12px_40px_rgba(0,0,0,0.08)] dark:border-neutral-600 dark:bg-neutral-950 dark:shadow-[0_12px_40px_rgba(0,0,0,0.35)]">
               <ShopTemplateMedia
                 src={template.image}
@@ -182,10 +182,10 @@ export function ShopTemplateModal({
             </p>
           </div>
 
-          <div className="flex w-full min-h-0 flex-col gap-4 lg:w-[46%] font-[family-name:var(--font-lexend),system-ui,sans-serif]">
+          <div className="flex w-full min-h-0 flex-col gap-4 lg:w-[46%] lg:overflow-y-auto lg:overscroll-contain lg:pr-2 font-[family-name:var(--font-lexend),system-ui,sans-serif]">
             <p
               id={titleId}
-              className="text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
+              className="lg:pr-10 text-xl font-bold tracking-tight text-neutral-950 sm:text-2xl font-[family-name:var(--font-lexend),system-ui,sans-serif] dark:text-white"
             >
               {template.title}
             </p>

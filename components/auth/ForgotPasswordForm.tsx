@@ -122,6 +122,7 @@ export function ForgotPasswordForm() {
               htmlFor="forgot-password-email"
               className="mb-1.5 block text-sm font-medium text-neutral-600 dark:text-neutral-300"
             >
+              
               Email address
             </label>
             <input
