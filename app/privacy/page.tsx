@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 const EFFECTIVE_DATE = "June 10, 2026";
-const LAST_UPDATED = "June 11, 2026";
+const LAST_UPDATED = "October 27, 2026";
 const PRIVACY_EMAIL = "privacy@fourlabs.studio";
 const CONTACT_ADDRESS = "No. 9, Ikeja, Lagos State, Nigeria";
 const CONTACT_PHONE = "+234 9127034899";
@@ -31,6 +31,11 @@ const DATA_PROTECTION_ROWS = [
     label: "Password",
     description:
       "Passwords are hashed using industry-standard bcrypt encryption before storage. We never store plain-text passwords and our team cannot view them.",
+  },
+  {
+    label: "Google Sign-In",
+    description:
+      "Your Google identity is verified with Google's signing keys on every sign-in. We store only your Google account ID, linked to your account, and never your Google password or access tokens.",
   },
   {
     label: "Profile Picture",
@@ -106,7 +111,30 @@ export default function PrivacyPage() {
                 ]}
               />
 
-              <SubHeading>1.2 Usage Information</SubHeading>
+              <SubHeading>1.2 Information from Google Sign-In</SubHeading>
+              <p className="mt-3 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
+                If you choose to sign up or sign in with your Google account, we
+                ask Google only for your basic profile and email address. With
+                your permission, Google shares the following with us:
+              </p>
+              <BulletList
+                items={[
+                  "Email address and whether Google has verified it: used to create or find your account; we only accept verified Google email addresses",
+                  "Name: used as your display name, which you can change at any time",
+                  "Profile picture: a link to the picture on your Google account, used as your profile picture until you replace it",
+                  "Google account ID: a unique identifier used to recognise your Google account each time you sign in",
+                ]}
+              />
+              <p className="mt-4 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
+                If an account with the same email address already exists, we
+                link your Google account to it so you can use either sign-in
+                method. We never receive or store your Google password. We do
+                not keep Google access tokens, and we cannot read your Gmail,
+                contacts, calendar, Drive files, or any other data in your
+                Google account.
+              </p>
+
+              <SubHeading>1.3 Usage Information</SubHeading>
               <BulletList
                 items={[
                   "Log data including IP address, browser type, and pages visited",
@@ -115,7 +143,7 @@ export default function PrivacyPage() {
                 ]}
               />
 
-              <SubHeading>1.3 Communications</SubHeading>
+              <SubHeading>1.4 Communications</SubHeading>
               <BulletList
                 items={[
                   "Messages sent through our support channels or feedback forms",
@@ -132,7 +160,7 @@ export default function PrivacyPage() {
               <BulletList
                 items={[
                   "To create and manage your account",
-                  "To authenticate your identity during login",
+                  "To authenticate your identity during login, including when you sign in with Google",
                   "To send you transactional emails (e.g., password resets, confirmations)",
                   "To personalise your in-platform experience",
                   "To improve our product features through aggregated, anonymised analysis",
@@ -143,6 +171,22 @@ export default function PrivacyPage() {
               <p className="mt-4 text-sm font-semibold leading-relaxed text-neutral-950 sm:text-base dark:text-white">
                 We do not sell, rent, or trade your personal information to
                 third parties for marketing purposes.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
+                Information we receive from Google is used only to sign you in
+                and to set up and display your account. We do not use it for
+                advertising, sell it, or transfer it to others except as
+                described in this policy. Our use of information received from
+                Google APIs adheres to the{" "}
+                <a
+                  href="https://developers.google.com/terms/api-services-user-data-policy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
+                >
+                  Google API Services User Data Policy
+                </a>
+                , including the Limited Use requirements.
               </p>
             </li>
 
@@ -203,6 +247,7 @@ export default function PrivacyPage() {
               <BulletList
                 items={[
                   "Service providers who assist us in operating our platform (e.g., cloud hosting, email delivery), bound by confidentiality agreements",
+                  "Google: if you use Google Sign-In, Google processes your sign-in under its own Privacy Policy and knows that you have signed in to our platform",
                   "Legal compliance: when required by law, court order, or to protect our rights",
                   "Business transfers: in the event of a merger or acquisition, users will be notified",
                 ]}
@@ -237,6 +282,21 @@ export default function PrivacyPage() {
                   {PRIVACY_EMAIL}
                 </a>
                 . We will respond within 30 days.
+              </p>
+              <p className="mt-4 text-sm leading-relaxed text-neutral-700 sm:text-base dark:text-neutral-300">
+                If you signed in with Google, you can remove our access at any
+                time from your{" "}
+                <a
+                  href="https://myaccount.google.com/permissions"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#DC4437] underline-offset-2 hover:underline dark:text-[#FEC107]"
+                >
+                  Google Account permissions
+                </a>{" "}
+                page. Doing so stops future Google sign-ins but does not delete
+                your account or the data we already hold. To delete those,
+                contact us as described above.
               </p>
             </li>
 
