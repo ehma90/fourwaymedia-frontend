@@ -90,7 +90,7 @@ export function HowWeWorkSection() {
               Our process is simple, structured, and intentional:
             </p>
 
-            <div className="relative mt-6 aspect-video overflow-hidden rounded-2xl border border-[#DC4437] bg-neutral-950 shadow-[0_16px_40px_rgba(0,0,0,0.12)] dark:border-[#FEC107] dark:shadow-[0_16px_40px_rgba(0,0,0,0.3)]">
+            <div className="relative mt-6 hidden md:block aspect-video overflow-hidden rounded-2xl border border-[#DC4437] bg-neutral-950 shadow-[0_16px_40px_rgba(0,0,0,0.12)] dark:border-[#FEC107] dark:shadow-[0_16px_40px_rgba(0,0,0,0.3)]">
               <video
                 src={
                   "https://res.cloudinary.com/dtw99sbpc/video/upload/v1725006656/Reel2024Fastforgif-ezgif_rxv2vd.mp4"
