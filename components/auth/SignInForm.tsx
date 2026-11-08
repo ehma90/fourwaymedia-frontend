@@ -21,10 +21,52 @@ export function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Set when sign-in is refused because the email isn't verified yet; offers a resend.
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
+  const [resendState, setResendState] = useState<
+    "idle" | "sending" | "sent" | "error"
+  >("idle");
+  const [resendMessage, setResendMessage] = useState<string | null>(null);
+
+  const handleResendVerification = async () => {
+    if (!unverifiedEmail || resendState === "sending") return;
+    setResendState("sending");
+    setResendMessage(null);
+    try {
+      const res = await fetch("/api/auth/resend-verification", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: unverifiedEmail }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        message?: string;
+        error?: string;
+      };
+      if (!res.ok) {
+        setResendState("error");
+        setResendMessage(
+          data.error ?? "Could not send the email. Please try again.",
+        );
+        return;
+      }
+      setResendState("sent");
+      setResendMessage(
+        data.message ?? "Check your inbox for a new verification link.",
+      );
+    } catch {
+      setResendState("error");
+      setResendMessage(
+        "Something went wrong. Check your connection and try again.",
+      );
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(null);
+    setUnverifiedEmail(null);
+    setResendState("idle");
+    setResendMessage(null);
     const form = new FormData(e.currentTarget);
     const email = String(form.get("email") ?? "").trim();
     const password = String(form.get("password") ?? "");
@@ -43,6 +85,9 @@ export function SignInForm() {
       setError(
         err instanceof ApiError ? err.message : "Sign in failed. Try again.",
       );
+      if (err instanceof ApiError && err.code === "EMAIL_NOT_VERIFIED") {
+        setUnverifiedEmail(email);
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -103,6 +148,35 @@ export function SignInForm() {
             role="alert"
           >
             {error}
+            {unverifiedEmail && resendState !== "sent" ? (
+              <>
+                <br />
+                <button
+                  type="button"
+                  onClick={handleResendVerification}
+                  disabled={resendState === "sending"}
+                  className="mt-1 font-semibold underline underline-offset-2 disabled:opacity-60"
+                >
+                  {resendState === "sending"
+                    ? "Sending…"
+                    : "Resend verification email"}
+                </button>
+              </>
+            ) : null}
+          </p>
+        ) : null}
+        {resendMessage ? (
+          <p
+            className={cn(
+              "rounded-lg border px-3 py-2 text-sm",
+              resendState === "sent"
+                ? "border-green-200 bg-green-50 text-green-800 dark:border-green-900/50 dark:bg-green-950/40 dark:text-green-200"
+                : "border-red-200 bg-red-50 text-red-800 dark:border-red-900/50 dark:bg-red-950/40 dark:text-red-200",
+            )}
+            role="status"
+            aria-live="polite"
+          >
+            {resendMessage}
           </p>
         ) : null}
 

@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 
+import { backendUnavailableBody, fetchBackend } from "@/lib/server-backend";
+
+export const runtime = "nodejs";
+
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export async function POST(request: Request) {
@@ -29,6 +33,16 @@ export async function POST(request: Request) {
     );
   }
 
-  // Stub: no email is sent yet; response is the same for every valid email (no enumeration).
-  return NextResponse.json({ ok: true });
+  // The backend answers identically whether or not the account exists (no enumeration).
+  const res = await fetchBackend("/api/v1/auth/forgot-password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+  if (!res) {
+    return NextResponse.json(backendUnavailableBody(), { status: 503 });
+  }
+
+  const data = await res.json().catch(() => ({}));
+  return NextResponse.json(data, { status: res.status });
 }
